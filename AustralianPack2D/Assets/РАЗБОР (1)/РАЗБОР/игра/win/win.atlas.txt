@@ -1,0 +1,111 @@
+
+win.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Radiance circle_01
+  rotate: false
+  xy: 2, 73
+  size: 293, 387
+  orig: 293, 387
+  offset: 0, 0
+  index: -1
+Radiance circle_02
+  rotate: false
+  xy: 526, 480
+  size: 427, 524
+  orig: 427, 524
+  offset: 0, 0
+  index: -1
+Radiance_1
+  rotate: false
+  xy: 2, 462
+  size: 522, 542
+  orig: 522, 542
+  offset: 0, 0
+  index: -1
+Radiance_2
+  rotate: false
+  xy: 297, 142
+  size: 318, 318
+  orig: 318, 318
+  offset: 0, 0
+  index: -1
+bokeh_01
+  rotate: false
+  xy: 712, 220
+  size: 68, 68
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+bokeh_02
+  rotate: false
+  xy: 72, 3
+  size: 68, 68
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+bokeh_03
+  rotate: false
+  xy: 2, 2
+  size: 68, 69
+  orig: 68, 69
+  offset: 0, 0
+  index: -1
+bokeh_04
+  rotate: false
+  xy: 617, 158
+  size: 37, 34
+  orig: 37, 34
+  offset: 0, 0
+  index: -1
+bokeh_05
+  rotate: false
+  xy: 297, 90
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+bokeh_06
+  rotate: false
+  xy: 955, 954
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+bokeh_07
+  rotate: false
+  xy: 142, 39
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+bokeh_08
+  rotate: false
+  xy: 350, 108
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+sparkle_01
+  rotate: false
+  xy: 617, 194
+  size: 93, 94
+  orig: 93, 94
+  offset: 0, 0
+  index: -1
+sparkle_Big_01
+  rotate: false
+  xy: 617, 290
+  size: 184, 188
+  orig: 184, 188
+  offset: 0, 0
+  index: -1
+sparkle_Big_02
+  rotate: false
+  xy: 803, 321
+  size: 154, 157
+  orig: 154, 157
+  offset: 0, 0
+  index: -1

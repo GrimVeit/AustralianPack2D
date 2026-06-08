@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f7d55aa7f7c714391804a61cccb32c, type: 3}
+  m_Name: ChickenAllPicturesSO
+  m_EditorClassIdentifier: 
+  chickenTypePictures:
+  - {fileID: 11400000, guid: c451ae0260c79544ca3c4c39176aa3db, type: 2}
+  - {fileID: 11400000, guid: 55be4e3dd436063499f3581c6d8bb3db, type: 2}
+  - {fileID: 11400000, guid: 0f130aa87e3f13948a4fba18029768d3, type: 2}
+  - {fileID: 11400000, guid: 4b80498c8267daa46aed4d9b669511f9, type: 2}
+  - {fileID: 11400000, guid: f40d9a2982b4bc14f932e635ade95e9b, type: 2}
+  - {fileID: 11400000, guid: a455488885e6cd04bb3daacf8c7ee728, type: 2}
+  - {fileID: 11400000, guid: cc47b98aa132b76498adf14b8cec62fb, type: 2}
+  - {fileID: 11400000, guid: 9241bb7d4966a92489749950813b1b89, type: 2}
+  - {fileID: 11400000, guid: 0c9e419348aa91c4e915c567d9a3cb62, type: 2}
+  - {fileID: 11400000, guid: 8853d60ff9efd9b44804c27b4a98ef90, type: 2}

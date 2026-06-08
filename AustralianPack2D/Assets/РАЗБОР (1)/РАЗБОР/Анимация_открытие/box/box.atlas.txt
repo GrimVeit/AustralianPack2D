@@ -1,0 +1,146 @@
+
+box.png
+size: 4096,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+box_back
+  rotate: true
+  xy: 2, 547
+  size: 475, 859
+  orig: 475, 859
+  offset: 0, 0
+  index: -1
+box_front
+  rotate: true
+  xy: 863, 547
+  size: 475, 812
+  orig: 475, 812
+  offset: 0, 0
+  index: -1
+box_standard/box_back
+  rotate: true
+  xy: 2923, 549
+  size: 473, 857
+  orig: 473, 857
+  offset: 0, 0
+  index: -1
+box_standard/box_front
+  rotate: true
+  xy: 2923, 74
+  size: 473, 810
+  orig: 473, 810
+  offset: 0, 0
+  index: -1
+box_standard/card
+  rotate: true
+  xy: 2252, 74
+  size: 472, 667
+  orig: 472, 667
+  offset: 0, 0
+  index: -1
+box_standard/cover_01
+  rotate: true
+  xy: 3782, 625
+  size: 397, 202
+  orig: 397, 202
+  offset: 0, 0
+  index: -1
+box_standard/cover_02
+  rotate: false
+  xy: 2, 2
+  size: 391, 68
+  orig: 391, 68
+  offset: 0, 0
+  index: -1
+box_standard/radiance_01
+  rotate: true
+  xy: 1392, 83
+  size: 462, 813
+  orig: 462, 813
+  offset: 0, 0
+  index: -1
+box_standard/radiance_02
+  rotate: true
+  xy: 2, 72
+  size: 473, 571
+  orig: 473, 571
+  offset: 0, 0
+  index: -1
+box_standard/ray
+  rotate: true
+  xy: 575, 58
+  size: 21, 698
+  orig: 21, 698
+  offset: 0, 0
+  index: -1
+box_standard/sidewall_L
+  rotate: true
+  xy: 3904, 6
+  size: 140, 165
+  orig: 140, 165
+  offset: 0, 0
+  index: -1
+box_standard/sidewall_R
+  rotate: false
+  xy: 3941, 279
+  size: 137, 170
+  orig: 137, 170
+  offset: 0, 0
+  index: -1
+card
+  rotate: true
+  xy: 2252, 548
+  size: 474, 669
+  orig: 474, 669
+  offset: 0, 0
+  index: -1
+cover_01
+  rotate: true
+  xy: 3735, 148
+  size: 399, 204
+  orig: 399, 204
+  offset: 0, 0
+  index: -1
+cover_02
+  rotate: true
+  xy: 3986, 629
+  size: 393, 70
+  orig: 393, 70
+  offset: 0, 0
+  index: -1
+radiance_01
+  rotate: true
+  xy: 575, 81
+  size: 464, 815
+  orig: 464, 815
+  offset: 0, 0
+  index: -1
+radiance_02
+  rotate: true
+  xy: 1677, 547
+  size: 475, 573
+  orig: 475, 573
+  offset: 0, 0
+  index: -1
+ray
+  rotate: true
+  xy: 1392, 58
+  size: 23, 700
+  orig: 23, 700
+  offset: 0, 0
+  index: -1
+sidewall_L
+  rotate: true
+  xy: 3735, 4
+  size: 142, 167
+  orig: 142, 167
+  offset: 0, 0
+  index: -1
+sidewall_R
+  rotate: false
+  xy: 3941, 451
+  size: 139, 172
+  orig: 139, 172
+  offset: 0, 0
+  index: -1
