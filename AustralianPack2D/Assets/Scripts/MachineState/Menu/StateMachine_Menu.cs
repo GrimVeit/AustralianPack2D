@@ -9,14 +9,18 @@ public class StateMachine_Menu : IStateMachineProvider
 
     private IState _currentState;
 
-    public StateMachine_Menu()
+    public StateMachine_Menu(UIMainMenuRoot sceneRoot)
     {
-        
+        states[typeof(MainState_Menu)] = new MainState_Menu(this, sceneRoot);
+        states[typeof(LevelState_Menu)] = new LevelState_Menu(this, sceneRoot);
+        states[typeof(SettingsState_Menu)] = new SettingsState_Menu(this, sceneRoot);
+        states[typeof(ShopState_Menu)] = new ShopState_Menu(this, sceneRoot);
+        states[typeof(AlbumState_Menu)] = new AlbumState_Menu(this, sceneRoot);
     }
 
     public void Initialize()
     {
-
+        EnterState(GetState<MainState_Menu>());
     }
 
     public void Dispose()

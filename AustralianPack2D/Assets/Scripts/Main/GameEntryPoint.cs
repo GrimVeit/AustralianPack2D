@@ -20,7 +20,7 @@ public class GameEntryPoint
         Object.DontDestroyOnLoad(rootView.gameObject);
     }
 
-    //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Autorun()
     {
         SetupGlobalSettings();
@@ -37,7 +37,7 @@ public class GameEntryPoint
 
     private void Run()
     {
-        coroutines.StartCoroutine(LoadAndStartCheck());
+        coroutines.StartCoroutine(LoadAndStartMenu());
     }
 
 
@@ -100,6 +100,17 @@ public class GameEntryPoint
         });
     }
 
+    private IEnumerator LoadAndStartMenu()
+    {
+        yield return LoadSceneAndRun<MenuEntryPoint>(Scenes.MAIN_MENU, true, sceneEntry =>
+        {
+            sceneEntry.OnClickToGame -= HandleClickToGame;
+            sceneEntry.OnClickToGame += HandleClickToGame;
+
+            sceneEntry.Run(rootView);
+        });
+    }
+
     #endregion
 
     #region Handlers
@@ -112,6 +123,11 @@ public class GameEntryPoint
     private void HandleClickToGame()
     {
         coroutines.StartCoroutine(LoadAndStartGame());
+    }
+
+    private void HandleClickToMenu()
+    {
+        coroutines.StartCoroutine(LoadAndStartMenu());
     }
 
     #endregion

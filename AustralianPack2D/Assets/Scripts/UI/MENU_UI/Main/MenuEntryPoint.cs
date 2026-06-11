@@ -38,7 +38,7 @@ public class MenuEntryPoint : MonoBehaviour
 
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
 
-        stateMachine = new StateMachine_Menu();
+        stateMachine = new StateMachine_Menu(sceneRoot);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
