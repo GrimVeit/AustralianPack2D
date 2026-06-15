@@ -15,6 +15,9 @@ public class MenuEntryPoint : MonoBehaviour
     private ParticleEffectMaterialPresenter particleEffectMaterialPresenter;
     private SoundPresenter soundPresenter;
 
+    private StoreLevelPresenter storeLevelPresenter;
+    private ChooseLevelVisualPresenter chooseLevelVisualPresenter;
+
     private StateMachine_Menu stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -38,6 +41,9 @@ public class MenuEntryPoint : MonoBehaviour
 
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
 
+        storeLevelPresenter = new StoreLevelPresenter(new StoreLevelModel(PlayerPrefsKeys.LEVEL_NUMBER));
+        chooseLevelVisualPresenter = new ChooseLevelVisualPresenter(new ChooseLevelVisualModel(storeLevelPresenter, storeLevelPresenter), viewContainer.GetView<ChooseLevelVisualView>());
+
         stateMachine = new StateMachine_Menu(sceneRoot);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -52,6 +58,9 @@ public class MenuEntryPoint : MonoBehaviour
         sceneRoot.Initialize();
 
         bankPresenter.Initialize();
+
+        chooseLevelVisualPresenter.Initialize();
+        storeLevelPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -102,6 +111,9 @@ public class MenuEntryPoint : MonoBehaviour
         particleEffectPresenter?.Dispose();
         particleEffectMaterialPresenter?.Dispose();
         bankPresenter?.Dispose();
+
+        chooseLevelVisualPresenter.Dispose();
+        storeLevelPresenter.Dispose();
 
         stateMachine?.Dispose();
     }
