@@ -5,8 +5,7 @@ using UnityEngine;
 public class GameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
-    [SerializeField] private ChickenAllPicturesSO chickenAllPicturesSO;
-    [SerializeField] private UIGameRoot menuRootPrefab;
+    [SerializeField] private UIGameRoot gameRootPrefab;
 
     private UIGameRoot sceneRoot;
     private ViewContainer viewContainer;
@@ -17,11 +16,13 @@ public class GameSceneEntryPoint : MonoBehaviour
     private SoundPresenter soundPresenter;
     private VideoPresenter videoPresenter;
 
+    private PlayToolbarPresenter playToolbarPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
     {
-        sceneRoot = menuRootPrefab;
+        sceneRoot = Instantiate(gameRootPrefab);
 
         uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
 
@@ -40,6 +41,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             (new ParticleEffectModel(),
             viewContainer.GetView<ParticleEffectView>());
 
+        playToolbarPresenter = new PlayToolbarPresenter(new PlayToolbarModel(), viewContainer.GetView<PlayToolbarView>());
+
         stateMachine = new StateMachine_Game();
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -53,6 +56,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
+
+        playToolbarPresenter.Initialize();
         
         stateMachine.Initialize();
     }
@@ -69,16 +74,20 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-
+        playToolbarPresenter.OnClickToExit += HandleClickToMenu;
+        playToolbarPresenter.OnClickToRestart += HandleClickToGame;
     }
 
     private void DeactivateTransitions()
     {
-
+        playToolbarPresenter.OnClickToExit -= HandleClickToMenu;
+        playToolbarPresenter.OnClickToRestart -= HandleClickToGame;
     }
 
     private void Deactivate()
     {
+        playToolbarPresenter.HideToolbar();
+
         sceneRoot.Deactivate();
         soundPresenter?.Dispose();
     }
@@ -91,6 +100,8 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         bankPresenter?.Dispose();
         videoPresenter?.Dispose();
+
+        playToolbarPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

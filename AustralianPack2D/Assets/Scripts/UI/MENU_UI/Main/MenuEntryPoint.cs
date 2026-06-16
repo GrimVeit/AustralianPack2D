@@ -22,7 +22,7 @@ public class MenuEntryPoint : MonoBehaviour
 
     public void Run(UIRootView uIRootView)
     {
-        sceneRoot = menuRootPrefab;
+        sceneRoot = Instantiate(menuRootPrefab);
 
         uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
 
@@ -77,12 +77,12 @@ public class MenuEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-
+        sceneRoot.OnClickToPlay_PlayFooter += HandleClickToGame;
     }
 
     private void DeactivateTransitions()
     {
-
+        sceneRoot.OnClickToPlay_PlayFooter -= HandleClickToGame;
     }
 
     private void Deactivate()

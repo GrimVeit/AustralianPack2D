@@ -34,7 +34,8 @@ public class ChooseLevelVisualModel
     {
         if(_currentGameLevel == level) return;
 
-        OnLevelDeselect?.Invoke(_currentGameLevel);
+        if(_currentGameLevel != GameLevel.None)
+           OnLevelDeselect?.Invoke(_currentGameLevel);
 
         _currentGameLevel = level;
         OnLevelSelect?.Invoke(_currentGameLevel);
