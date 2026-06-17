@@ -7,14 +7,18 @@ public class StateMachine_Game : IStateMachineProvider
 
     private IState _currentState;
 
-    public StateMachine_Game()
+    public StateMachine_Game
+        (IStoreLevelInfo storeLevelInfo,
+        IStoreGameCardsProvider storeGameCardsProvider,
+        ICardsGameSpawnerProvider cardsGameSpawnerProvider
+        )
     {
-        
+        states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider);
     }
 
     public void Initialize()
     {
-
+        EnterState(GetState<StartState_Game>());
     }
 
     public void Dispose()

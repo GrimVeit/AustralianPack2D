@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBoardSpawner : MonoBehaviour
+public class CardsGameSpawnerView : View
 {
     [Header("Board")]
     public RectTransform board;
 
     [Header("Prefab")]
-    public RectTransform cardPrefab;
+    public GameCard cardPrefab;
 
     [Header("Configs")]
     public List<BoardLevelConfig> configs = new();
@@ -23,41 +23,28 @@ public class TestBoardSpawner : MonoBehaviour
     public float minCellSize = 70f;
     public float maxCellSize = 180f;
 
-    //[SerializeField] private BoardLevelType levelTypeCurrent;
+    private readonly List<GameCard> spawned = new();
 
-    //private readonly List<RectTransform> spawned = new();
+    public void Spawn(GameLevel type, IReadOnlyList<CardDto> cardDtos)
+    {
+        Clear();
 
-    //private BoardLevelConfig GetConfig(BoardLevelType type)
-    //{
-    //    return configs.Find(c => c.type == type);
-    //}
+        var config = configs.Find(c => c.type == type);
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        Spawn(levelTypeCurrent);
-    //    }
-    //}
+        if (config == null)
+        {
+            Debug.LogError("Config not found");
+            return;
+        }
 
-    //public void Spawn(BoardLevelType type)
-    //{
-    //    Clear();
+        Debug.Log(cardDtos.Count);
 
-    //    var config = configs.Find(c => c.type == type);
+        fillFactor = config.fillFactor;
 
-    //    if (config == null)
-    //    {
-    //        Debug.LogError("Config not found");
-    //        return;
-    //    }
+        SpawnAuto(cardDtos);
+    }
 
-    //    fillFactor = config.fillFactor;
-
-    //    //SpawnAuto(config.totalCards);
-    //}
-
-    private void SpawnAuto(int totalCards)
+    private void SpawnAuto(IReadOnlyList<CardDto> cardDtos)
     {
         float width = board.rect.width;
         float height = board.rect.height;
@@ -72,9 +59,9 @@ public class TestBoardSpawner : MonoBehaviour
         float bestCellSize = 0f;
         int bestRows = 0;
 
-        for (int c = 1; c <= totalCards; c++)
+        for (int c = 1; c <= cardDtos.Count; c++)
         {
-            int rows = Mathf.CeilToInt(totalCards / (float)c);
+            int rows = Mathf.CeilToInt(cardDtos.Count / (float)c);
 
             float cellW = (usableWidth - (c - 1) * spacing) / c;
             float cellH = (usableHeight - (rows - 1) * spacing) / rows;
@@ -125,17 +112,18 @@ public class TestBoardSpawner : MonoBehaviour
         // ─────────────────────────────
         // 4. spawn
         // ─────────────────────────────
-        for (int i = 0; i < totalCards; i++)
+        for (int i = 0; i < cardDtos.Count; i++)
         {
             int x = i % columns;
             int y = i / columns;
 
-            RectTransform card = Instantiate(cardPrefab, board);
-            //spawned.Add(card);
+            GameCard card = Instantiate(cardPrefab, board);
+            card.SetData(cardDtos[i].Sprite);
+            spawned.Add(card);
 
-            card.sizeDelta = new Vector2(cell, cell);
+            card.RectTransform.sizeDelta = new Vector2(cell, cell);
 
-            card.anchoredPosition = new Vector2(
+            card.RectTransform.anchoredPosition = new Vector2(
                 start.x + x * (cell + spacingX),
                 start.y - y * (cell + spacingY)
             );
@@ -144,10 +132,19 @@ public class TestBoardSpawner : MonoBehaviour
 
     private void Clear()
     {
-        //foreach (var c in spawned)
-        //    if (c != null)
-        //        Destroy(c.gameObject);
+        foreach (var c in spawned)
+            if (c != null)
+                Destroy(c.gameObject);
 
-        //spawned.Clear();
+        spawned.Clear();
     }
+}
+
+[System.Serializable]
+public class BoardLevelConfig
+{
+    public GameLevel type;
+
+    [Range(0f, 1f)]
+    public float fillFactor = 0.85f;
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private List<Sprite> spritesGameCards;
     [SerializeField] private UIGameRoot gameRootPrefab;
 
     private UIGameRoot sceneRoot;
@@ -17,6 +18,10 @@ public class GameSceneEntryPoint : MonoBehaviour
     private VideoPresenter videoPresenter;
 
     private PlayToolbarPresenter playToolbarPresenter;
+
+    private StoreLevelPresenter storeLevelPresenter;
+    private StoreGameCardsPresenter storeGameCardsPresenter;
+    private CardsGameSpawnerPresenter cardsGameSpawnerPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -43,7 +48,11 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         playToolbarPresenter = new PlayToolbarPresenter(new PlayToolbarModel(), viewContainer.GetView<PlayToolbarView>());
 
-        stateMachine = new StateMachine_Game();
+        storeLevelPresenter = new StoreLevelPresenter(new StoreLevelModel(PlayerPrefsKeys.LEVEL_NUMBER));
+        storeGameCardsPresenter = new StoreGameCardsPresenter(new StoreGameCardsModel(spritesGameCards));
+        cardsGameSpawnerPresenter = new CardsGameSpawnerPresenter(viewContainer.GetView<CardsGameSpawnerView>());
+
+        stateMachine = new StateMachine_Game(storeLevelPresenter, storeGameCardsPresenter, cardsGameSpawnerPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -58,6 +67,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         bankPresenter.Initialize();
 
         playToolbarPresenter.Initialize();
+
+        storeLevelPresenter.Initialize();
         
         stateMachine.Initialize();
     }
@@ -102,6 +113,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         videoPresenter?.Dispose();
 
         playToolbarPresenter?.Dispose();
+
+        storeLevelPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }
