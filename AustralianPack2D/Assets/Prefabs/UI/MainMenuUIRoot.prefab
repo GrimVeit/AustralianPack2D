@@ -9357,11 +9357,11 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &8664227479597732452
 MonoBehaviour:
@@ -9551,7 +9551,7 @@ GameObject:
   - component: {fileID: 3257849718561565301}
   - component: {fileID: 5244070066364905972}
   - component: {fileID: 8535095219846104856}
-  - component: {fileID: 5934431647600327234}
+  - component: {fileID: 1882803245102064223}
   m_Layer: 5
   m_Name: Panels
   m_TagString: Untagged
@@ -9609,13 +9609,13 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &5934431647600327234
+--- !u!114 &1882803245102064223
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

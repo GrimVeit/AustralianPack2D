@@ -41,7 +41,7 @@ public class GameEntryPoint
     }
 
 
-    private IEnumerator LoadSceneAndRun<TSceneEntry>(string scene, bool showLoading = false, Action<TSceneEntry> setup = null)
+    private IEnumerator LoadSceneAndRun<TSceneEntry>(string scene, bool showLoading = true, Action<TSceneEntry> setup = null)
         where TSceneEntry : MonoBehaviour
     {
         if (showLoading)

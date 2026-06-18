@@ -25,6 +25,24 @@ public class CardsGameSpawnerView : View
 
     private readonly List<GameCard> spawned = new();
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spawned[0].PlayWrongShake();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            spawned[0].Show();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightAlt))
+        {
+            spawned[0].Hide();
+        }
+    }
+
     public void Spawn(GameLevel type, IReadOnlyList<CardDto> cardDtos)
     {
         Clear();
@@ -118,15 +136,14 @@ public class CardsGameSpawnerView : View
             int y = i / columns;
 
             GameCard card = Instantiate(cardPrefab, board);
-            card.SetData(cardDtos[i].Sprite);
             spawned.Add(card);
 
-            card.RectTransform.sizeDelta = new Vector2(cell, cell);
-
-            card.RectTransform.anchoredPosition = new Vector2(
+            card.SetData(cardDtos[i].Sprite);
+            card.SetSizeDelta(new Vector2(cell, cell));
+            card.SetAnchoredPosition(new Vector2(
                 start.x + x * (cell + spacingX),
-                start.y - y * (cell + spacingY)
-            );
+                start.y - y * (cell + spacingY)));
+            card.Initialize();
         }
     }
 
