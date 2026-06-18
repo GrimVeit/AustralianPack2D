@@ -22,6 +22,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private StoreLevelPresenter storeLevelPresenter;
     private StoreGameCardsPresenter storeGameCardsPresenter;
     private CardsGameSpawnerPresenter cardsGameSpawnerPresenter;
+    private CardsOrchestrationPresenter cardsOrchestrationPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -51,6 +52,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeLevelPresenter = new StoreLevelPresenter(new StoreLevelModel(PlayerPrefsKeys.LEVEL_NUMBER));
         storeGameCardsPresenter = new StoreGameCardsPresenter(new StoreGameCardsModel(spritesGameCards));
         cardsGameSpawnerPresenter = new CardsGameSpawnerPresenter(viewContainer.GetView<CardsGameSpawnerView>());
+        cardsOrchestrationPresenter = new CardsOrchestrationPresenter(new CardsOrchestrationModel(cardsGameSpawnerPresenter));
 
         stateMachine = new StateMachine_Game(storeLevelPresenter, storeGameCardsPresenter, cardsGameSpawnerPresenter);
 
@@ -69,6 +71,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         playToolbarPresenter.Initialize();
 
         storeLevelPresenter.Initialize();
+        cardsOrchestrationPresenter.Initialize();
         
         stateMachine.Initialize();
     }
@@ -115,6 +118,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         playToolbarPresenter?.Dispose();
 
         storeLevelPresenter?.Dispose();
+        cardsOrchestrationPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

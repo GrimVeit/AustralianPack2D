@@ -1,0 +1,150 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CardsOrchestrationModel
+{
+    private ICardsGameSpawnerListener _spawnListener;
+
+    private IReadOnlyList<IGameCard> _cards;
+
+    private IGameCard _firstCard;
+    private IGameCard _secondCard;
+
+    private bool _lockInput;
+
+    private readonly float _compareDelay = 0.4f;
+    private readonly float _hideDelay = 0.3f;
+
+    private IEnumerator processCoroutine;
+
+    public CardsOrchestrationModel(ICardsGameSpawnerListener spawnListener)
+    {
+        _spawnListener = spawnListener;
+        _spawnListener.OnSpawnedCards += OnCardsSpawned;
+    }
+
+    public void Dispose()
+    {
+        if (_spawnListener != null)
+            _spawnListener.OnSpawnedCards -= OnCardsSpawned;
+
+        UnsubscribeCards();
+    }
+
+    private void OnCardsSpawned(IReadOnlyList<IGameCard> cards)
+    {
+        UnsubscribeCards();
+
+        _cards = cards;
+
+        foreach (var card in _cards)
+        {
+            card.OnChooseCard += OnCardChosen;
+            card.ActivateInteraction();
+            card.Hide(); // reset состояния
+        }
+
+        ResetState();
+    }
+
+    private void UnsubscribeCards()
+    {
+        if (_cards == null)
+            return;
+
+        foreach (var card in _cards)
+        {
+            card.OnChooseCard -= OnCardChosen;
+        }
+    }
+
+    private void ResetState()
+    {
+        _firstCard = null;
+        _secondCard = null;
+        _lockInput = false;
+    }
+
+    private void OnCardChosen(IGameCard card)
+    {
+        if (_lockInput)
+            return;
+
+        if (_firstCard == null)
+        {
+            SelectFirst(card);
+            return;
+        }
+
+        if (_firstCard == card)
+            return;
+
+        SelectSecond(card);
+    }
+
+    private void SelectFirst(IGameCard card)
+    {
+        _firstCard = card;
+
+        _firstCard.Show();
+        _firstCard.DeactivateInteraction();
+    }
+
+    private void SelectSecond(IGameCard card)
+    {
+        _secondCard = card;
+
+        _secondCard.Show();
+        _secondCard.DeactivateInteraction();
+
+        _lockInput = true;
+
+        Coroutines.Start(CompareRoutine());
+    }
+
+    private IEnumerator CompareRoutine()
+    {
+        yield return new WaitForSeconds(_compareDelay);
+
+        if (_firstCard.IdPair == _secondCard.IdPair)
+        {
+            HandleMatch();
+        }
+        else
+        {
+            HandleMismatch();
+        }
+    }
+
+    private void HandleMatch()
+    {
+        _firstCard.Shake();
+        _secondCard.Shake();
+
+        Coroutines.Start(HideRoutine());
+    }
+
+    private void HandleMismatch()
+    {
+        _firstCard.Shake();
+        _secondCard.Shake();
+
+        Coroutines.Start(HideRoutine());
+    }
+
+    private IEnumerator HideRoutine()
+    {
+        yield return new WaitForSeconds(_hideDelay);
+
+        _firstCard.Hide();
+        _firstCard.ActivateInteraction();
+
+        _secondCard.Hide();
+        _secondCard.ActivateInteraction();
+
+        _firstCard = null;
+        _secondCard = null;
+        _lockInput = false;
+    }
+}

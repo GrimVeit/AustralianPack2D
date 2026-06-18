@@ -1,11 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameCard : MonoBehaviour
+public class GameCard : MonoBehaviour, IGameCard
 {
+    public int IdPair => _idPair;
+    public int IdUnique => _idUnique;
+
+    [Header("BUTTON")]
+    [SerializeField] private Button buttonCard;
     [Header("Refs")]
     [SerializeField] private RectTransform rectTransformParent;
     [SerializeField] private RectTransform rectTransformMiddle;
@@ -26,6 +32,8 @@ public class GameCard : MonoBehaviour
     [SerializeField] private int rotationVibrato = 10;
     [SerializeField] private float rotationElasticity = 1f;
 
+    private int _idPair;
+    private int _idUnique;
     private Vector3 _startParentPos;
     private Quaternion _startParentRot;
 
@@ -45,11 +53,18 @@ public class GameCard : MonoBehaviour
 
         rectTransformCard.localPosition = _direction * _cardOffset;
         rectTransformCover.localPosition = Vector3.zero;
+
+        buttonCard.onClick.AddListener(ChooseCard);
+    }
+
+    public void Dispose()
+    {
+        buttonCard.onClick.RemoveListener(ChooseCard);
     }
 
     private void RollDirection()
     {
-        float r = Random.value;
+        float r = UnityEngine.Random.value;
 
         if (r < 0.25f)
             _direction = Vector2.right;
@@ -61,9 +76,11 @@ public class GameCard : MonoBehaviour
             _direction = Vector2.down;
     }
 
-    public void SetData(Sprite sprite)
+    public void SetData(CardDto cardDto)
     {
-        imageCard.sprite = sprite;
+        imageCard.sprite = cardDto.Sprite;
+        _idPair = cardDto.PairId;
+        _idUnique = cardDto.UniqueId;
     }
 
     public void SetSizeDelta(Vector2 size)
@@ -81,13 +98,29 @@ public class GameCard : MonoBehaviour
         rectTransformParent.anchoredPosition = pos;
     }
 
-    public void PlayWrongShake()
+    #region Input
+
+    public void ActivateInteraction()
+    {
+        buttonCard.enabled = true;
+    }
+
+    public void DeactivateInteraction()
+    {
+        buttonCard.enabled = false;
+    }
+
+
+    public void Shake()
     {
         rectTransformParent.DOKill();
 
+        rectTransformMiddle.localScale = Vector3.one;
         rectTransformParent.SetAsLastSibling();
 
         Sequence seq = DOTween.Sequence();
+
+        seq.Join(rectTransformMiddle.DOScale(1.1f, 0.1f));
 
         seq.Join(rectTransformParent.DOShakePosition(
             shakeDuration,
@@ -105,7 +138,8 @@ public class GameCard : MonoBehaviour
             rotationElasticity
         ));
 
-        seq.Append(rectTransformParent.DOLocalMove(_startParentPos, 0.15f).SetEase(Ease.OutQuad));
+        seq.Append(rectTransformMiddle.DOScale(1f, 0.1f));
+        seq.Join(rectTransformParent.DOLocalMove(_startParentPos, 0.15f).SetEase(Ease.OutQuad));
         seq.Join(rectTransformParent.DOLocalRotateQuaternion(_startParentRot, 0.15f).SetEase(Ease.OutQuad));
     }
 
@@ -151,4 +185,33 @@ public class GameCard : MonoBehaviour
             RollDirection();
         });
     }
+
+
+    #endregion
+
+    #region Output
+
+    public event Action<IGameCard> OnChooseCard;
+
+    private void ChooseCard()
+    {
+        OnChooseCard?.Invoke(this);
+    }
+
+    #endregion
+}
+
+public interface IGameCard
+{
+    public event Action<IGameCard> OnChooseCard;
+
+    public int IdUnique { get; }
+    public int IdPair { get; }
+
+    public void ActivateInteraction();
+    public void DeactivateInteraction();
+
+    public void Show();
+    public void Hide();
+    public void Shake();
 }

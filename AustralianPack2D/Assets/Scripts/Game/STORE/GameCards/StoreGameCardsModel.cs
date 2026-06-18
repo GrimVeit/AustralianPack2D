@@ -31,21 +31,22 @@ public class StoreGameCardsModel
             return new List<CardDto>();
 
         var selected = _catalog
-            .OrderBy(_ => UnityEngine.Random.value)
+            .OrderBy(_ => Random.value)
             .Take(uniqueCount)
             .ToList();
 
         List<CardDto> result = new(count);
 
-        foreach (var def in selected)
+        int uniqueId = 0;
+
+        for (int i = 0; i < selected.Count; i++)
         {
-            // создаём пару
-            result.Add(new CardDto(def.Id, def.Sprite));
-            result.Add(new CardDto(def.Id, def.Sprite));
+            result.Add(new CardDto(uniqueId++, selected[i].Id, selected[i].Sprite));
+            result.Add(new CardDto(uniqueId++, selected[i].Id, selected[i].Sprite));
         }
 
         return result
-            .OrderBy(_ => UnityEngine.Random.value)
+            .OrderBy(_ => Random.value)
             .ToList();
     }
 }
@@ -64,11 +65,13 @@ public class CardDefinition
 
 public class CardDto
 {
+    public int UniqueId { get; }
     public int PairId { get; }
     public Sprite Sprite { get; }
 
-    public CardDto(int pairId, Sprite sprite)
+    public CardDto(int uniqueId, int pairId, Sprite sprite)
     {
+        UniqueId = uniqueId;
         PairId = pairId;
         Sprite = sprite;
     }

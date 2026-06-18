@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class CardsGameSpawnerView : View
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            spawned[0].PlayWrongShake();
+            spawned[0].Shake();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -138,13 +139,15 @@ public class CardsGameSpawnerView : View
             GameCard card = Instantiate(cardPrefab, board);
             spawned.Add(card);
 
-            card.SetData(cardDtos[i].Sprite);
+            card.SetData(cardDtos[i]);
             card.SetSizeDelta(new Vector2(cell, cell));
             card.SetAnchoredPosition(new Vector2(
                 start.x + x * (cell + spacingX),
                 start.y - y * (cell + spacingY)));
             card.Initialize();
         }
+
+        OnSpawnedCards?.Invoke(spawned);
     }
 
     private void Clear()
@@ -155,6 +158,12 @@ public class CardsGameSpawnerView : View
 
         spawned.Clear();
     }
+
+    #region Output
+
+    public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards;
+
+    #endregion
 }
 
 [System.Serializable]

@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider
+public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider, ICardsGameSpawnerListener
 {
     private readonly CardsGameSpawnerView _view;
 
@@ -10,6 +11,16 @@ public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider
     {
         _view = view;
     }
+
+    #region Output
+
+    public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards
+    {
+        add => _view.OnSpawnedCards += value;
+        remove => _view.OnSpawnedCards -= value;
+    }
+
+    #endregion
 
     #region Input
 
@@ -21,4 +32,9 @@ public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider
 public interface ICardsGameSpawnerProvider
 {
     public void CreateGrid(GameLevel level, IReadOnlyList<CardDto> cardDtos);
+}
+
+public interface ICardsGameSpawnerListener
+{
+    public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards;
 }
