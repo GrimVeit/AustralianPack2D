@@ -19,6 +19,7 @@ public class MenuEntryPoint : MonoBehaviour
     private ChooseLevelVisualPresenter chooseLevelVisualPresenter;
 
     private BookPagesPresenter bookPagesPresenter;
+    private BookControlPresenter bookControlPresenter;
 
     private StateMachine_Menu stateMachine;
 
@@ -47,8 +48,9 @@ public class MenuEntryPoint : MonoBehaviour
         chooseLevelVisualPresenter = new ChooseLevelVisualPresenter(new ChooseLevelVisualModel(storeLevelPresenter, storeLevelPresenter), viewContainer.GetView<ChooseLevelVisualView>());
 
         bookPagesPresenter = new BookPagesPresenter(new BookPagesModel(soundPresenter), viewContainer.GetView<BookPagesView>());
+        bookControlPresenter = new BookControlPresenter(new BookControlModel(bookPagesPresenter, bookPagesPresenter), viewContainer.GetView<BookControlView>());
 
-        stateMachine = new StateMachine_Menu(sceneRoot);
+        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -67,6 +69,7 @@ public class MenuEntryPoint : MonoBehaviour
         storeLevelPresenter.Initialize();
 
         bookPagesPresenter.Initialize();
+        bookControlPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -162,6 +165,7 @@ public class MenuEntryPoint : MonoBehaviour
         storeLevelPresenter.Dispose();
 
         bookPagesPresenter?.Dispose();
+        bookControlPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

@@ -11,6 +11,7 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private MovePanel backgroundPanel_Settings;
     [SerializeField] private MovePanel backgroundPanel_Shop;
     [SerializeField] private MovePanel backgroundPanel_Album;
+    [SerializeField] private MovePanel backgroundPanel_Green;
 
     [Header("MAIN")]
     [SerializeField] private MainHeaderPanel_Menu mainHeaderPanel;
@@ -31,7 +32,9 @@ public class UIMainMenuRoot : UIRoot
 
     [Header("ALBUM")]
     [SerializeField] private AlbumHeaderPanel_Menu albumHeaderPanel;
-    [SerializeField] private AlbumMiddlePanel_Menu albumMiddlePanel;
+    [SerializeField] private AlbumMiddlePanel_Menu albumChooseMiddlePanel;
+    [SerializeField] private AlbumTablePanel_Menu albumTablePanel;
+    [SerializeField] private AlbumTableFooterPanel_Menu albumTableFooterPanel;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
     {
@@ -45,6 +48,7 @@ public class UIMainMenuRoot : UIRoot
         backgroundPanel_Settings.Initialize();
         backgroundPanel_Shop.Initialize();
         backgroundPanel_Album.Initialize();
+        backgroundPanel_Green.Initialize();
 
         mainHeaderPanel.Initialize();
         mainMiddlePanel.Initialize();
@@ -60,7 +64,9 @@ public class UIMainMenuRoot : UIRoot
         shopMiddlePanel.Initialize();
 
         albumHeaderPanel.Initialize();
-        albumMiddlePanel.Initialize();
+        albumChooseMiddlePanel.Initialize();
+        albumTablePanel.Initialize();
+        albumTableFooterPanel.Initialize();
     }
 
     public void Activate()
@@ -90,6 +96,11 @@ public class UIMainMenuRoot : UIRoot
 
 
         albumHeaderPanel.OnClickBack += ClickToExit_AlbumHeader;
+        albumChooseMiddlePanel.OnClickCommon += ClickToCommon_AlbumChoose;
+        albumChooseMiddlePanel.OnClickUncommon += ClickToUncommon_AlbumChoose;
+        albumChooseMiddlePanel.OnClickRare += ClickToRare_AlbumChoose;
+        albumChooseMiddlePanel.OnClickEpic += ClickToEpic_AlbumChoose;
+        albumChooseMiddlePanel.OnClickMythical += ClickToMythical_AlbumChoose;
     }
 
 
@@ -122,6 +133,11 @@ public class UIMainMenuRoot : UIRoot
 
 
         albumHeaderPanel.OnClickBack -= ClickToExit_AlbumHeader;
+        albumChooseMiddlePanel.OnClickCommon -= ClickToCommon_AlbumChoose;
+        albumChooseMiddlePanel.OnClickUncommon -= ClickToUncommon_AlbumChoose;
+        albumChooseMiddlePanel.OnClickRare -= ClickToRare_AlbumChoose;
+        albumChooseMiddlePanel.OnClickEpic -= ClickToEpic_AlbumChoose;
+        albumChooseMiddlePanel.OnClickMythical -= ClickToMythical_AlbumChoose;
     }
 
     public void Dispose()
@@ -131,6 +147,7 @@ public class UIMainMenuRoot : UIRoot
         backgroundPanel_Settings.Dispose();
         backgroundPanel_Shop.Dispose();
         backgroundPanel_Album.Dispose();
+        backgroundPanel_Green.Dispose();
 
         mainHeaderPanel.Dispose();
         mainMiddlePanel.Dispose();
@@ -146,7 +163,9 @@ public class UIMainMenuRoot : UIRoot
         shopMiddlePanel.Dispose();
 
         albumHeaderPanel.Dispose();
-        albumMiddlePanel.Dispose();
+        albumChooseMiddlePanel.Dispose();
+        albumTablePanel.Dispose();
+        albumTableFooterPanel.Dispose();
     }
 
     #region INPUT
@@ -231,6 +250,22 @@ public class UIMainMenuRoot : UIRoot
         if (!backgroundPanel_Album.IsActive) return;
 
         CloseOtherPanel(backgroundPanel_Album);
+    }
+
+
+
+    public void OpenBackgroundPanel_Green()
+    {
+        if (backgroundPanel_Green.IsActive) return;
+
+        OpenOtherPanel(backgroundPanel_Green);
+    }
+
+    public void CloseBackgroundPanel_Green()
+    {
+        if (!backgroundPanel_Green.IsActive) return;
+
+        CloseOtherPanel(backgroundPanel_Green);
     }
 
     #endregion
@@ -407,16 +442,48 @@ public class UIMainMenuRoot : UIRoot
 
     public void OpenAlbumMiddlePanel()
     {
-        if (albumMiddlePanel.IsActive) return;
+        if (albumChooseMiddlePanel.IsActive) return;
 
-        OpenOtherPanel(albumMiddlePanel);
+        OpenOtherPanel(albumChooseMiddlePanel);
     }
 
     public void CloseAlbumMiddlePanel()
     {
-        if (!albumMiddlePanel.IsActive) return;
+        if (!albumChooseMiddlePanel.IsActive) return;
 
-        CloseOtherPanel(albumMiddlePanel);
+        CloseOtherPanel(albumChooseMiddlePanel);
+    }
+
+
+
+    public void OpenAlbumTablePanel()
+    {
+        if(albumTablePanel.IsActive) return;
+
+        OpenOtherPanel(albumTablePanel);
+    }
+
+    public void CloseAlbumTablePanel()
+    {
+        if (!albumTablePanel.IsActive) return;
+
+        CloseOtherPanel(albumTablePanel);
+    }
+
+
+
+    public void OpenAlbumTableFooterPanel()
+    {
+        if (albumTableFooterPanel.IsActive) return;
+
+        OpenOtherPanel(albumTableFooterPanel);
+    }
+
+    public void CloseAlbumTableFooterPanel()
+    {
+        if (!albumTableFooterPanel.IsActive) return;
+
+        CloseOtherPanel(albumTableFooterPanel);
     }
 
     #endregion
@@ -544,9 +611,40 @@ public class UIMainMenuRoot : UIRoot
 
     public event Action OnClickToExit_AlbumHeader;
 
+    public event Action OnClickToCommon_AlbumChoose;
+    public event Action OnClickToUncommon_AlbumChoose;
+    public event Action OnClickToRare_AlbumChoose;
+    public event Action OnClickToEpic_AlbumChoose;
+    public event Action OnClickToMythical_AlbumChoose;
+
     private void ClickToExit_AlbumHeader()
     {
         OnClickToExit_AlbumHeader?.Invoke();
+    }
+
+    private void ClickToCommon_AlbumChoose()
+    {
+        OnClickToCommon_AlbumChoose?.Invoke();
+    }
+
+    private void ClickToUncommon_AlbumChoose()
+    {
+        OnClickToUncommon_AlbumChoose?.Invoke();
+    }
+
+    private void ClickToRare_AlbumChoose()
+    {
+        OnClickToRare_AlbumChoose?.Invoke();
+    }
+
+    private void ClickToEpic_AlbumChoose()
+    {
+        OnClickToEpic_AlbumChoose?.Invoke();
+    }
+
+    private void ClickToMythical_AlbumChoose()
+    {
+        OnClickToMythical_AlbumChoose?.Invoke();
     }
 
     #endregion

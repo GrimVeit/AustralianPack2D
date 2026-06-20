@@ -23,6 +23,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private StoreGameCardsPresenter storeGameCardsPresenter;
     private CardsGameSpawnerPresenter cardsGameSpawnerPresenter;
     private CardsOrchestrationPresenter cardsOrchestrationPresenter;
+    private GameScorePresenter gameScorePresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -35,9 +36,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         viewContainer = sceneRoot.GetComponent<ViewContainer>();
         viewContainer.Initialize();
 
-        soundPresenter = new SoundPresenter
-                    (new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS, PlayerPrefsKeys.KEY_VOLUME_SOUND, PlayerPrefsKeys.KEY_VOLUME_MUSIC),
-                    viewContainer.GetView<SoundView>());
+        soundPresenter = new SoundPresenter(new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS, PlayerPrefsKeys.KEY_VOLUME_SOUND, PlayerPrefsKeys.KEY_VOLUME_MUSIC), viewContainer.GetView<SoundView>());
 
         videoPresenter = new VideoPresenter(new VideoModel(), viewContainer.GetView<VideoView>());
 
@@ -53,6 +52,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeGameCardsPresenter = new StoreGameCardsPresenter(new StoreGameCardsModel(spritesGameCards));
         cardsGameSpawnerPresenter = new CardsGameSpawnerPresenter(viewContainer.GetView<CardsGameSpawnerView>());
         cardsOrchestrationPresenter = new CardsOrchestrationPresenter(new CardsOrchestrationModel(cardsGameSpawnerPresenter));
+        gameScorePresenter = new GameScorePresenter(new GameScoreModel(cardsOrchestrationPresenter, storeLevelPresenter), viewContainer.GetView<GameScoreView>());
 
         stateMachine = new StateMachine_Game(storeLevelPresenter, storeGameCardsPresenter, cardsGameSpawnerPresenter);
 
@@ -70,6 +70,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         playToolbarPresenter.Initialize();
 
+        gameScorePresenter.Initialize();
         storeLevelPresenter.Initialize();
         cardsOrchestrationPresenter.Initialize();
         
@@ -117,6 +118,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         playToolbarPresenter?.Dispose();
 
+        gameScorePresenter?.Dispose();
         storeLevelPresenter?.Dispose();
         cardsOrchestrationPresenter?.Dispose();
 

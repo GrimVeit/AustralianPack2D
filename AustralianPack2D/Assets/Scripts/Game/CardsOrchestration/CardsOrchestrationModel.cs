@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,6 +140,9 @@ public class CardsOrchestrationModel
         _firstCard.Effect();
         _secondCard.Effect();
 
+        OnAddMatch?.Invoke();
+        OnAddMove?.Invoke();
+
         Coroutines.Start(HideRoutine());
     }
 
@@ -146,6 +150,8 @@ public class CardsOrchestrationModel
     {
         _firstCard.Shake();
         _secondCard.Shake();
+
+        OnAddMove?.Invoke();
 
         Coroutines.Start(ReturnRoutine());
     }
@@ -172,4 +178,11 @@ public class CardsOrchestrationModel
 
         ResetState();
     }
+
+    #region Output
+
+    public event Action OnAddMove;
+    public event Action OnAddMatch;
+
+    #endregion
 }
