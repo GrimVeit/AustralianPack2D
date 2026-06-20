@@ -18,6 +18,8 @@ public class MenuEntryPoint : MonoBehaviour
     private StoreLevelPresenter storeLevelPresenter;
     private ChooseLevelVisualPresenter chooseLevelVisualPresenter;
 
+    private BookPagesPresenter bookPagesPresenter;
+
     private StateMachine_Menu stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -44,6 +46,8 @@ public class MenuEntryPoint : MonoBehaviour
         storeLevelPresenter = new StoreLevelPresenter(new StoreLevelModel(PlayerPrefsKeys.LEVEL_NUMBER));
         chooseLevelVisualPresenter = new ChooseLevelVisualPresenter(new ChooseLevelVisualModel(storeLevelPresenter, storeLevelPresenter), viewContainer.GetView<ChooseLevelVisualView>());
 
+        bookPagesPresenter = new BookPagesPresenter(new BookPagesModel(soundPresenter), viewContainer.GetView<BookPagesView>());
+
         stateMachine = new StateMachine_Menu(sceneRoot);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -62,7 +66,49 @@ public class MenuEntryPoint : MonoBehaviour
         chooseLevelVisualPresenter.Initialize();
         storeLevelPresenter.Initialize();
 
+        bookPagesPresenter.Initialize();
+
         stateMachine.Initialize();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            bookPagesPresenter.OpenPastPage();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightAlt))
+        {
+            bookPagesPresenter.OpenSecondPage();
+        }
+
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            bookPagesPresenter.OpenPage(CardType.Common);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            bookPagesPresenter.OpenPage(CardType.Uncommon);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            bookPagesPresenter.OpenPage(CardType.Rare);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            bookPagesPresenter.OpenPage(CardType.Epic);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            bookPagesPresenter.OpenPage(CardType.Mythical);
+        }
     }
 
     private void ActivateEvents()
@@ -114,6 +160,8 @@ public class MenuEntryPoint : MonoBehaviour
 
         chooseLevelVisualPresenter.Dispose();
         storeLevelPresenter.Dispose();
+
+        bookPagesPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

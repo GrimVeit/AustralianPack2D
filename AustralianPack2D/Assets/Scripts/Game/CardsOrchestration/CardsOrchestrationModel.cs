@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardsOrchestrationModel
 {
     private ICardsGameSpawnerListener _spawnListener;
 
-    private IReadOnlyList<IGameCard> _cards;
+    private List<IGameCard> _cards;
 
     private IGameCard _firstCard;
     private IGameCard _secondCard;
@@ -14,20 +15,26 @@ public class CardsOrchestrationModel
     private bool _lockInput;
 
     private readonly float _compareDelay = 0.4f;
-    private readonly float _hideDelay = 0.3f;
+    private readonly float _hideDelayReturn = 0.3f;
+    private readonly float _hideDelayHide = 0.5f;
 
     private IEnumerator processCoroutine;
 
     public CardsOrchestrationModel(ICardsGameSpawnerListener spawnListener)
     {
         _spawnListener = spawnListener;
+
         _spawnListener.OnSpawnedCards += OnCardsSpawned;
+        _spawnListener.OnDestroyCard += DestroyCard;
     }
 
     public void Dispose()
     {
         if (_spawnListener != null)
+        {
             _spawnListener.OnSpawnedCards -= OnCardsSpawned;
+            _spawnListener.OnDestroyCard -= DestroyCard;
+        }
 
         UnsubscribeCards();
     }
@@ -36,7 +43,7 @@ public class CardsOrchestrationModel
     {
         UnsubscribeCards();
 
-        _cards = cards;
+        _cards = cards.ToList();
 
         foreach (var card in _cards)
         {
@@ -46,6 +53,13 @@ public class CardsOrchestrationModel
         }
 
         ResetState();
+    }
+
+    private void DestroyCard(IGameCard card)
+    {
+        card.OnChooseCard -= OnCardChosen;
+
+        _cards.Remove(card);
     }
 
     private void UnsubscribeCards()
@@ -122,6 +136,9 @@ public class CardsOrchestrationModel
         _firstCard.Shake();
         _secondCard.Shake();
 
+        _firstCard.Effect();
+        _secondCard.Effect();
+
         Coroutines.Start(HideRoutine());
     }
 
@@ -130,12 +147,12 @@ public class CardsOrchestrationModel
         _firstCard.Shake();
         _secondCard.Shake();
 
-        Coroutines.Start(HideRoutine());
+        Coroutines.Start(ReturnRoutine());
     }
 
-    private IEnumerator HideRoutine()
+    private IEnumerator ReturnRoutine()
     {
-        yield return new WaitForSeconds(_hideDelay);
+        yield return new WaitForSeconds(_hideDelayReturn);
 
         _firstCard.Hide();
         _firstCard.ActivateInteraction();
@@ -143,8 +160,16 @@ public class CardsOrchestrationModel
         _secondCard.Hide();
         _secondCard.ActivateInteraction();
 
-        _firstCard = null;
-        _secondCard = null;
-        _lockInput = false;
+        ResetState();
+    }
+
+    private IEnumerator HideRoutine()
+    {
+        yield return new WaitForSeconds(_hideDelayHide);
+
+        _firstCard.HideDestroy();
+        _secondCard.HideDestroy();
+
+        ResetState();
     }
 }

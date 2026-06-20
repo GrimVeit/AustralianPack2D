@@ -144,10 +144,22 @@ public class CardsGameSpawnerView : View
             card.SetAnchoredPosition(new Vector2(
                 start.x + x * (cell + spacingX),
                 start.y - y * (cell + spacingY)));
+            card.OnDestroy += DeleteCard;
             card.Initialize();
         }
 
         OnSpawnedCards?.Invoke(spawned);
+    }
+
+    private void DeleteCard(GameCard card)
+    {
+        card.OnDestroy -= DeleteCard;
+
+        OnDestroyCard?.Invoke(card);
+
+        card.Dispose();
+
+        card.Destroy();
     }
 
     private void Clear()
@@ -162,6 +174,7 @@ public class CardsGameSpawnerView : View
     #region Output
 
     public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards;
+    public event Action<IGameCard> OnDestroyCard;
 
     #endregion
 }

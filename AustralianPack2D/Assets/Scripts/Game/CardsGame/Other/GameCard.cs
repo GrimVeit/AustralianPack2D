@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +16,11 @@ public class GameCard : MonoBehaviour, IGameCard
     [SerializeField] private RectTransform rectTransformMiddle;
     [SerializeField] private RectTransform rectTransformCover;
     [SerializeField] private RectTransform rectTransformCard;
+    [SerializeField] private RectTransform rectTransformEffect;
     [SerializeField] private Image imageCard;
+
+    [Header("EFFECT")]
+    [SerializeField] private SkeletonGraphic skeletonEffect;
 
     [Header("Shake - Position")]
     [SerializeField] private float shakeDuration = 0.4f;
@@ -38,6 +41,8 @@ public class GameCard : MonoBehaviour, IGameCard
     private Quaternion _startParentRot;
 
     private Sequence sequenceShowHide;
+    private Sequence seq;
+    private Tween tweenScale;
 
     private Vector2 _direction = Vector2.right;
     private float _cardOffset;
@@ -54,12 +59,18 @@ public class GameCard : MonoBehaviour, IGameCard
         rectTransformCard.localPosition = _direction * _cardOffset;
         rectTransformCover.localPosition = Vector3.zero;
 
+        rectTransformEffect.Rotate(0, 0, UnityEngine.Random.Range(0, 360));
+
         buttonCard.onClick.AddListener(ChooseCard);
     }
 
     public void Dispose()
     {
         buttonCard.onClick.RemoveListener(ChooseCard);
+
+        sequenceShowHide?.Kill();
+        seq?.Kill();
+        tweenScale?.Kill();
     }
 
     private void RollDirection()
@@ -89,6 +100,7 @@ public class GameCard : MonoBehaviour, IGameCard
         rectTransformCard.sizeDelta = size;
         rectTransformMiddle.sizeDelta = size;
         rectTransformParent.sizeDelta = size;
+        rectTransformEffect.localScale = new Vector3(size.x / 300f, size.x / 300f, size.x / 300f);
 
         _cardOffset = size.x;
     }
@@ -96,6 +108,11 @@ public class GameCard : MonoBehaviour, IGameCard
     public void SetAnchoredPosition(Vector2 pos)
     {
         rectTransformParent.anchoredPosition = pos;
+    }
+
+    public void Effect()
+    {
+        skeletonEffect.AnimationState.SetAnimation(0, "win", false);
     }
 
     #region Input
@@ -118,7 +135,7 @@ public class GameCard : MonoBehaviour, IGameCard
         rectTransformMiddle.localScale = Vector3.one;
         rectTransformParent.SetAsLastSibling();
 
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
 
         seq.Join(rectTransformMiddle.DOScale(1.1f, 0.1f));
 
@@ -186,12 +203,30 @@ public class GameCard : MonoBehaviour, IGameCard
         });
     }
 
+    public void HideDestroy()
+    {
+        tweenScale?.Kill();
+
+        tweenScale = rectTransformParent.DOScale(0, 0.2f)
+            //.SetEase(Ease.OutBack)
+            .OnComplete(() => 
+            {
+                OnDestroy?.Invoke(this);
+            });
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
 
     #endregion
 
     #region Output
 
     public event Action<IGameCard> OnChooseCard;
+    public event Action<GameCard> OnDestroy;
 
     private void ChooseCard()
     {
@@ -213,5 +248,9 @@ public interface IGameCard
 
     public void Show();
     public void Hide();
+    public void HideDestroy();
+
+
     public void Shake();
+    public void Effect();
 }

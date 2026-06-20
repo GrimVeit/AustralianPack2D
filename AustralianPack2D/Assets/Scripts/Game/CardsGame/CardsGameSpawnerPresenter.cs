@@ -20,6 +20,12 @@ public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider, ICardsGameSp
         remove => _view.OnSpawnedCards -= value;
     }
 
+    public event Action<IGameCard> OnDestroyCard
+    {
+        add => _view.OnDestroyCard += value;
+        remove => _view.OnDestroyCard -= value;
+    }
+
     #endregion
 
     #region Input
@@ -36,5 +42,6 @@ public interface ICardsGameSpawnerProvider
 
 public interface ICardsGameSpawnerListener
 {
+    public event Action<IGameCard> OnDestroyCard;
     public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards;
 }
