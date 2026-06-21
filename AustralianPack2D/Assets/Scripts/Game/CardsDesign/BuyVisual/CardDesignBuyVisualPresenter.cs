@@ -33,10 +33,8 @@ public class CardDesignBuyVisualPresenter
     private void ActivateEvents()
     {
         _view.OnChoose += _model.ChooseDesign;
-        _view.OnBuy += _model.Buy;
+        _view.OnBuy += _model.BuyDesign;
 
-        _model.OnActivateBuy += _view.ActivateBuy;
-        _model.OnDeactivateBuy += _view.DeactivateBuy;
         _model.OnChoose += _view.Choose;
         _model.OnUnchoose += _view.Unchoose;
         _model.OnOpen += _view.Open;
@@ -48,10 +46,8 @@ public class CardDesignBuyVisualPresenter
     private void DeactivateEvents()
     {
         _view.OnChoose -= _model.ChooseDesign;
-        _view.OnBuy -= _model.Buy;
+        _view.OnBuy -= _model.BuyDesign;
 
-        _model.OnActivateBuy -= _view.ActivateBuy;
-        _model.OnDeactivateBuy -= _view.DeactivateBuy;
         _model.OnChoose -= _view.Choose;
         _model.OnUnchoose -= _view.Unchoose;
         _model.OnOpen -= _view.Open;

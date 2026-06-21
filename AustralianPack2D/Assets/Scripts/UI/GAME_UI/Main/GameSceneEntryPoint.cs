@@ -19,6 +19,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private PlayToolbarPresenter playToolbarPresenter;
 
+    private StoreCardDesignPresenter storeCardDesignPresenter;
     private StoreLevelPresenter storeLevelPresenter;
     private StoreGameCardsPresenter storeGameCardsPresenter;
     private CardsGameSpawnerPresenter cardsGameSpawnerPresenter;
@@ -48,13 +49,14 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         playToolbarPresenter = new PlayToolbarPresenter(new PlayToolbarModel(), viewContainer.GetView<PlayToolbarView>());
 
+        storeCardDesignPresenter = new StoreCardDesignPresenter(new StoreCardDesignModel());
         storeLevelPresenter = new StoreLevelPresenter(new StoreLevelModel(PlayerPrefsKeys.LEVEL_NUMBER));
         storeGameCardsPresenter = new StoreGameCardsPresenter(new StoreGameCardsModel(spritesGameCards));
         cardsGameSpawnerPresenter = new CardsGameSpawnerPresenter(viewContainer.GetView<CardsGameSpawnerView>());
         cardsOrchestrationPresenter = new CardsOrchestrationPresenter(new CardsOrchestrationModel(cardsGameSpawnerPresenter));
         gameScorePresenter = new GameScorePresenter(new GameScoreModel(cardsOrchestrationPresenter, storeLevelPresenter), viewContainer.GetView<GameScoreView>());
 
-        stateMachine = new StateMachine_Game(storeLevelPresenter, storeGameCardsPresenter, cardsGameSpawnerPresenter);
+        stateMachine = new StateMachine_Game(storeLevelPresenter, storeGameCardsPresenter, cardsGameSpawnerPresenter, storeCardDesignPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -72,6 +74,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         gameScorePresenter.Initialize();
         storeLevelPresenter.Initialize();
+        storeCardDesignPresenter.Initialize();
         cardsOrchestrationPresenter.Initialize();
         
         stateMachine.Initialize();
@@ -120,6 +123,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         gameScorePresenter?.Dispose();
         storeLevelPresenter?.Dispose();
+        storeCardDesignPresenter?.Dispose();
         cardsOrchestrationPresenter?.Dispose();
 
         stateMachine?.Dispose();

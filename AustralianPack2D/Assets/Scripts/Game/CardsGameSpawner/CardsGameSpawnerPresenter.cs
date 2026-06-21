@@ -30,14 +30,14 @@ public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider, ICardsGameSp
 
     #region Input
 
-    public void CreateGrid(GameLevel level, IReadOnlyList<CardDto> cardDtos) => _view.Spawn(level, cardDtos);
+    public void CreateGrid(GameLevel level, IReadOnlyList<CardDto> cardDtos, int design) => _view.Spawn(level, cardDtos, design);
 
     #endregion
 }
 
 public interface ICardsGameSpawnerProvider
 {
-    public void CreateGrid(GameLevel level, IReadOnlyList<CardDto> cardDtos);
+    public void CreateGrid(GameLevel level, IReadOnlyList<CardDto> cardDtos, int design);
 }
 
 public interface ICardsGameSpawnerListener

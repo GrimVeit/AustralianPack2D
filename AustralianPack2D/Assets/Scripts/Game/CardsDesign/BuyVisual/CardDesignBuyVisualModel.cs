@@ -12,7 +12,6 @@ public class CardDesignBuyVisualModel
     private readonly ISoundProvider _soundProvider;
 
     private int _currentDesignIndex = -1;
-    private int _currentPrice = 0;
 
     public CardDesignBuyVisualModel(IStoreCardDesignEventsProvider storeCardDesignEventsProvider, IStoreCardDesignProvider storeCardDesignProvider, IStoreCardDesignInfoProvider storeCardDesignInfoProvider, IMoneyProvider moneyProvider, ISoundProvider soundProvider)
     {
@@ -30,7 +29,9 @@ public class CardDesignBuyVisualModel
 
     public void Initialize()
     {
-        ChooseDesign(_storeCardDesignInfoProvider.GetCardDesignIndex(), _currentPrice, false);
+        Debug.Log(_storeCardDesignInfoProvider.CardDesignIndex);
+
+        ChooseDesign(_storeCardDesignInfoProvider.CardDesignIndex, false);
     }
 
     public void Dispose()
@@ -43,28 +44,21 @@ public class CardDesignBuyVisualModel
 
 
 
-    public void ChooseDesign(int id, int price, bool isSoundActivate = true)
+    public void ChooseDesign(int id, bool isSoundActivate = true)
     {
         if (_currentDesignIndex == id) return;
+
+        var dataDesign = _storeCardDesignInfoProvider.GetCardDesignData(id);
+
+        if (!dataDesign.IsOpen) return;
 
         OnUnchoose?.Invoke(_currentDesignIndex);
 
         _currentDesignIndex = id;
-        _currentPrice = price;
 
-        var dataDesign = _storeCardDesignInfoProvider.GetCardDesignData(_currentDesignIndex);
+        Debug.Log(_currentDesignIndex);
 
-        if (dataDesign.IsOpen)
-        {
-            if (!dataDesign.IsSelect)
-                _storeCardDesignProvider.SelectDesign(id);
-
-            OnDeactivateBuy?.Invoke();
-        }
-        else
-        {
-            OnActivateBuy?.Invoke();
-        }
+        if (!dataDesign.IsSelect) _storeCardDesignProvider.SelectDesign(id);
 
         if (isSoundActivate)
             _soundProvider.PlayOneShot("ChooseCardDesign");
@@ -73,19 +67,24 @@ public class CardDesignBuyVisualModel
         OnChoose?.Invoke(_currentDesignIndex);
     }
 
-    public void Buy()
+    public void BuyDesign(int id, int price)
     {
-        if (_moneyProvider.CanAfford(_currentPrice))
+        var dataDesign = _storeCardDesignInfoProvider.GetCardDesignData(id);
+        if (dataDesign.IsOpen) return;
+
+        if (_moneyProvider.CanAfford(price))
         {
             _soundProvider.PlayOneShot("Money");
 
-            _storeCardDesignProvider.OpenDesign(_currentDesignIndex, () => _storeCardDesignProvider.SelectDesign(_currentDesignIndex));
-            _moneyProvider.SendMoney(-_currentPrice);
+            _storeCardDesignProvider.OpenDesign(id, () => _storeCardDesignProvider.SelectDesign(id));
+            _moneyProvider.SendMoney(-price);
         }
         else
         {
             Debug.Log("NOT MONEY FOR BUY");
         }
+
+        ChooseDesign(id, false);
     }
 
     #region Output
@@ -97,9 +96,6 @@ public class CardDesignBuyVisualModel
 
     public event Action<int> OnChoose;
     public event Action<int> OnUnchoose;
-
-    public event Action OnActivateBuy;
-    public event Action OnDeactivateBuy;
 
     private void Open(int id)
     {

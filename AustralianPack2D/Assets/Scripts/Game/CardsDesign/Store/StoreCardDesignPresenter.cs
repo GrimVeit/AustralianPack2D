@@ -57,7 +57,7 @@ public class StoreCardDesignPresenter : IStoreCardDesignEventsProvider, IStoreCa
 
     public void SelectDesign(int id, Action OnComplete) => _model.SelectDesign(id, OnComplete);
 
-    public int GetCardDesignIndex() => _model.GetDesignIndex();
+    public int CardDesignIndex => _model.GetDesignIndex();
     public CardDesignData GetCardDesignData(int id) => _model.GetCardDesignData(id);
 
 
@@ -75,7 +75,7 @@ public interface IStoreCardDesignEventsProvider
 
 public interface IStoreCardDesignInfoProvider
 {
-    public int GetCardDesignIndex();
+    public int CardDesignIndex { get; }
     public CardDesignData GetCardDesignData(int id);
 }
 

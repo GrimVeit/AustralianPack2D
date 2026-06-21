@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CardsGameSpawnerView : View
 {
+    [Header("Design")]
+    [SerializeField] private List<Sprite> designs;
+
     [Header("Board")]
     public RectTransform board;
 
@@ -44,7 +47,7 @@ public class CardsGameSpawnerView : View
         }
     }
 
-    public void Spawn(GameLevel type, IReadOnlyList<CardDto> cardDtos)
+    public void Spawn(GameLevel type, IReadOnlyList<CardDto> cardDtos, int design)
     {
         Clear();
 
@@ -60,10 +63,10 @@ public class CardsGameSpawnerView : View
 
         fillFactor = config.fillFactor;
 
-        SpawnAuto(cardDtos);
+        SpawnAuto(cardDtos, design);
     }
 
-    private void SpawnAuto(IReadOnlyList<CardDto> cardDtos)
+    private void SpawnAuto(IReadOnlyList<CardDto> cardDtos, int design)
     {
         float width = board.rect.width;
         float height = board.rect.height;
@@ -139,7 +142,7 @@ public class CardsGameSpawnerView : View
             GameCard card = Instantiate(cardPrefab, board);
             spawned.Add(card);
 
-            card.SetData(cardDtos[i]);
+            card.SetData(cardDtos[i], designs[design]);
             card.SetSizeDelta(new Vector2(cell, cell));
             card.SetAnchoredPosition(new Vector2(
                 start.x + x * (cell + spacingX),

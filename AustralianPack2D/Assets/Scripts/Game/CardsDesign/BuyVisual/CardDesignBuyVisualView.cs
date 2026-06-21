@@ -13,46 +13,24 @@ public class CardDesignBuyVisualView : View
     [SerializeField] private float timeSelectDeselectCheck;
     [SerializeField] private float timeChooseUnchoose;
 
-    //[Header("Buy")]
-    //[SerializeField] private Button buttonBuy;
-    //[SerializeField] private UIEffect effectButtonBuy;
-
     public void Initialize()
     {
         for (int i = 0; i < designVisuals.Count; i++)
         {
-            designVisuals[i].OnChoose += Choose;
+            designVisuals[i].OnChoose += ChooseVisual;
+            designVisuals[i].OnBuy += BuyVisual;
+            designVisuals[i].Initialize();
         }
-
-        //effectButtonBuy.Initialize();
-
-        //buttonBuy.onClick.AddListener(Buy);
     }
 
     public void Dispose()
     {
         for (int i = 0; i < designVisuals.Count; i++)
         {
-            designVisuals[i].OnChoose -= Choose;
+            designVisuals[i].OnChoose -= ChooseVisual;
+            designVisuals[i].OnBuy -= BuyVisual;
+            designVisuals[i].Dispose();
         }
-
-        //effectButtonBuy.Dispose();
-
-        //buttonBuy.onClick.RemoveListener(Buy);
-    }
-
-    public void ActivateBuy()
-    {
-        //buttonBuy.enabled = true;
-
-        //effectButtonBuy.ActivateEffect();
-    }
-
-    public void DeactivateBuy()
-    {
-        //buttonBuy.enabled = false;
-
-        //effectButtonBuy.DeactivateEffect();
     }
 
     public void Open(int id)
@@ -140,17 +118,17 @@ public class CardDesignBuyVisualView : View
 
     #region Output
 
-    public event Action<int, int, bool> OnChoose;
-    public event Action OnBuy;
+    public event Action<int, bool> OnChoose;
+    public event Action<int, int> OnBuy;
 
-    private void Choose(int id, int price)
+    private void ChooseVisual(int id)
     {
-        OnChoose?.Invoke(id, price, true);
+        OnChoose?.Invoke(id, true);
     }
 
-    private void Buy()
+    private void BuyVisual(int id, int price)
     {
-        OnBuy?.Invoke();
+        OnBuy?.Invoke(id, price);
     }
 
     #endregion

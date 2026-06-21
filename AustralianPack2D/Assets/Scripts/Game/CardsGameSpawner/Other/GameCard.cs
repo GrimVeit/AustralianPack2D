@@ -18,6 +18,7 @@ public class GameCard : MonoBehaviour, IGameCard
     [SerializeField] private RectTransform rectTransformCard;
     [SerializeField] private RectTransform rectTransformEffect;
     [SerializeField] private Image imageCard;
+    [SerializeField] private Image imageCover;
 
     [Header("EFFECT")]
     [SerializeField] private SkeletonGraphic skeletonEffect;
@@ -87,9 +88,11 @@ public class GameCard : MonoBehaviour, IGameCard
             _direction = Vector2.down;
     }
 
-    public void SetData(CardDto cardDto)
+    public void SetData(CardDto cardDto, Sprite spriteCover)
     {
         imageCard.sprite = cardDto.Sprite;
+        imageCover.sprite = spriteCover;
+
         _idPair = cardDto.PairId;
         _idUnique = cardDto.UniqueId;
     }

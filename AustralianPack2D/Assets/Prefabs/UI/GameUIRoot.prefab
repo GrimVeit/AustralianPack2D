@@ -1321,6 +1321,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f7f11323646474a8bf2753f4262cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  designs:
+  - {fileID: 21300000, guid: 8cc504ccfc28f684e8c42850f0f7b5ff, type: 3}
+  - {fileID: 21300000, guid: f4e34b0053aad8540973711ff8708414, type: 3}
+  - {fileID: 21300000, guid: a0962cdfd33434c46a59f00e667001bf, type: 3}
+  - {fileID: 21300000, guid: 02de6f57d9403f2488cab612ef083284, type: 3}
+  - {fileID: 21300000, guid: 3dde8cd853baa1c4f8a10afb97012591, type: 3}
+  - {fileID: 21300000, guid: ce1aeedbd3f224b45b6344ad36d89aff, type: 3}
+  - {fileID: 21300000, guid: 4a9532053cd32bc49a027cde187ced8a, type: 3}
+  - {fileID: 21300000, guid: b1211c7372fb053488489fce2e294dca, type: 3}
+  - {fileID: 21300000, guid: 283aaf5311627924fa776e35b41b87d8, type: 3}
+  - {fileID: 21300000, guid: 8af9f63faecfe774881bb13477f774a0, type: 3}
+  - {fileID: 21300000, guid: f9e6035b1f858b8419c61c9bb46533dd, type: 3}
+  - {fileID: 21300000, guid: 9ed984d5adaadbb43951bfa7d2763ed3, type: 3}
+  - {fileID: 21300000, guid: a455a0024d9e6ee4d941c683a671f9d0, type: 3}
+  - {fileID: 21300000, guid: 0d437d088dbbe584498e0198e3f7203b, type: 3}
   board: {fileID: 3314833289830098025}
   cardPrefab: {fileID: 5662430930196222731, guid: 98aa0a50b1caddf4691b197f29042f69, type: 3}
   configs:

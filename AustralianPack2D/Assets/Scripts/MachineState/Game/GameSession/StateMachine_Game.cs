@@ -10,10 +10,11 @@ public class StateMachine_Game : IStateMachineProvider
     public StateMachine_Game
         (IStoreLevelInfo storeLevelInfo,
         IStoreGameCardsProvider storeGameCardsProvider,
-        ICardsGameSpawnerProvider cardsGameSpawnerProvider
+        ICardsGameSpawnerProvider cardsGameSpawnerProvider,
+        IStoreCardDesignInfoProvider storeCardDesignInfoProvider
         )
     {
-        states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider);
+        states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider);
     }
 
     public void Initialize()

@@ -22,17 +22,32 @@ public class CardDesignBuyVisual : MonoBehaviour, IPointerDownHandler, IPointerU
     [Header("Open/Close")]
     [SerializeField] private Transform transformShadow;
     [SerializeField] private Transform transformPrice;
+    [SerializeField] private Button buttonBuy;
+
+    public void Initialize()
+    {
+        buttonBuy.onClick.AddListener(Buy);
+    }
+
+    public void Dispose()
+    {
+        buttonBuy.onClick.RemoveListener(Buy);
+    }
 
     public void Open(float timeOpenCloseShadow, float timeOpenClosePrice)
     {
         transformShadow.DOScaleY(0, timeOpenCloseShadow);
         transformPrice.DOScale(0, timeOpenClosePrice);
+        buttonBuy.enabled = false;
+        buttonBuy.transform.DOScale(0, timeOpenClosePrice);
     }
 
     public void Close(float timeOpenCloseShadow, float timeOpenClosePrice)
     {
         transformShadow.DOScaleY(1, timeOpenCloseShadow);
         transformPrice.DOScale(1, timeOpenClosePrice);
+        buttonBuy.enabled = true;
+        buttonBuy.transform.DOScale(1, timeOpenClosePrice);
     }
 
     public void Select(float timeSelectDeselectCheck)
@@ -64,12 +79,18 @@ public class CardDesignBuyVisual : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        OnChoose?.Invoke(id, price);
+        OnChoose?.Invoke(id);
     }
 
     #region Output
 
-    public event Action<int, int> OnChoose;
+    public event Action<int> OnChoose;
+    public event Action<int, int> OnBuy;
+
+    private void Buy()
+    {
+        OnBuy?.Invoke(id, price);
+    }
 
     #endregion
 }

@@ -60,6 +60,7 @@ MonoBehaviour:
   rectTransformCard: {fileID: 86194048854976232}
   rectTransformEffect: {fileID: 3668481235161479998}
   imageCard: {fileID: 4195363181507908878}
+  imageCover: {fileID: 7044294886207983115}
   skeletonEffect: {fileID: 4302953625536587429}
   shakeDuration: 0.4
   shakeStrength: {x: 0.1, y: 0.15}

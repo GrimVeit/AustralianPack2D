@@ -9,13 +9,13 @@ public class BankDisplayView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMoney;
     [SerializeField] private Transform moneyDisplay;
 
-    private Vector3 defaultMoneyTableScale;
+    private Vector3 defaultMoneyTableScale = Vector3.one;
 
     private Tween tweenScale;
 
     public void Initialize()
     {
-        defaultMoneyTableScale = moneyDisplay.localScale;
+
     }
 
     public void AddMoney()
