@@ -30,6 +30,9 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private ShopHeaderPanel_Menu shopHeaderPanel;
     [SerializeField] private ShopMiddlePanel_Menu shopMiddlePanel;
 
+    [SerializeField] private ShopCoverTablePanel_Menu shopCoverTablePanel;
+    [SerializeField] private ShopCoverTableFooterPanel_Menu shopCoverTableFooterPanel;
+
     [Header("ALBUM")]
     [SerializeField] private AlbumHeaderPanel_Menu albumHeaderPanel;
     [SerializeField] private AlbumMiddlePanel_Menu albumChooseMiddlePanel;
@@ -62,6 +65,8 @@ public class UIMainMenuRoot : UIRoot
 
         shopHeaderPanel.Initialize();
         shopMiddlePanel.Initialize();
+        shopCoverTablePanel.Initialize();
+        shopCoverTableFooterPanel.Initialize();
 
         albumHeaderPanel.Initialize();
         albumChooseMiddlePanel.Initialize();
@@ -161,6 +166,8 @@ public class UIMainMenuRoot : UIRoot
 
         shopHeaderPanel.Dispose();
         shopMiddlePanel.Dispose();
+        shopCoverTablePanel.Dispose();
+        shopCoverTableFooterPanel.Dispose();
 
         albumHeaderPanel.Dispose();
         albumChooseMiddlePanel.Dispose();
@@ -418,6 +425,38 @@ public class UIMainMenuRoot : UIRoot
         if (!shopMiddlePanel.IsActive) return;
 
         CloseOtherPanel(shopMiddlePanel);
+    }
+
+
+
+    public void OpenShopCoverTablePanel()
+    {
+        if (shopCoverTablePanel.IsActive) return;
+
+        OpenOtherPanel(shopCoverTablePanel);
+    }
+
+    public void CloseShopCoverTablePanel()
+    {
+        if (!shopCoverTablePanel.IsActive) return;
+
+        CloseOtherPanel(shopCoverTablePanel);
+    }
+
+
+
+    public void OpenShopCoverTableFooterPanel()
+    {
+        if (shopCoverTableFooterPanel.IsActive) return;
+
+        OpenOtherPanel(shopCoverTableFooterPanel);
+    }
+
+    public void CloseShopCoverTableFooterPanel()
+    {
+        if (!shopCoverTableFooterPanel.IsActive) return;
+
+        CloseOtherPanel(shopCoverTableFooterPanel);
     }
 
     #endregion

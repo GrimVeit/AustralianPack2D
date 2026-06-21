@@ -21,6 +21,12 @@ public class MenuEntryPoint : MonoBehaviour
     private BookPagesPresenter bookPagesPresenter;
     private BookControlPresenter bookControlPresenter;
 
+    private BookCoverPagesPresenter bookCoverPagesPresenter;
+    private BookCoverControlPresenter bookCoverControlPresenter;
+
+    private StoreCardDesignPresenter storeCardDesignPresenter;
+    private CardDesignBuyVisualPresenter cardDesignBuyPresenter;
+
     private StateMachine_Menu stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -50,6 +56,12 @@ public class MenuEntryPoint : MonoBehaviour
         bookPagesPresenter = new BookPagesPresenter(new BookPagesModel(soundPresenter), viewContainer.GetView<BookPagesView>());
         bookControlPresenter = new BookControlPresenter(new BookControlModel(bookPagesPresenter, bookPagesPresenter), viewContainer.GetView<BookControlView>());
 
+        bookCoverPagesPresenter = new BookCoverPagesPresenter(new BookCoverPagesModel(soundPresenter), viewContainer.GetView<BookCoverPagesView>());
+        bookCoverControlPresenter = new BookCoverControlPresenter(new BookCoverControlModel(bookCoverPagesPresenter, bookCoverPagesPresenter), viewContainer.GetView<BookCoverControlView>());
+
+        storeCardDesignPresenter = new StoreCardDesignPresenter(new StoreCardDesignModel());
+        cardDesignBuyPresenter = new CardDesignBuyVisualPresenter(new CardDesignBuyVisualModel(storeCardDesignPresenter, storeCardDesignPresenter, storeCardDesignPresenter, bankPresenter, soundPresenter), viewContainer.GetView<CardDesignBuyVisualView>());
+
         stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -71,6 +83,12 @@ public class MenuEntryPoint : MonoBehaviour
         bookPagesPresenter.Initialize();
         bookControlPresenter.Initialize();
 
+        bookCoverPagesPresenter.Initialize();
+        bookCoverControlPresenter.Initialize();
+
+        cardDesignBuyPresenter.Initialize();
+        storeCardDesignPresenter.Initialize();
+
         stateMachine.Initialize();
     }
 
@@ -86,7 +104,7 @@ public class MenuEntryPoint : MonoBehaviour
             bookPagesPresenter.OpenSecondPage();
         }
 
-
+        //
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -166,6 +184,12 @@ public class MenuEntryPoint : MonoBehaviour
 
         bookPagesPresenter?.Dispose();
         bookControlPresenter?.Dispose();
+
+        bookCoverPagesPresenter?.Dispose();
+        bookCoverControlPresenter?.Dispose();
+
+        cardDesignBuyPresenter?.Dispose();
+        storeCardDesignPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

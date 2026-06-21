@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopState_Menu : IState
 {
     private readonly IStateMachineProvider _machineProvider;
-    private UIMainMenuRoot _sceneRoot;
+    private readonly UIMainMenuRoot _sceneRoot;
 
     public ShopState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot)
     {
@@ -18,6 +18,7 @@ public class ShopState_Menu : IState
         Debug.Log("<color=red>ACTIVATE STATE - SHOP / MENU</color>");
 
         _sceneRoot.OnClickToExit_ShopHeader += ChangeStateToMain;
+        _sceneRoot.OnClickToCover_ShopMiddle += ChangeStateToShopCover;
 
         _sceneRoot.OpenShopHeaderPanel();
         _sceneRoot.OpenShopMiddlePanel();
@@ -27,14 +28,21 @@ public class ShopState_Menu : IState
     public void ExitState()
     {
         _sceneRoot.OnClickToExit_ShopHeader -= ChangeStateToMain;
+        _sceneRoot.OnClickToCover_ShopMiddle -= ChangeStateToShopCover;
 
-        _sceneRoot.CloseShopHeaderPanel();
         _sceneRoot.CloseShopMiddlePanel();
-        _sceneRoot.CloseBackgroundPanel_Shop();
     }
 
     private void ChangeStateToMain()
     {
+        _sceneRoot.CloseShopHeaderPanel();
+        _sceneRoot.CloseBackgroundPanel_Shop();
+
         _machineProvider.EnterState(_machineProvider.GetState<MainState_Menu>());
+    }
+
+    private void ChangeStateToShopCover()
+    {
+        _machineProvider.EnterState(_machineProvider.GetState<ShopCoverState_Menu>());
     }
 }
