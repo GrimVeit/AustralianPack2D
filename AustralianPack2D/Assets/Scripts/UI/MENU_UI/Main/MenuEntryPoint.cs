@@ -14,6 +14,7 @@ public class MenuEntryPoint : MonoBehaviour
     private ParticleEffectPresenter particleEffectPresenter;
     private ParticleEffectMaterialPresenter particleEffectMaterialPresenter;
     private SoundPresenter soundPresenter;
+    private VolumeSettingsPresenter volumeSettingsPresenter;
 
     private StoreLevelPresenter storeLevelPresenter;
     private ChooseLevelVisualPresenter chooseLevelVisualPresenter;
@@ -41,6 +42,8 @@ public class MenuEntryPoint : MonoBehaviour
         soundPresenter = new SoundPresenter
             (new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS, PlayerPrefsKeys.KEY_VOLUME_SOUND, PlayerPrefsKeys.KEY_VOLUME_MUSIC),
             viewContainer.GetView<SoundView>());
+
+        volumeSettingsPresenter = new VolumeSettingsPresenter(new VolumeSettingsModel(soundPresenter), viewContainer.GetView<VolumeSettingsView>());
 
         particleEffectPresenter = new ParticleEffectPresenter
             (new ParticleEffectModel(),
@@ -70,6 +73,7 @@ public class MenuEntryPoint : MonoBehaviour
         ActivateEvents();
 
         soundPresenter.Initialize();
+        volumeSettingsPresenter.Initialize();
         particleEffectPresenter.Initialize();
         particleEffectMaterialPresenter.Initialize();
         particleEffectMaterialPresenter.Activate();
@@ -174,6 +178,7 @@ public class MenuEntryPoint : MonoBehaviour
         DeactivateEvents();
 
         soundPresenter?.Dispose();
+        volumeSettingsPresenter?.Dispose();
         sceneRoot?.Dispose();
         particleEffectPresenter?.Dispose();
         particleEffectMaterialPresenter?.Dispose();
