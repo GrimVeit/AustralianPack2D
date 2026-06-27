@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,84 +6,68 @@ using UnityEngine;
 
 public class StoreCardModel
 {
-    public event Action<Card> OnOpenCard;
+    public event Action<Card, bool> OnOpenCard;
     public event Action<Card> OnCloseCard;
 
     private readonly List<Card> _cards;
-    private readonly Dictionary<CardKey, CardSaveData> _save = new();
+    private readonly Dictionary<CardKey, Card> _cardsMap;
+    private readonly Dictionary<CardKey, bool> _save;
 
-    public string FilePath = Path.Combine(Application.persistentDataPath, "Cards.json");
-
+    private readonly string _filePath;
     private readonly System.Random _random = new();
 
     public StoreCardModel(CardPacksSO chipGroup)
     {
         _cards = new List<Card>();
+        _cardsMap = new Dictionary<CardKey, Card>();
+        _save = new Dictionary<CardKey, bool>();
 
-        // build runtime cards
+        _filePath = Path.Combine(Application.persistentDataPath, "Cards.json");
+
         foreach (var pack in chipGroup.CardPackSOs)
         {
             foreach (var card in pack.cards)
             {
-                _cards.Add(new Card(
+                var runtimeCard = new Card(
                     card.sprite,
                     card.page,
                     card.index,
                     pack.type
-                ));
+                );
+
+                _cards.Add(runtimeCard);
+                _cardsMap[runtimeCard.Key] = runtimeCard;
             }
         }
 
         Load();
     }
 
+    #region LOAD / SAVE
+
     private void Load()
     {
-        if (File.Exists(FilePath))
+        if (File.Exists(_filePath))
         {
-            var json = File.ReadAllText(FilePath);
+            var json = File.ReadAllText(_filePath);
             var wrapper = JsonUtility.FromJson<CardSaveWrapper>(json);
 
             foreach (var e in wrapper.Entries)
             {
                 var key = new CardKey(e.Type, e.Page, e.Index);
-
-                _save[key] = new CardSaveData
-                {
-                    IsOpen = e.IsOpen
-                };
+                _save[key] = e.IsOpen;
             }
         }
         else
         {
             foreach (var card in _cards)
             {
-                _save[card.Key] = new CardSaveData
-                {
-                    IsOpen = false
-                };
-            }
-
-            // стартовая карта открыта
-            if (_cards.Count > 0)
-            {
-                _save[_cards[0].Key].IsOpen = true;
+                _save[card.Key] = false;
             }
         }
     }
 
-    public void Initialize()
-    {
-        foreach (var card in _cards)
-        {
-            if (_save.TryGetValue(card.Key, out var data) && data.IsOpen)
-                OnOpenCard?.Invoke(card);
-            else
-                OnCloseCard?.Invoke(card);
-        }
-    }
-
-    public void Dispose()
+    public void Save()
     {
         var wrapper = new CardSaveWrapper();
 
@@ -95,13 +78,32 @@ public class StoreCardModel
                 Type = kvp.Key.Type,
                 Page = kvp.Key.Page,
                 Index = kvp.Key.Index,
-                IsOpen = kvp.Value.IsOpen
+                IsOpen = kvp.Value
             });
         }
 
         var json = JsonUtility.ToJson(wrapper);
-        File.WriteAllText(FilePath, json);
+        File.WriteAllText(_filePath, json);
     }
+
+    #endregion
+
+    #region INIT
+
+    public void Initialize()
+    {
+        foreach (var card in _cards)
+        {
+            bool isOpen = _save.TryGetValue(card.Key, out var state) && state;
+
+            if (isOpen)
+                OnOpenCard?.Invoke(card, false);
+            else
+                OnCloseCard?.Invoke(card);
+        }
+    }
+
+    #endregion
 
     #region INPUT
 
@@ -109,21 +111,26 @@ public class StoreCardModel
     {
         var key = new CardKey(type, page, index);
 
-        if (!_save.TryGetValue(key, out var data))
+        if (!_save.TryGetValue(key, out var isOpen))
         {
             Debug.LogError($"Card not found: {type} {page} {index}");
             return;
         }
 
-        if (data.IsOpen)
+        if (isOpen)
             return;
 
-        data.IsOpen = true;
+        _save[key] = true;
 
-        var card = GetCard(key);
-        if (card != null)
-            OnOpenCard?.Invoke(card);
+        if (_cardsMap.TryGetValue(key, out var card))
+        {
+            OnOpenCard?.Invoke(card, true);
+        }
     }
+
+    #endregion
+
+    #region RANDOM
 
     public Card GetRandomCard()
     {
@@ -135,39 +142,54 @@ public class StoreCardModel
 
     public List<Card> GetRandomCards(int count)
     {
-        var result = new List<Card>();
-
         if (_cards.Count == 0)
-            return result;
+            return new List<Card>();
+
+        var list = new List<Card>(_cards);
+
+        count = Mathf.Min(count, list.Count);
 
         for (int i = 0; i < count; i++)
         {
-            result.Add(GetRandomCard());
+            int r = _random.Next(i, list.Count);
+            (list[i], list[r]) = (list[r], list[i]);
         }
 
-        return result;
+        return list.Take(count).ToList();
     }
 
     #endregion
-
-    private Card GetCard(CardKey key)
-    {
-        return _cards.Find(c => c.Key.Equals(key));
-    }
 }
 
 [Serializable]
-public struct CardKey
+public readonly struct CardKey : IEquatable<CardKey>
 {
-    public CardType Type;
-    public int Page;
-    public int Index;
+    public readonly CardType Type;
+    public readonly int Page;
+    public readonly int Index;
 
     public CardKey(CardType type, int page, int index)
     {
         Type = type;
         Page = page;
         Index = index;
+    }
+
+    public readonly bool Equals(CardKey other)
+    {
+        return Type == other.Type &&
+               Page == other.Page &&
+               Index == other.Index;
+    }
+
+    public override readonly bool Equals(object obj)
+    {
+        return obj is CardKey other && Equals(other);
+    }
+
+    public override readonly int GetHashCode()
+    {
+        return HashCode.Combine(Type, Page, Index);
     }
 }
 
@@ -201,11 +223,5 @@ public class CardSaveEntry
     public CardType Type;
     public int Page;
     public int Index;
-    public bool IsOpen;
-}
-
-[Serializable]
-public class CardSaveData
-{
     public bool IsOpen;
 }

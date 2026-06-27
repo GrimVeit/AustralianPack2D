@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private CardPacksSO cards;
     [SerializeField] private UIMainMenuRoot menuRootPrefab;
 
     private UIMainMenuRoot sceneRoot;
@@ -27,6 +28,9 @@ public class MenuEntryPoint : MonoBehaviour
 
     private StoreCardDesignPresenter storeCardDesignPresenter;
     private CardDesignBuyVisualPresenter cardDesignBuyPresenter;
+
+    private StoreCardPresenter storeCardPresenter;
+    private CardVisualPresenter cardVisualPresenter;
 
     private StateMachine_Menu stateMachine;
 
@@ -65,6 +69,9 @@ public class MenuEntryPoint : MonoBehaviour
         storeCardDesignPresenter = new StoreCardDesignPresenter(new StoreCardDesignModel());
         cardDesignBuyPresenter = new CardDesignBuyVisualPresenter(new CardDesignBuyVisualModel(storeCardDesignPresenter, storeCardDesignPresenter, storeCardDesignPresenter, bankPresenter, soundPresenter), viewContainer.GetView<CardDesignBuyVisualView>());
 
+        storeCardPresenter = new StoreCardPresenter(new StoreCardModel(cards));
+        cardVisualPresenter = new CardVisualPresenter(new CardVisualModel(storeCardPresenter), viewContainer.GetView<CardVisualView>());
+
         stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -92,6 +99,9 @@ public class MenuEntryPoint : MonoBehaviour
 
         cardDesignBuyPresenter.Initialize();
         storeCardDesignPresenter.Initialize();
+
+        cardVisualPresenter.Initialize();
+        storeCardPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -195,6 +205,9 @@ public class MenuEntryPoint : MonoBehaviour
 
         cardDesignBuyPresenter?.Dispose();
         storeCardDesignPresenter?.Dispose();
+
+        cardVisualPresenter.Dispose();
+        storeCardPresenter.Dispose();
 
         stateMachine?.Dispose();
     }
