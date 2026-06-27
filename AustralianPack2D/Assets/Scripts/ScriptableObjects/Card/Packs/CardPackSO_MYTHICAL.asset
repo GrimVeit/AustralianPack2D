@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3547d22e9737f21469a73f23cdd1f5c1, type: 3}
+  m_Name: CardPackSO_MYTHICAL
+  m_EditorClassIdentifier: 
+  type: 4
+  cards:
+  - sprite: {fileID: 21300000, guid: 4b596136d00e811459d153177676e03f, type: 3}
+    page: 16
+    index: 0
+  - sprite: {fileID: 21300000, guid: e26206b941ad9284881418e31180a0b0, type: 3}
+    page: 16
+    index: 1
+  - sprite: {fileID: 21300000, guid: 6746b30891b49b74080c14e200dacb94, type: 3}
+    page: 16
+    index: 2
+  - sprite: {fileID: 21300000, guid: 81bcef4935df2b941944e23de6f76e20, type: 3}
+    page: 16
+    index: 3
+  - sprite: {fileID: 21300000, guid: bb68031ae23fb334a8c06a3f2622a076, type: 3}
+    page: 16
+    index: 4

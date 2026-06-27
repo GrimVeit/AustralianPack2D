@@ -108,41 +108,10 @@ public class MenuEntryPoint : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            bookPagesPresenter.OpenPastPage();
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightAlt))
-        {
-            bookPagesPresenter.OpenSecondPage();
-        }
-
-        //
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            bookPagesPresenter.OpenPage(CardType.Common);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            bookPagesPresenter.OpenPage(CardType.Uncommon);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            bookPagesPresenter.OpenPage(CardType.Rare);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            bookPagesPresenter.OpenPage(CardType.Epic);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            bookPagesPresenter.OpenPage(CardType.Mythical);
+            var card = storeCardPresenter.GetRandomCard();
+            storeCardPresenter.OpenCard(card.Type, card.Page, card.Index);
         }
     }
 

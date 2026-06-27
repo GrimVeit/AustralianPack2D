@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPackSOs:
   - {fileID: 11400000, guid: 707e30d87903cf540b700ceb7f14c13a, type: 2}
+  - {fileID: 11400000, guid: 218dae21680e7bc4c8cf59b68161ce2c, type: 2}
+  - {fileID: 11400000, guid: a5150ad6a2234ad47bbd0dcbb704e9ed, type: 2}
+  - {fileID: 11400000, guid: 6d9a58d3f99e2114ba303d0baeb4e2c2, type: 2}
+  - {fileID: 11400000, guid: 4a02e5acb8452ae4297a78978c4e6065, type: 2}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +15,8 @@ public class StoreCardModel
 
     private readonly string _filePath;
     private readonly System.Random _random = new();
+
+    private readonly string XOR_KEY = "eurghfuirehfisdfioerfywre73647898037uhgdg";
 
     public StoreCardModel(CardPacksSO chipGroup)
     {
@@ -47,23 +49,37 @@ public class StoreCardModel
 
     private void Load()
     {
-        if (File.Exists(_filePath))
+        if (!File.Exists(_filePath))
         {
-            var json = File.ReadAllText(_filePath);
+            CreateDefault();
+            return;
+        }
+
+        try
+        {
+            var encrypted = File.ReadAllText(_filePath);
+            var json = Xor(encrypted, XOR_KEY);
+
             var wrapper = JsonUtility.FromJson<CardSaveWrapper>(json);
+
+            if (wrapper?.Entries == null)
+            {
+                CreateDefault();
+                return;
+            }
 
             foreach (var e in wrapper.Entries)
             {
+                if (e == null) continue;
+
                 var key = new CardKey(e.Type, e.Page, e.Index);
                 _save[key] = e.IsOpen;
             }
         }
-        else
+        catch
         {
-            foreach (var card in _cards)
-            {
-                _save[card.Key] = false;
-            }
+            // любой мусор, битый JSON, обрезанный файл и т.д.
+            CreateDefault();
         }
     }
 
@@ -83,7 +99,32 @@ public class StoreCardModel
         }
 
         var json = JsonUtility.ToJson(wrapper);
-        File.WriteAllText(_filePath, json);
+
+        var encrypted = Xor(json, XOR_KEY);
+
+        File.WriteAllText(_filePath, encrypted);
+    }
+
+    private void CreateDefault()
+    {
+        _save.Clear();
+
+        foreach (var card in _cards)
+        {
+            _save[card.Key] = false;
+        }
+    }
+
+    private string Xor(string data, string key)
+    {
+        var result = new char[data.Length];
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            result[i] = (char)(data[i] ^ key[i % key.Length]);
+        }
+
+        return new string(result);
     }
 
     #endregion
@@ -117,8 +158,7 @@ public class StoreCardModel
             return;
         }
 
-        if (isOpen)
-            return;
+        if (isOpen) return;
 
         _save[key] = true;
 

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3547d22e9737f21469a73f23cdd1f5c1, type: 3}
+  m_Name: CardPackSO_EPIC
+  m_EditorClassIdentifier: 
+  type: 3
+  cards:
+  - sprite: {fileID: 21300000, guid: 7d5911c6400917e4ea66456a5236d1c7, type: 3}
+    page: 14
+    index: 0
+  - sprite: {fileID: 21300000, guid: 6d74b45052807874b9ad979a784f2560, type: 3}
+    page: 14
+    index: 1
+  - sprite: {fileID: 21300000, guid: ce826e25721ca4a47852d062a2c48506, type: 3}
+    page: 14
+    index: 2
+  - sprite: {fileID: 21300000, guid: 4dd1035a1ff4f5347b0a1163b0c6916d, type: 3}
+    page: 14
+    index: 3
+  - sprite: {fileID: 21300000, guid: a396399c55c6d21429e1242b86a771fd, type: 3}
+    page: 14
+    index: 4
+  - sprite: {fileID: 21300000, guid: 4bf052d9f58dbcf4e89ab2f4d56faadc, type: 3}
+    page: 14
+    index: 5
+  - sprite: {fileID: 21300000, guid: 030b3ba8c14ca5c4a96c5577e176457f, type: 3}
+    page: 14
+    index: 6
+  - sprite: {fileID: 21300000, guid: 9bfd63c66e3f6d84e8629207146ac42d, type: 3}
+    page: 14
+    index: 7
+  - sprite: {fileID: 21300000, guid: fc2ae0dc05a006c47b7a3a98596c5011, type: 3}
+    page: 14
+    index: 8
+  - sprite: {fileID: 21300000, guid: 1d5537983dd590a4691b118855090a07, type: 3}
+    page: 15
+    index: 0
