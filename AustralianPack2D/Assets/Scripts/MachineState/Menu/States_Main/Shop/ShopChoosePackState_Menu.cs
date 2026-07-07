@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopCoverState_Menu : IState
+public class ShopChoosePackState_Menu : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly UIMainMenuRoot _sceneRoot;
 
-    public ShopCoverState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot)
+    public ShopChoosePackState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
@@ -17,16 +17,14 @@ public class ShopCoverState_Menu : IState
     {
         _sceneRoot.OnClickToExit_ShopHeader += ChangeStateToShop;
 
-        _sceneRoot.OpenShopCoverTablePanel();
-        _sceneRoot.OpenShopCoverTableFooterPanel();
+        _sceneRoot.OpenShopChoosePackPanel();
     }
 
     public void ExitState()
     {
         _sceneRoot.OnClickToExit_ShopHeader -= ChangeStateToShop;
 
-        _sceneRoot.CloseShopCoverTablePanel();
-        _sceneRoot.CloseShopCoverTableFooterPanel();
+        _sceneRoot.CloseShopChoosePackPanel();
     }
 
     private void ChangeStateToShop()

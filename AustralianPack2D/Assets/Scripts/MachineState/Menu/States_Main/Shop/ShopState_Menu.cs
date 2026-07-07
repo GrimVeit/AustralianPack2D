@@ -19,6 +19,7 @@ public class ShopState_Menu : IState
 
         _sceneRoot.OnClickToExit_ShopHeader += ChangeStateToMain;
         _sceneRoot.OnClickToCover_ShopMiddle += ChangeStateToShopCover;
+        _sceneRoot.OnClickToCardPack_ShopMiddle += ChangeStateToShopChoosePack;
 
         _sceneRoot.OpenShopHeaderPanel();
         _sceneRoot.OpenShopMiddlePanel();
@@ -29,6 +30,7 @@ public class ShopState_Menu : IState
     {
         _sceneRoot.OnClickToExit_ShopHeader -= ChangeStateToMain;
         _sceneRoot.OnClickToCover_ShopMiddle -= ChangeStateToShopCover;
+        _sceneRoot.OnClickToCardPack_ShopMiddle -= ChangeStateToShopChoosePack;
 
         _sceneRoot.CloseShopMiddlePanel();
     }
@@ -41,8 +43,14 @@ public class ShopState_Menu : IState
         _machineProvider.EnterState(_machineProvider.GetState<MainState_Menu>());
     }
 
+
     private void ChangeStateToShopCover()
     {
         _machineProvider.EnterState(_machineProvider.GetState<ShopCoverState_Menu>());
+    }
+
+    private void ChangeStateToShopChoosePack()
+    {
+        _machineProvider.EnterState(_machineProvider.GetState<ShopChoosePackState_Menu>());
     }
 }

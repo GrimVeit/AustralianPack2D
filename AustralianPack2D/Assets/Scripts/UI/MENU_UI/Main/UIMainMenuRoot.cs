@@ -33,6 +33,8 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private ShopCoverTablePanel_Menu shopCoverTablePanel;
     [SerializeField] private ShopCoverTableFooterPanel_Menu shopCoverTableFooterPanel;
 
+    [SerializeField] private ShopChoosePackPanel_Menu shopChoosePackPanel;
+
     [Header("ALBUM")]
     [SerializeField] private AlbumHeaderPanel_Menu albumHeaderPanel;
     [SerializeField] private AlbumMiddlePanel_Menu albumChooseMiddlePanel;
@@ -68,6 +70,8 @@ public class UIMainMenuRoot : UIRoot
         shopCoverTablePanel.Initialize();
         shopCoverTableFooterPanel.Initialize();
 
+        shopChoosePackPanel.Initialize();
+
         albumHeaderPanel.Initialize();
         albumChooseMiddlePanel.Initialize();
         albumTablePanel.Initialize();
@@ -97,6 +101,8 @@ public class UIMainMenuRoot : UIRoot
         shopHeaderPanel.OnClickBack += ClickToExit_ShopHeader;
         shopMiddlePanel.OnClickCover += ClickToCover_ShopMiddle;
         shopMiddlePanel.OnClickCardPack += ClickToCardPack_ShopMiddle;
+        shopChoosePackPanel.OnClickStandard += ClickToStandard_ShopChoosePack;
+        shopChoosePackPanel.OnClickPriority += ClickToPriority_ShopChoosePack;
 
 
 
@@ -135,6 +141,8 @@ public class UIMainMenuRoot : UIRoot
         shopHeaderPanel.OnClickBack -= ClickToExit_ShopHeader;
         shopMiddlePanel.OnClickCover -= ClickToCover_ShopMiddle;
         shopMiddlePanel.OnClickCardPack -= ClickToCardPack_ShopMiddle;
+        shopChoosePackPanel.OnClickStandard -= ClickToStandard_ShopChoosePack;
+        shopChoosePackPanel.OnClickPriority -= ClickToPriority_ShopChoosePack;
 
 
         albumHeaderPanel.OnClickBack -= ClickToExit_AlbumHeader;
@@ -168,6 +176,8 @@ public class UIMainMenuRoot : UIRoot
         shopMiddlePanel.Dispose();
         shopCoverTablePanel.Dispose();
         shopCoverTableFooterPanel.Dispose();
+
+        shopChoosePackPanel.Dispose();
 
         albumHeaderPanel.Dispose();
         albumChooseMiddlePanel.Dispose();
@@ -459,6 +469,23 @@ public class UIMainMenuRoot : UIRoot
         CloseOtherPanel(shopCoverTableFooterPanel);
     }
 
+
+
+
+    public void OpenShopChoosePackPanel()
+    {
+        if (shopChoosePackPanel.IsActive) return;
+
+        OpenOtherPanel(shopChoosePackPanel);
+    }
+
+    public void CloseShopChoosePackPanel()
+    {
+        if (!shopChoosePackPanel.IsActive) return;
+
+        CloseOtherPanel(shopChoosePackPanel);
+    }
+
     #endregion
 
     #region ALBUM
@@ -622,12 +649,15 @@ public class UIMainMenuRoot : UIRoot
 
     #endregion
 
-    #region LEVEL
+    #region SHOP
 
     public event Action OnClickToExit_ShopHeader;
 
     public event Action OnClickToCover_ShopMiddle;
     public event Action OnClickToCardPack_ShopMiddle;
+
+    public event Action OnClickToStandard_ShopChoosePack;
+    public event Action OnClickToPriority_ShopChoosePack;
 
     private void ClickToExit_ShopHeader()
     {
@@ -642,6 +672,17 @@ public class UIMainMenuRoot : UIRoot
     private void ClickToCardPack_ShopMiddle()
     {
         OnClickToCardPack_ShopMiddle?.Invoke();
+    }
+
+
+    private void ClickToStandard_ShopChoosePack()
+    {
+        OnClickToStandard_ShopChoosePack?.Invoke();
+    }
+
+    private void ClickToPriority_ShopChoosePack()
+    {
+        OnClickToPriority_ShopChoosePack?.Invoke();
     }
 
     #endregion

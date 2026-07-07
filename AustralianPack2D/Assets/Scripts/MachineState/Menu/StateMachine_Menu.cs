@@ -17,6 +17,7 @@ public class StateMachine_Menu : IStateMachineProvider
 
         states[typeof(ShopState_Menu)] = new ShopState_Menu(this, sceneRoot);
         states[typeof(ShopCoverState_Menu)] = new ShopCoverState_Menu(this, sceneRoot);
+        states[typeof(ShopChoosePackState_Menu)] = new ShopChoosePackState_Menu(this, sceneRoot);
 
         states[typeof(AlbumState_Menu)] = new AlbumState_Menu(this, sceneRoot, bookPageProvider);
         states[typeof(AlbumTableState_Menu)] = new AlbumTableState_Menu(this, sceneRoot);
