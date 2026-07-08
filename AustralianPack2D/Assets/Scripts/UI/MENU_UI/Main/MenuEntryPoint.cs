@@ -32,6 +32,11 @@ public class MenuEntryPoint : MonoBehaviour
     private StoreCardPresenter storeCardPresenter;
     private CardVisualPresenter cardVisualPresenter;
 
+    private CardBoxBuyPresenter cardBoxBuyPresenter;
+    private CardBoxBuyVisualPresenter cardBoxBuyVisualPresenter;
+    private CardBoxPresenter cardBoxPresenter;
+
+
     private StateMachine_Menu stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -72,7 +77,11 @@ public class MenuEntryPoint : MonoBehaviour
         storeCardPresenter = new StoreCardPresenter(new StoreCardModel(cards));
         cardVisualPresenter = new CardVisualPresenter(new CardVisualModel(storeCardPresenter), viewContainer.GetView<CardVisualView>());
 
-        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter);
+        cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel(bankPresenter));
+        cardBoxBuyVisualPresenter = new CardBoxBuyVisualPresenter(new CardBoxBuyVisualModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxBuyVisualView>());
+        cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
+
+        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -102,6 +111,10 @@ public class MenuEntryPoint : MonoBehaviour
 
         cardVisualPresenter.Initialize();
         storeCardPresenter.Initialize();
+
+        cardBoxPresenter.Initialize();
+        cardBoxBuyVisualPresenter.Initialize();
+        cardBoxBuyPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -177,6 +190,10 @@ public class MenuEntryPoint : MonoBehaviour
 
         cardVisualPresenter.Dispose();
         storeCardPresenter.Dispose();
+
+        cardBoxPresenter.Dispose();
+        cardBoxBuyVisualPresenter.Dispose();
+        cardBoxBuyPresenter.Dispose();
 
         stateMachine?.Dispose();
     }

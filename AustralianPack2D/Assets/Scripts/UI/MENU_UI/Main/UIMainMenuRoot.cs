@@ -34,6 +34,7 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private ShopCoverTableFooterPanel_Menu shopCoverTableFooterPanel;
 
     [SerializeField] private ShopChoosePackPanel_Menu shopChoosePackPanel;
+    [SerializeField] private ShopOpenPackPanel_Menu shopOpenPackPanel;
 
     [Header("ALBUM")]
     [SerializeField] private AlbumHeaderPanel_Menu albumHeaderPanel;
@@ -71,6 +72,7 @@ public class UIMainMenuRoot : UIRoot
         shopCoverTableFooterPanel.Initialize();
 
         shopChoosePackPanel.Initialize();
+        shopOpenPackPanel.Initialize();
 
         albumHeaderPanel.Initialize();
         albumChooseMiddlePanel.Initialize();
@@ -178,6 +180,7 @@ public class UIMainMenuRoot : UIRoot
         shopCoverTableFooterPanel.Dispose();
 
         shopChoosePackPanel.Dispose();
+        shopOpenPackPanel.Dispose();
 
         albumHeaderPanel.Dispose();
         albumChooseMiddlePanel.Dispose();
@@ -484,6 +487,21 @@ public class UIMainMenuRoot : UIRoot
         if (!shopChoosePackPanel.IsActive) return;
 
         CloseOtherPanel(shopChoosePackPanel);
+    }
+
+
+    public void OpenShopOpenPackPanel()
+    {
+        if (shopOpenPackPanel.IsActive) return;
+
+        OpenOtherPanel(shopOpenPackPanel);
+    }
+
+    public void CloseShopOpenPackPanel()
+    {
+        if (!shopOpenPackPanel.IsActive) return;
+
+        CloseOtherPanel(shopOpenPackPanel);
     }
 
     #endregion

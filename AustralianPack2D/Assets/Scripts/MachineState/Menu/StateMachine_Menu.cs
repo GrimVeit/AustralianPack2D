@@ -9,7 +9,12 @@ public class StateMachine_Menu : IStateMachineProvider
 
     private IState _currentState;
 
-    public StateMachine_Menu(UIMainMenuRoot sceneRoot, IBookPageProvider bookPageProvider)
+    public StateMachine_Menu(
+        UIMainMenuRoot sceneRoot, 
+        IBookPageProvider bookPageProvider,
+        ICardBoxProvider cardBoxProvider,
+        ICardBoxListener cardBoxListener,
+        ICardBoxBuyVisualListener cardBoxBuyVisualListener)
     {
         states[typeof(MainState_Menu)] = new MainState_Menu(this, sceneRoot);
         states[typeof(LevelState_Menu)] = new LevelState_Menu(this, sceneRoot);
@@ -17,7 +22,8 @@ public class StateMachine_Menu : IStateMachineProvider
 
         states[typeof(ShopState_Menu)] = new ShopState_Menu(this, sceneRoot);
         states[typeof(ShopCoverState_Menu)] = new ShopCoverState_Menu(this, sceneRoot);
-        states[typeof(ShopChoosePackState_Menu)] = new ShopChoosePackState_Menu(this, sceneRoot);
+        states[typeof(ShopChoosePackState_Menu)] = new ShopChoosePackState_Menu(this, sceneRoot, cardBoxBuyVisualListener);
+        states[typeof(ShopOpenPackState_Menu)] = new ShopOpenPackState_Menu(this, sceneRoot, cardBoxProvider, cardBoxListener);
 
         states[typeof(AlbumState_Menu)] = new AlbumState_Menu(this, sceneRoot, bookPageProvider);
         states[typeof(AlbumTableState_Menu)] = new AlbumTableState_Menu(this, sceneRoot);

@@ -5,21 +5,39 @@ using UnityEngine;
 
 public class CardBoxPresenter : ICardBoxProvider, ICardBoxListener
 {
+    private readonly CardBoxModel _model;
     private readonly CardBoxView _view;
 
-    public CardBoxPresenter(CardBoxView view)
+    public CardBoxPresenter(CardBoxModel model, CardBoxView view)
     {
+        _model = model;
         _view = view;
     }
 
     public void Initialize()
     {
+        ActivateEvents();
+
         _view.Initialize();
+        _model.Initialize();
     }
 
     public void Dispose()
     {
+        DeactivateEvents();
+
         _view.Dispose();
+        _model.Dispose();
+    }
+
+    private void ActivateEvents()
+    {
+        _model.OnSetSkin += _view.SetSkin;
+    }
+
+    private void DeactivateEvents()
+    {
+        _model.OnSetSkin -= _view.SetSkin;
     }
 
     #region Output
@@ -34,7 +52,7 @@ public class CardBoxPresenter : ICardBoxProvider, ICardBoxListener
 
     #region Input
 
-    public void Show() => _view.Show();
+    public void Show(float time) => _view.Show(time);
 
     public void Hide() => _view.Hide();
 
@@ -51,6 +69,6 @@ public interface ICardBoxListener
 public interface ICardBoxProvider
 {
     public void ActivateOpen();
-    public void Show();
+    public void Show(float time);
     public void Hide();
 }
