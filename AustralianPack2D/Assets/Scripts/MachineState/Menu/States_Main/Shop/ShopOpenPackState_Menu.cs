@@ -60,7 +60,7 @@ public class ShopOpenPackState_Menu : IState
 
         yield return new WaitForSeconds(2);
 
-        ChangeStateToShopChoosePack();
+        //ChangeStateToShopChoosePack();
     }
 
     private void Return()
