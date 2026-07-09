@@ -148,6 +148,13 @@ public class StoreCardModel
 
     #region INPUT
 
+    public bool IsCardOwned(Card card)
+    {
+        if (card == null) return false;
+
+        return _save.TryGetValue(card.Key, out bool isOpen) && isOpen;
+    }
+
     public void OpenCard(CardType type, int page, int index)
     {
         var key = new CardKey(type, page, index);
@@ -180,22 +187,49 @@ public class StoreCardModel
         return _cards[_random.Next(_cards.Count)];
     }
 
+    public Card GetRandomCard(CardType type)
+    {
+        var cards = _cards
+            .Where(card => card.Type == type)
+            .ToList();
+
+        if (cards.Count == 0)
+            return null;
+
+        return cards[_random.Next(cards.Count)];
+    }
+
     public List<Card> GetRandomCards(int count)
     {
-        if (_cards.Count == 0)
-            return new List<Card>();
+        var result = new List<Card>();
 
-        var list = new List<Card>(_cards);
-
-        count = Mathf.Min(count, list.Count);
+        if (_cards.Count == 0) return result;
 
         for (int i = 0; i < count; i++)
         {
-            int r = _random.Next(i, list.Count);
-            (list[i], list[r]) = (list[r], list[i]);
+            int index = _random.Next(0, _cards.Count);
+            result.Add(_cards[index]);
         }
 
-        return list.Take(count).ToList();
+        return result;
+    }
+
+    public List<Card> GetRandomCards(CardType type, int count)
+    {
+        var result = new List<Card>();
+
+        var cards = _cards
+            .Where(card => card.Type == type)
+            .ToList();
+
+        if (cards.Count == 0) return result;
+
+        for (int i = 0; i < count; i++)
+        {
+            result.Add(cards[_random.Next(cards.Count)]);
+        }
+
+        return result;
     }
 
     #endregion

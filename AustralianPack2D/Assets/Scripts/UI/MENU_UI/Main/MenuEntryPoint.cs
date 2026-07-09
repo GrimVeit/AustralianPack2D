@@ -34,7 +34,9 @@ public class MenuEntryPoint : MonoBehaviour
 
     private CardBoxBuyPresenter cardBoxBuyPresenter;
     private CardBoxBuyVisualPresenter cardBoxBuyVisualPresenter;
+    private CardsBoxPseudoPresenter cardsBoxPseudoPresenter;
     private CardBoxPresenter cardBoxPresenter;
+    private CardPresentationPresenter cardPresentationPresenter;
 
 
     private StateMachine_Menu stateMachine;
@@ -79,9 +81,11 @@ public class MenuEntryPoint : MonoBehaviour
 
         cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel(bankPresenter));
         cardBoxBuyVisualPresenter = new CardBoxBuyVisualPresenter(new CardBoxBuyVisualModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxBuyVisualView>());
+        cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
+        cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
 
-        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter);
+        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, cardPresentationPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -112,8 +116,10 @@ public class MenuEntryPoint : MonoBehaviour
         cardVisualPresenter.Initialize();
         storeCardPresenter.Initialize();
 
+        cardPresentationPresenter.Initialize();
         cardBoxPresenter.Initialize();
         cardBoxBuyVisualPresenter.Initialize();
+        cardsBoxPseudoPresenter.Initialize();
         cardBoxBuyPresenter.Initialize();
 
         stateMachine.Initialize();
@@ -191,8 +197,10 @@ public class MenuEntryPoint : MonoBehaviour
         cardVisualPresenter.Dispose();
         storeCardPresenter.Dispose();
 
+        cardPresentationPresenter.Dispose();
         cardBoxPresenter.Dispose();
         cardBoxBuyVisualPresenter.Dispose();
+        cardsBoxPseudoPresenter.Dispose();
         cardBoxBuyPresenter.Dispose();
 
         stateMachine?.Dispose();

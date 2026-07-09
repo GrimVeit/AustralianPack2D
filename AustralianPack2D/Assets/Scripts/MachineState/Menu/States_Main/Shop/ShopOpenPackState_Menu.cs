@@ -6,19 +6,30 @@ public class ShopOpenPackState_Menu : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly UIMainMenuRoot _sceneRoot;
+
     private readonly ICardBoxProvider _cardBoxProvider;
     private readonly ICardBoxListener _cardBoxListener;
 
-    private bool _isReturn;
+    private readonly ICardsBoxPseudoProvider _cardsBoxPseudoProvider;
+    private readonly ICardsBoxPseudoListener _cardsBoxPseudoListener;
+
+    private readonly ICardPresentationProvider _cardPresentationProvider;
+
+    private bool _isOpenPack = false;
+    private bool _isEndMovePseudo = false;
+    private bool _isEndRotatePseudo = false;
 
     private IEnumerator timer;
 
-    public ShopOpenPackState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot, ICardBoxProvider cardBoxProvider, ICardBoxListener cardBoxListener)
+    public ShopOpenPackState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot, ICardBoxProvider cardBoxProvider, ICardBoxListener cardBoxListener, ICardsBoxPseudoProvider cardsBoxPseudoProvider, ICardsBoxPseudoListener cardsBoxPseudoListener, ICardPresentationProvider cardPresentationProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
         _cardBoxProvider = cardBoxProvider;
         _cardBoxListener = cardBoxListener;
+        _cardsBoxPseudoProvider = cardsBoxPseudoProvider;
+        _cardsBoxPseudoListener = cardsBoxPseudoListener;
+        _cardPresentationProvider = cardPresentationProvider;
     }
 
     public void EnterState()
@@ -27,12 +38,17 @@ public class ShopOpenPackState_Menu : IState
 
         if (timer != null) Coroutines.Stop(timer);
 
-        _cardBoxListener.OnEndOpen += Return;
+        _cardBoxListener.OnEndOpen += ReturnOpen;
+        _cardsBoxPseudoListener.OnEndMove += ReturnEndMovePseudo;
+        _cardsBoxPseudoListener.OnEndRotate += ReturnEndRotatePseudo;
 
         _sceneRoot.CloseShopHeaderPanel();
         _sceneRoot.OpenShopOpenPackPanel();
+        _sceneRoot.OpenBackgroundPanel_Green();
 
-        _isReturn = false;
+        _isOpenPack = false;
+        _isEndMovePseudo = false;
+        _isEndRotatePseudo = false;
 
         timer = Timer();
         Coroutines.Start(timer);
@@ -42,9 +58,9 @@ public class ShopOpenPackState_Menu : IState
     {
         if (timer != null) Coroutines.Stop(timer);
 
-        _cardBoxListener.OnEndOpen -= Return;
-
-        _sceneRoot.CloseShopOpenPackPanel();
+        _cardBoxListener.OnEndOpen -= ReturnOpen;
+        _cardsBoxPseudoListener.OnEndMove -= ReturnEndMovePseudo;
+        _cardsBoxPseudoListener.OnEndRotate -= ReturnEndRotatePseudo;
     }
 
     private IEnumerator Timer()
@@ -56,23 +72,49 @@ public class ShopOpenPackState_Menu : IState
 
         _cardBoxProvider.ActivateOpen();
 
-        yield return new WaitUntil(() => _isReturn);
+        yield return new WaitUntil(() => _isOpenPack);
 
-        yield return new WaitForSeconds(2);
+        _cardBoxProvider.Hide();
+        _cardsBoxPseudoProvider.Show();
 
-        //ChangeStateToShopChoosePack();
+        _cardsBoxPseudoProvider.MoveToShow(1);
+
+        yield return new WaitUntil(() => _isEndMovePseudo);
+
+        _cardsBoxPseudoProvider.ShowRotate(0.5f);
+
+        yield return new WaitUntil(() => _isEndRotatePseudo);
+
+        _cardsBoxPseudoProvider.Hide();
+
+        _cardPresentationProvider.Show(0.5f);
+
+        yield return new WaitForSeconds(1f);
+
+        _cardPresentationProvider.ShowDuplicates();
+
+        yield return new WaitForSeconds(2f);
+
+        ChangeStateToShopChoosePack();
     }
 
-    private void Return()
+    private void ReturnOpen()
     {
-        _isReturn = true;
+        _isOpenPack = true;
+    }
+
+    private void ReturnEndMovePseudo()
+    {
+        _isEndMovePseudo = true;
+    }
+
+    private void ReturnEndRotatePseudo()
+    {
+        _isEndRotatePseudo = true;
     }
 
     private void ChangeStateToShopChoosePack()
     {
-        _cardBoxProvider.Hide();
-        _sceneRoot.OpenShopHeaderPanel();
-
-        _machineProvider.EnterState(_machineProvider.GetState<ShopChoosePackState_Menu>());
+        _machineProvider.EnterState(_machineProvider.GetState<ShopCardsPresentationState_Menu>());
     }
 }

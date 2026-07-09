@@ -73,7 +73,7 @@ public class CardsBoxPseudoView : View
         for (int i = 0; i < cardsItem.Count; i++)
         {
             cardsItem[i].MoveTo(transformsPoses[i], time);
-            cardsItem[i].SizeTo(sizeStart, time);
+            cardsItem[i].SizeTo(sizeEnd, time);
         }
     }
 

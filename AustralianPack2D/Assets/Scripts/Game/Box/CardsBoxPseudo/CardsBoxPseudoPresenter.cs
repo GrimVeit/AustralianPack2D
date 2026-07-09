@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardsBoxPseudoPresenter : ICardsBoxPseudoListener
+public class CardsBoxPseudoPresenter : ICardsBoxPseudoListener, ICardsBoxPseudoProvider
 {
     private readonly CardsBoxPseudoModel _model;
     private readonly CardsBoxPseudoView _view;

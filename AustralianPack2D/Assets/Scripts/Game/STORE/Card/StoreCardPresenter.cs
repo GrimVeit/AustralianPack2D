@@ -41,18 +41,28 @@ public class StoreCardPresenter : IStoreCardProvider, IStoreCardListener
     #region Input
 
     public void Save() => _model.Save();
+
+
+    public bool IsCardOwned(Card card) => _model.IsCardOwned(card);
     public void OpenCard(CardType type, int page, int index) => _model.OpenCard(type, page, index);
+
     public Card GetRandomCard() => _model.GetRandomCard();
+    public Card GetRandomCard(CardType type) => _model.GetRandomCard(type);
+
     public List<Card> GetRandomCards(int count) => _model.GetRandomCards(count);
+    public List<Card> GetRandomCards(CardType type, int count) => _model.GetRandomCards(type, count);
 
     #endregion
 }
 
 public interface IStoreCardProvider
 {
+    public bool IsCardOwned(Card card);
     public void OpenCard(CardType type, int page, int index);
     public Card GetRandomCard();
+    public Card GetRandomCard(CardType type);
     public List<Card> GetRandomCards(int count);
+    public List<Card> GetRandomCards(CardType type, int count);
 }
 
 public interface IStoreCardListener
