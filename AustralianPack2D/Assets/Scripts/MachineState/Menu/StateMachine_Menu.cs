@@ -19,7 +19,8 @@ public class StateMachine_Menu : IStateMachineProvider
         ICardsBoxPseudoListener cardsBoxPseudoListener,
         ICardsBoxPseudoProvider cardsBoxPseudoProvider,
         
-        ICardPresentationProvider cardPresentationProvider)
+        ICardPresentationProvider cardPresentationProvider,
+        ICardPresentationListener cardPresentationListener)
     {
         states[typeof(MainState_Menu)] = new MainState_Menu(this, sceneRoot);
         states[typeof(LevelState_Menu)] = new LevelState_Menu(this, sceneRoot);
@@ -29,7 +30,8 @@ public class StateMachine_Menu : IStateMachineProvider
         states[typeof(ShopCoverState_Menu)] = new ShopCoverState_Menu(this, sceneRoot);
         states[typeof(ShopChoosePackState_Menu)] = new ShopChoosePackState_Menu(this, sceneRoot, cardBoxBuyVisualListener);
         states[typeof(ShopOpenPackState_Menu)] = new ShopOpenPackState_Menu(this, sceneRoot, cardBoxProvider, cardBoxListener, cardsBoxPseudoProvider, cardsBoxPseudoListener, cardPresentationProvider);
-        states[typeof(ShopCardsPresentationState_Menu)] = new ShopCardsPresentationState_Menu(this, sceneRoot, cardPresentationProvider);
+        states[typeof(ShopCardsPresentationState_Menu)] = new ShopCardsPresentationState_Menu(this, sceneRoot, cardPresentationProvider, cardPresentationListener);
+        states[typeof(ShopCardPresentationState_Menu)] = new ShopCardPresentationState_Menu(this, sceneRoot);
 
         states[typeof(AlbumState_Menu)] = new AlbumState_Menu(this, sceneRoot, bookPageProvider);
         states[typeof(AlbumTableState_Menu)] = new AlbumTableState_Menu(this, sceneRoot);

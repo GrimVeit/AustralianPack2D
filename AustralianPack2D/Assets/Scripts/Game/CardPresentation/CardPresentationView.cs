@@ -8,8 +8,12 @@ using UnityEngine.UI;
 
 public class CardPresentationView : View
 {
+    [Header("CARDS")]
     [SerializeField] private List<CardPresentationUnit> cardPresentationUnits = new();
     [SerializeField] private Color colorDuplicate;
+
+    [Header("PRESENTATION")]
+    [SerializeField] private Image imageCardPresentation;
 
     public void Initialize()
     {
@@ -28,6 +32,17 @@ public class CardPresentationView : View
             cardPresentationUnits[i].Dispose();
         }
     }
+
+    #region CARD PRESENTATION
+
+    public void CardPresentation(Sprite sprite)
+    {
+        imageCardPresentation.sprite = sprite;
+    }
+
+    #endregion
+
+    #region CARDS
 
     public void SetCards(List<CardOpenResult> cards)
     {
@@ -60,6 +75,8 @@ public class CardPresentationView : View
             cardPresentationUnits[i].ShowDuplicate(colorDuplicate);
         }
     }
+
+    #endregion
 
     #region Output
 

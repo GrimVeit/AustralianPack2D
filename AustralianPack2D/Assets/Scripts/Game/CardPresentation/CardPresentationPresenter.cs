@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardPresentationPresenter : ICardPresentationProvider
+public class CardPresentationPresenter : ICardPresentationProvider, ICardPresentationListener
 {
     private readonly CardPresentationModel _model;
     private readonly CardPresentationView _view;
@@ -31,13 +32,32 @@ public class CardPresentationPresenter : ICardPresentationProvider
 
     private void ActivateEvents()
     {
+        _view.OnClickCard += _model.ClickCard;
+
+        _model.OnClickCard += ClickCard;
         _model.OnBuyCards += _view.SetCards;
     }
 
     private void DeactivateEvents()
     {
+        _view.OnClickCard -= _model.ClickCard;
+
+        _model.OnClickCard -= ClickCard;
         _model.OnBuyCards -= _view.SetCards;
     }
+
+    private void ClickCard(CardOpenResult card)
+    {
+        _view.CardPresentation(card.Card.Sprite);
+
+        OnClickCard?.Invoke();
+    }
+
+    #region Output
+
+    public event Action OnClickCard;
+
+    #endregion
 
     #region Input
 
@@ -53,4 +73,9 @@ public interface ICardPresentationProvider
     public void Show(float time);
     public void Hide();
     public void ShowDuplicates();
+}
+
+public interface ICardPresentationListener
+{
+    public event Action OnClickCard;
 }

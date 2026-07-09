@@ -7,12 +7,14 @@ public class ShopCardsPresentationState_Menu : IState
     private readonly IStateMachineProvider _stateMachineProvider;
     private readonly UIMainMenuRoot _sceneRoot;
     private readonly ICardPresentationProvider _cardPresentationProvider;
+    private readonly ICardPresentationListener _cardPresentationListener;
 
-    public ShopCardsPresentationState_Menu(IStateMachineProvider stateMachineProvider, UIMainMenuRoot sceneRoot, ICardPresentationProvider cardPresentationProvider)
+    public ShopCardsPresentationState_Menu(IStateMachineProvider stateMachineProvider, UIMainMenuRoot sceneRoot, ICardPresentationProvider cardPresentationProvider, ICardPresentationListener cardPresentationListener)
     {
         _stateMachineProvider = stateMachineProvider;
         _sceneRoot = sceneRoot;
         _cardPresentationProvider = cardPresentationProvider;
+        _cardPresentationListener = cardPresentationListener;
     }
 
     public void EnterState()
@@ -21,8 +23,10 @@ public class ShopCardsPresentationState_Menu : IState
 
         _sceneRoot.OnClickToExit_ShopHeader += ChangeStateToChoosePack;
         _sceneRoot.OnClickToAlbum_ShopOpenPackFooter += ChangeStateToAlbum;
+        _cardPresentationListener.OnClickCard += ChangeStateToCardPresentation;
 
         _sceneRoot.OpenShopHeaderPanel();
+        _sceneRoot.OpenShopOpenPackPanel();
         _sceneRoot.OpenShopOpenFooterPackPanel();
     }
 
@@ -30,15 +34,15 @@ public class ShopCardsPresentationState_Menu : IState
     {
         _sceneRoot.OnClickToExit_ShopHeader -= ChangeStateToChoosePack;
         _sceneRoot.OnClickToAlbum_ShopOpenPackFooter -= ChangeStateToAlbum;
+        _cardPresentationListener.OnClickCard -= ChangeStateToCardPresentation;
 
         _sceneRoot.CloseShopOpenFooterPackPanel();
+        _sceneRoot.CloseShopOpenPackPanel();
     }
 
     private void ChangeStateToAlbum()
     {
         _sceneRoot.CloseShopHeaderPanel();
-        _sceneRoot.CloseBackgroundPanel_Green();
-        _sceneRoot.CloseShopOpenPackPanel();
         _sceneRoot.CloseBackgroundPanel_Green();
         _cardPresentationProvider.Hide();
 
@@ -48,10 +52,15 @@ public class ShopCardsPresentationState_Menu : IState
     private void ChangeStateToChoosePack()
     {
         _sceneRoot.CloseBackgroundPanel_Green();
-        _sceneRoot.CloseShopOpenPackPanel();
-        _sceneRoot.CloseBackgroundPanel_Green();
         _cardPresentationProvider.Hide();
 
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ShopChoosePackState_Menu>());
+    }
+
+    private void ChangeStateToCardPresentation()
+    {
+        _sceneRoot.CloseShopHeaderPanel();
+
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ShopCardPresentationState_Menu>());
     }
 }

@@ -85,7 +85,7 @@ public class MenuEntryPoint : MonoBehaviour
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
         cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
 
-        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, cardPresentationPresenter);
+        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, cardPresentationPresenter, cardPresentationPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();

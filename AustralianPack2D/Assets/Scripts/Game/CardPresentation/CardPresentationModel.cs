@@ -25,6 +25,11 @@ public class CardPresentationModel
         _cardBoxBuyListener.OnSendBox -= SendBox;
     }
 
+    public void ClickCard(CardOpenResult cardOpen)
+    {
+        OnClickCard?.Invoke(cardOpen);
+    }
+
     private void SendBox(CardBoxType boxType)
     {
         var cardTypes = HelperCardBoxType.GetCards(boxType, 5);
@@ -57,6 +62,8 @@ public class CardPresentationModel
     #region Output
 
     public event Action<List<CardOpenResult>> OnBuyCards;
+
+    public event Action<CardOpenResult> OnClickCard;
 
     #endregion
 }
