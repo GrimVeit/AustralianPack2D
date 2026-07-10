@@ -1,6 +1,6 @@
 using System;
 
-public class CardsOrchestrationPresenter : ICardsOrchectrationListener
+public class CardsOrchestrationPresenter : ICardsOrchectrationListener, ICardsOrchectrationProvider
 {
     private readonly CardsOrchestrationModel _model;
 
@@ -34,10 +34,28 @@ public class CardsOrchestrationPresenter : ICardsOrchectrationListener
     }
 
     #endregion
+
+    #region Input
+
+    public void ActivateInteractive() => _model.ActivateInteractive();
+    public void DeactivateInteractive() => _model.DeactivateInteractive();
+    public void ShowCards() => _model.ShowCards();
+    public void HideCards() => _model.HideCards();
+
+    #endregion
 }
 
 public interface ICardsOrchectrationListener
 {
     public event Action OnAddMove;
     public event Action OnAddMatch;
+}
+
+public interface ICardsOrchectrationProvider
+{
+    public void ActivateInteractive();
+    public void DeactivateInteractive();
+
+    public void ShowCards();
+    public void HideCards();
 }

@@ -1,38 +1,36 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class CardsTypePanel_Game : MovePanel
+public class MainFooterPanel_Game : MovePanel
 {
-    [SerializeField] private UIEffectCombination combination;
+    [SerializeField] private UIEffectCombination effectCombination;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        combination.Initialize();
+        effectCombination.Initialize();
     }
 
     public override void Dispose()
     {
         base.Dispose();
 
-        combination.Dispose();
+        effectCombination.Dispose();
     }
 
     public override void ActivatePanel()
     {
         base.ActivatePanel();
 
-        combination.ActivateEffect();
+        effectCombination.ActivateEffect();
     }
 
     public override void DeactivatePanel()
     {
         base.DeactivatePanel();
 
-        combination.DeactivateEffect();
+        effectCombination.DeactivateEffect();
     }
 }

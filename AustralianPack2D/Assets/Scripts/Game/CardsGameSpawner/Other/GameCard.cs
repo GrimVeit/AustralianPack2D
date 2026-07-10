@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,8 +49,13 @@ public class GameCard : MonoBehaviour, IGameCard
     private Vector2 _direction = Vector2.right;
     private float _cardOffset;
 
+    private TrackEntry trackEntry;
+
     public void Initialize()
     {
+        trackEntry = skeletonEffect.AnimationState.SetAnimation(0, "win", false);
+        trackEntry.TimeScale = 0;
+
         _startParentPos = rectTransformParent.localPosition;
         _startParentRot = rectTransformParent.localRotation;
 
@@ -115,7 +121,7 @@ public class GameCard : MonoBehaviour, IGameCard
 
     public void Effect()
     {
-        skeletonEffect.AnimationState.SetAnimation(0, "win", false);
+        trackEntry.TimeScale = 1;
     }
 
     #region Input

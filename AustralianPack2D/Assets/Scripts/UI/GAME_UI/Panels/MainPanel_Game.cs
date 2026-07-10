@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainPanel_Game : MovePanel
 {
@@ -25,17 +22,14 @@ public class MainPanel_Game : MovePanel
 
     public override void ActivatePanel()
     {
-        panel.SetActive(true);
-        isActive = true;
-        CanvasGroupAlpha(canvasGroup, 0, 1, time);
+        base.ActivatePanel();
 
         effectCombination.ActivateEffect();
     }
 
     public override void DeactivatePanel()
     {
-        isActive = false;
-        CanvasGroupAlpha(canvasGroup, 1, 0, time, () => { panel.SetActive(false); });
+        base.DeactivatePanel();
 
         effectCombination.DeactivateEffect();
     }

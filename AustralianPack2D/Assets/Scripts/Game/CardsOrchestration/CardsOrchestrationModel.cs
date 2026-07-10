@@ -14,6 +14,7 @@ public class CardsOrchestrationModel
     private IGameCard _secondCard;
 
     private bool _lockInput;
+    private bool _isActive = true;
 
     private readonly float _compareDelay = 0.4f;
     private readonly float _hideDelayReturn = 0.3f;
@@ -38,6 +39,30 @@ public class CardsOrchestrationModel
         }
 
         UnsubscribeCards();
+    }
+
+    public void ActivateInteractive()
+    {
+        _isActive = true;
+    }
+
+    public void DeactivateInteractive()
+    {
+        _isActive = false;
+    }
+
+    public void ShowCards()
+    {
+        if (_cards == null) return;
+
+        _cards.ForEach(c => c.Show());
+    }
+
+    public void HideCards()
+    {
+        if (_cards == null) return;
+
+        _cards.ForEach(c => c.Hide());
     }
 
     private void OnCardsSpawned(IReadOnlyList<IGameCard> cards)
@@ -83,8 +108,9 @@ public class CardsOrchestrationModel
 
     private void OnCardChosen(IGameCard card)
     {
-        if (_lockInput)
-            return;
+        if (!_isActive) return;
+
+        if (_lockInput) return;
 
         if (_firstCard == null)
         {

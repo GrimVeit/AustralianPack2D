@@ -23,6 +23,7 @@ public class GameScoreModel
         _levelInfo = levelInfo;
 
         _config = HelperLevelScoreBalance.GetConfig(_levelInfo.GameLevel);
+        Debug.Log($"Level - {_levelInfo.GameLevel}");
 
         _flow.OnAddMove += OnMove;
         _flow.OnAddMatch += OnMatch;
@@ -58,6 +59,8 @@ public class GameScoreModel
     private void OnMatch()
     {
         _matches += 1;
+
+        Debug.Log($"MATCHES - {_matches}, TOTAL - {_config.TotalPairs}");
 
         if (_matches >= _config.TotalPairs)
         {

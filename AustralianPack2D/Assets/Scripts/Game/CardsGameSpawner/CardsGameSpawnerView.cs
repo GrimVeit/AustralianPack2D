@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CardsGameSpawnerView : View
@@ -29,24 +30,6 @@ public class CardsGameSpawnerView : View
 
     private readonly List<GameCard> spawned = new();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            spawned[0].Shake();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            spawned[0].Show();
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightAlt))
-        {
-            spawned[0].Hide();
-        }
-    }
-
     public void Spawn(GameLevel type, IReadOnlyList<CardDto> cardDtos, int design)
     {
         Clear();
@@ -63,10 +46,20 @@ public class CardsGameSpawnerView : View
 
         fillFactor = config.fillFactor;
 
-        SpawnAuto(cardDtos, design);
+        Coroutines.Start(SpawnAuto(cardDtos, design));
     }
 
-    private void SpawnAuto(IReadOnlyList<CardDto> cardDtos, int design)
+    public void Show()
+    {
+        spawned.ForEach(c => c.Show());
+    }
+
+    public void Hide()
+    {
+        spawned.ForEach(c => c.Hide());
+    }
+
+    private IEnumerator SpawnAuto(IReadOnlyList<CardDto> cardDtos, int design)
     {
         float width = board.rect.width;
         float height = board.rect.height;
@@ -149,9 +142,14 @@ public class CardsGameSpawnerView : View
                 start.y - y * (cell + spacingY)));
             card.OnDestroy += DeleteCard;
             card.Initialize();
+            card.transform.localScale = Vector3.zero;
+            card.transform.DOScale(1, 0.05f);
+
+            yield return new WaitForSeconds(0.05f);
         }
 
         OnSpawnedCards?.Invoke(spawned);
+        OnCreateGrid?.Invoke();
     }
 
     private void DeleteCard(GameCard card)
@@ -178,6 +176,7 @@ public class CardsGameSpawnerView : View
 
     public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards;
     public event Action<IGameCard> OnDestroyCard;
+    public event Action OnCreateGrid;
 
     #endregion
 }

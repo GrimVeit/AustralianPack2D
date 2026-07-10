@@ -14,6 +14,12 @@ public class CardsGameSpawnerPresenter : ICardsGameSpawnerProvider, ICardsGameSp
 
     #region Output
 
+    public event Action OnCreateGrid
+    {
+        add => _view.OnCreateGrid += value;
+        remove => _view.OnCreateGrid -= value;
+    }
+
     public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards
     {
         add => _view.OnSpawnedCards += value;
@@ -42,6 +48,7 @@ public interface ICardsGameSpawnerProvider
 
 public interface ICardsGameSpawnerListener
 {
+    public event Action OnCreateGrid;
     public event Action<IGameCard> OnDestroyCard;
     public event Action<IReadOnlyList<IGameCard>> OnSpawnedCards;
 }

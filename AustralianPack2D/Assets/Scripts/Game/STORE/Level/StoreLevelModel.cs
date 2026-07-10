@@ -16,12 +16,12 @@ public class StoreLevelModel
     public StoreLevelModel(string healthKey)
     {
         LEVEL_NUMBER_KEY = healthKey;
+
+        _currentGameLevel = LoadLevel();
     }
 
     public void Initialize()
     {
-        _currentGameLevel = LoadLevel();
-
         OnChangeLevel?.Invoke(_currentGameLevel);
     }
 

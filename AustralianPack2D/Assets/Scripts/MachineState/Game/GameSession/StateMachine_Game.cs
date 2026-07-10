@@ -14,7 +14,8 @@ public class StateMachine_Game : IStateMachineProvider
         IStoreCardDesignInfoProvider storeCardDesignInfoProvider
         )
     {
-        states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider);
+        //states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider);
+        //states[typeof(MemoryState_Game)] = new MemoryState_Game(this);
     }
 
     public void Initialize()
