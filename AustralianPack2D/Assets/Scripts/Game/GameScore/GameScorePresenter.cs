@@ -17,6 +17,7 @@ public class GameScorePresenter
     {
         ActivateEvents();
 
+        _view.Initialize();
         _model.Initialize();
     }
 
@@ -24,16 +25,17 @@ public class GameScorePresenter
     {
         DeactivateEvents();
 
+        _view.Dispose();
         _model.Dispose();
     }
 
     private void ActivateEvents()
     {
-        _model.OnAddMoves += _view.SetMove;
+        _model.OnChangeMoves += _view.SetMove;
     }
 
     private void DeactivateEvents()
     {
-        _model.OnAddMoves -= _view.SetMove;
+        _model.OnChangeMoves -= _view.SetMove;
     }
 }

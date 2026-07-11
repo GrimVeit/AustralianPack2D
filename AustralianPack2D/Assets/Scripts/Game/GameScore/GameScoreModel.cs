@@ -1,21 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameScoreModel
 {
+    public CardBoxType CardBoxType => _cardBoxType;
+
     public bool IsGoodResult;
 
     private readonly ICardsOrchectrationListener _flow;
     private readonly IStoreLevelInfo _levelInfo;
 
-    private int _moves;
+    private int _moves = 0;
     private int _matches;
 
-    private LevelScoreConfig _config;
+    private readonly LevelScoreConfig _config;
 
-    private bool _isGoodResult;
+    private CardBoxType _cardBoxType;
 
     public GameScoreModel(ICardsOrchectrationListener flow, IStoreLevelInfo levelInfo)
     {
@@ -27,11 +27,13 @@ public class GameScoreModel
 
         _flow.OnAddMove += OnMove;
         _flow.OnAddMatch += OnMatch;
+
+        _cardBoxType = _config.StartGift;
     }
 
     public void Initialize()
     {
-
+        OnChangeMoves?.Invoke(_moves, _cardBoxType);
     }
 
     public void Dispose()
@@ -44,16 +46,44 @@ public class GameScoreModel
     {
         _moves += 1;
 
-        _isGoodResult = _moves <= _config.GoodMoveThreshold;
+        switch (_config.StartGift)
+        {
+            case CardBoxType.None:
+                _cardBoxType = CardBoxType.None;
+                break;
+            case CardBoxType.Standard:
 
-        if (_isGoodResult)
-        {
-            OnAddMoves?.Invoke(_moves, true);
+                if (_moves >= 0 && _moves <= _config.StandardMoveThreshold)
+                {
+                    _cardBoxType = CardBoxType.Standard;
+                }
+                else
+                {
+                    _cardBoxType = CardBoxType.None;
+                }
+
+                break;
+            case CardBoxType.Priority:
+
+                if (_moves >= 0 && _moves <= _config.PriorityMoveThreshold)
+                {
+                    _cardBoxType = CardBoxType.Priority;
+                }
+                else if (_moves > _config.PriorityMoveThreshold && _moves <= _config.StandardMoveThreshold)
+                {
+                    _cardBoxType = CardBoxType.Standard;
+                }
+                else
+                {
+                    _cardBoxType = CardBoxType.None;
+                }
+
+                break;
+            default:
+                break;
         }
-        else
-        {
-            OnAddMoves?.Invoke(_moves, false);
-        }
+
+        OnChangeMoves.Invoke(_moves, _cardBoxType);
     }
 
     private void OnMatch()
@@ -75,7 +105,7 @@ public class GameScoreModel
 
     #region Output
 
-    public event Action<int, bool> OnAddMoves;
+    public event Action<int, CardBoxType> OnChangeMoves;
 
     #endregion
 }

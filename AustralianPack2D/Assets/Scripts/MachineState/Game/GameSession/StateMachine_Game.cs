@@ -11,11 +11,15 @@ public class StateMachine_Game : IStateMachineProvider
         (IStoreLevelInfo storeLevelInfo,
         IStoreGameCardsProvider storeGameCardsProvider,
         ICardsGameSpawnerProvider cardsGameSpawnerProvider,
-        IStoreCardDesignInfoProvider storeCardDesignInfoProvider
+        IStoreCardDesignInfoProvider storeCardDesignInfoProvider,
+        ICardsGameSpawnerListener cardsGameSpawnerListener,
+        UIGameRoot sceneRoot,
+        ICardsOrchectrationProvider cardsOrchectrationProvider
         )
     {
-        //states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider);
-        //states[typeof(MemoryState_Game)] = new MemoryState_Game(this);
+        states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider, cardsGameSpawnerListener, sceneRoot);
+        states[typeof(MemoryState_Game)] = new MemoryState_Game(this, sceneRoot, storeLevelInfo, cardsOrchectrationProvider);
+        states[typeof(PlayState_Game)] = new PlayState_Game(this, sceneRoot, cardsOrchectrationProvider);
     }
 
     public void Initialize()

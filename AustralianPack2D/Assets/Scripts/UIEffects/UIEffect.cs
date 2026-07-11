@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class UIEffect : MonoBehaviour
 {
     public bool IsActive => isActive;
-    private protected bool isActive;
+    private protected bool isActive = false;
 
     public virtual void Initialize() { }
     public virtual void Dispose() { }

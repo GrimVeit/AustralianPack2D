@@ -56,7 +56,14 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsOrchestrationPresenter = new CardsOrchestrationPresenter(new CardsOrchestrationModel(cardsGameSpawnerPresenter));
         gameScorePresenter = new GameScorePresenter(new GameScoreModel(cardsOrchestrationPresenter, storeLevelPresenter), viewContainer.GetView<GameScoreView>());
 
-        stateMachine = new StateMachine_Game(storeLevelPresenter, storeGameCardsPresenter, cardsGameSpawnerPresenter, storeCardDesignPresenter);
+        stateMachine = new StateMachine_Game(
+            storeLevelPresenter, 
+            storeGameCardsPresenter, 
+            cardsGameSpawnerPresenter, 
+            storeCardDesignPresenter,
+            cardsGameSpawnerPresenter,
+            sceneRoot,
+            cardsOrchestrationPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();

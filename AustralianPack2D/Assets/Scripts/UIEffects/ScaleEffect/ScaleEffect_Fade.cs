@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-public class ScaleEffect_Fade : ScaleEffect
+public class ScaleEffect_Fade : UIEffect
 {
     [SerializeField] private float duration;
     [SerializeField] private Transform scaleElement;

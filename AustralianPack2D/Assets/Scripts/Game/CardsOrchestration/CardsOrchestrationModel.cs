@@ -14,7 +14,7 @@ public class CardsOrchestrationModel
     private IGameCard _secondCard;
 
     private bool _lockInput;
-    private bool _isActive = true;
+    private bool _isActive = false;
 
     private readonly float _compareDelay = 0.4f;
     private readonly float _hideDelayReturn = 0.3f;
