@@ -14,17 +14,24 @@ public class StateMachine_Game : IStateMachineProvider
         IStoreCardDesignInfoProvider storeCardDesignInfoProvider,
         ICardsGameSpawnerListener cardsGameSpawnerListener,
         UIGameRoot sceneRoot,
-        ICardsOrchectrationProvider cardsOrchectrationProvider
+        ICardsOrchectrationProvider cardsOrchectrationProvider,
+        IVideoProvider videoProvider,
+        ISoundProvider soundProvider,
+        IGameScoreListener gameScoreListener
         )
     {
+        states[typeof(StartHoldOnState_Game)] = new StartHoldOnState_Game(this);
         states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider, cardsGameSpawnerListener, sceneRoot);
         states[typeof(MemoryState_Game)] = new MemoryState_Game(this, sceneRoot, storeLevelInfo, cardsOrchectrationProvider);
-        states[typeof(PlayState_Game)] = new PlayState_Game(this, sceneRoot, cardsOrchectrationProvider);
+        states[typeof(PlayState_Game)] = new PlayState_Game(this, sceneRoot, cardsOrchectrationProvider, gameScoreListener);
+
+        states[typeof(StartWinState_Game)] = new StartWinState_Game(this, videoProvider, sceneRoot, soundProvider);
+        states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);
     }
 
     public void Initialize()
     {
-        EnterState(GetState<StartState_Game>());
+        EnterState(GetState<StartHoldOnState_Game>());
     }
 
     public void Dispose()

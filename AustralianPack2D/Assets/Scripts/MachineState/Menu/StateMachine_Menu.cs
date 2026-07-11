@@ -22,6 +22,7 @@ public class StateMachine_Menu : IStateMachineProvider
         ICardPresentationProvider cardPresentationProvider,
         ICardPresentationListener cardPresentationListener)
     {
+        states[typeof(StartHoldOnState_Menu)] = new StartHoldOnState_Menu(this);
         states[typeof(MainState_Menu)] = new MainState_Menu(this, sceneRoot);
         states[typeof(LevelState_Menu)] = new LevelState_Menu(this, sceneRoot);
         states[typeof(SettingsState_Menu)] = new SettingsState_Menu(this, sceneRoot);
@@ -39,7 +40,7 @@ public class StateMachine_Menu : IStateMachineProvider
 
     public void Initialize()
     {
-        EnterState(GetState<MainState_Menu>());
+        EnterState(GetState<StartHoldOnState_Menu>());
     }
 
     public void Dispose()

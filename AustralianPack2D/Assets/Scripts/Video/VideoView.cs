@@ -25,11 +25,18 @@ public class VideoView : View
             return;
         }
 
-        videoPlay.Image.texture = videoPlay.Texture;
+        var vp = videoPlay.VideoPlayer;
 
-        videoPlay.VideoPlayer.time = 0;
-        videoPlay.VideoPlayer.Prepare();
+        videoPlay.Image.texture = videoPlay.Texture;
+        videoPlay.Image.enabled = false;
+
+        vp.Stop();
+        vp.frame = 0;
+        vp.time = 0;
+
+        vp.Prepare();
     }
+
 
     public void Play(string id, Action onComplete = null)
     {
@@ -41,27 +48,82 @@ public class VideoView : View
             return;
         }
 
-        StartCoroutine(WaitForVideoEndByFrame(videoPlay.VideoPlayer, onComplete));
+        var vp = videoPlay.VideoPlayer;
 
-        videoPlay.VideoPlayer.frame = 1;
-        videoPlay.VideoPlayer.Play();
+        videoPlay.Image.texture = videoPlay.Texture;
+        videoPlay.Image.enabled = false;
 
-        void OnVideoEnd(VideoPlayer vp)
+        vp.Stop();
+        vp.frame = 0;
+        vp.time = 0;
+
+        vp.loopPointReached -= OnVideoEnd;
+        vp.loopPointReached += OnVideoEnd;
+
+
+        void OnVideoEnd(VideoPlayer player)
         {
-            vp.loopPointReached -= OnVideoEnd;
+            player.loopPointReached -= OnVideoEnd;
             onComplete?.Invoke();
         }
 
-        IEnumerator WaitForVideoEndByFrame(VideoPlayer vp, Action onCompleteCallback)
+
+        if (vp.isPrepared)
         {
-            while (!vp.isPrepared)
-                yield return null;
-
-            while (vp.frame < (long)vp.frameCount - 1)
-                yield return null;
-
-            onCompleteCallback?.Invoke();
+            StartVideo();
         }
+        else
+        {
+            vp.prepareCompleted += OnPrepared;
+            vp.Prepare();
+        }
+
+
+        void OnPrepared(VideoPlayer player)
+        {
+            player.prepareCompleted -= OnPrepared;
+            StartVideo();
+        }
+
+
+        void StartVideo()
+        {
+            StartCoroutine(StartRoutine());
+        }
+
+
+        IEnumerator StartRoutine()
+        {
+            vp.frame = 0;
+
+            // Рендерим первый кадр
+            vp.Play();
+
+            yield return null;
+
+            vp.Pause();
+
+            yield return null;
+
+            // Теперь texture содержит первый кадр
+            videoPlay.Image.enabled = true;
+
+            vp.Play();
+        }
+    }
+
+
+    public void Stop(string id)
+    {
+        var videoPlay = videoPlayers.GetVideoPlayById(id);
+
+        if (videoPlay.VideoPlayer == null)
+            return;
+
+        videoPlay.VideoPlayer.Stop();
+        videoPlay.VideoPlayer.frame = 0;
+
+        videoPlay.Image.enabled = false;
     }
 }
 

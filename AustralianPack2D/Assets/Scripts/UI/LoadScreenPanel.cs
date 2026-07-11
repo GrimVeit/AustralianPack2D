@@ -6,6 +6,7 @@ public class LoadScreenPanel : MovePanel
 {
     [SerializeField] private UIEffectCombination effectCombination;
     [SerializeField] private LazyMotionGroup motionGroup;
+    [SerializeField] private UIFly uIFly;
 
     private void Awake() => Initialize();
 
@@ -32,6 +33,7 @@ public class LoadScreenPanel : MovePanel
     {
         base.ActivatePanel();
 
+        uIFly.EnableAnimation();
         effectCombination.ActivateEffect();
         motionGroup.Activate();
     }
@@ -40,6 +42,7 @@ public class LoadScreenPanel : MovePanel
     {
         base.DeactivatePanel();
 
+        uIFly.DisableAnimation();
         effectCombination.DeactivateEffect();
         motionGroup.Deactivate();
     }

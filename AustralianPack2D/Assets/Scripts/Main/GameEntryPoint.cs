@@ -60,6 +60,8 @@ public class GameEntryPoint
         var sceneEntryPoint = Object.FindObjectOfType<TSceneEntry>();
         setup?.Invoke(sceneEntryPoint);
 
+        yield return new WaitForSeconds(0.5f);
+
         if (showLoading)
         {
             yield return rootView.HideLoadingScreen(0);

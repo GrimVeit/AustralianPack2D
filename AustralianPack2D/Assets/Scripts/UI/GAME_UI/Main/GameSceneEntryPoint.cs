@@ -63,7 +63,10 @@ public class GameSceneEntryPoint : MonoBehaviour
             storeCardDesignPresenter,
             cardsGameSpawnerPresenter,
             sceneRoot,
-            cardsOrchestrationPresenter);
+            cardsOrchestrationPresenter,
+            videoPresenter,
+            soundPresenter,
+            gameScorePresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -99,12 +102,16 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
+        sceneRoot.OnClickToMenu_Win += HandleClickToMenu;
+        sceneRoot.OnClickToGame_Win += HandleClickToGame;
         playToolbarPresenter.OnClickToExit += HandleClickToMenu;
         playToolbarPresenter.OnClickToRestart += HandleClickToGame;
     }
 
     private void DeactivateTransitions()
     {
+        sceneRoot.OnClickToMenu_Win -= HandleClickToMenu;
+        sceneRoot.OnClickToGame_Win -= HandleClickToGame;
         playToolbarPresenter.OnClickToExit -= HandleClickToMenu;
         playToolbarPresenter.OnClickToRestart -= HandleClickToGame;
     }

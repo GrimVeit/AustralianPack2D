@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScorePresenter
+public class GameScorePresenter : IGameScoreListener
 {
     private readonly GameScoreModel _model;
     private readonly GameScoreView _view;
@@ -38,4 +39,19 @@ public class GameScorePresenter
     {
         _model.OnChangeMoves -= _view.SetMove;
     }
+
+    #region Output
+
+    public event Action OnFinish
+    {
+        add => _model.OnFinish += value;
+        remove => _model.OnFinish -= value;
+    }
+
+    #endregion
+}
+
+public interface IGameScoreListener
+{
+    public event Action OnFinish;
 }

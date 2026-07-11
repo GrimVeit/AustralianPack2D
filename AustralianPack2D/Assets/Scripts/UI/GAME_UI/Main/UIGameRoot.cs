@@ -7,6 +7,10 @@ public class UIGameRoot : UIRoot
     [SerializeField] private MainFooterPanel_Game mainFooterPanel;
     [SerializeField] private MemorizeFooterPanel_Game memorizeFooterPanel;
 
+    [Header("WIN")]
+    [SerializeField] private WinStartPanel_Game winStartPanel;
+    [SerializeField] private WinPanel_Game winPanel;
+
     private ISoundProvider _soundProvider;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
@@ -19,15 +23,22 @@ public class UIGameRoot : UIRoot
         mainPanel.Initialize();
         mainFooterPanel.Initialize();
         memorizeFooterPanel.Initialize();
+
+        winStartPanel.Initialize();
+        winPanel.Initialize();
     }
 
     public void Activate()
     {
-        
+        winPanel.OnClickToMenu += ClickToMenu_Win;
+        winPanel.OnClickToGame += ClickToGame_Win;
     }
 
     public void Deactivate()
     {
+        winPanel.OnClickToMenu -= ClickToMenu_Win;
+        winPanel.OnClickToGame -= ClickToGame_Win;
+
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
     }
@@ -37,6 +48,9 @@ public class UIGameRoot : UIRoot
         mainPanel.Dispose();
         mainFooterPanel.Dispose();
         memorizeFooterPanel.Dispose();
+
+        winStartPanel.Dispose();
+        winPanel.Dispose();
     }
 
     #region Input
@@ -87,6 +101,37 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(memorizeFooterPanel);
     }
 
+
+
+
+    public void OpenWinStartPanel()
+    {
+        if (winStartPanel.IsActive) return;
+
+        OpenOtherPanel(winStartPanel);
+    }
+
+    public void CloseWinStartPanel()
+    {
+        if (!winStartPanel.IsActive) return;
+
+        CloseOtherPanel(winStartPanel);
+    }
+
+    public void OpenWinPanel()
+    {
+        if (winPanel.IsActive) return;
+
+        OpenOtherPanel(winPanel);
+    }
+
+    public void CloseWinPanel()
+    {
+        if (!winPanel.IsActive) return;
+
+        CloseOtherPanel(winPanel);
+    }
+
     #endregion
 
 
@@ -94,7 +139,22 @@ public class UIGameRoot : UIRoot
 
     #region Output
 
+    #region WIN
 
+    public event Action OnClickToMenu_Win;
+    public event Action OnClickToGame_Win;
+
+    private void ClickToMenu_Win()
+    {
+        OnClickToMenu_Win?.Invoke();
+    }
+
+    private void ClickToGame_Win()
+    {
+        OnClickToGame_Win?.Invoke();
+    }
+
+    #endregion
 
     #endregion
 }

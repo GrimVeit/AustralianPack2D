@@ -101,11 +101,13 @@ public class GameScoreModel
     private void FinishGame()
     {
         Debug.Log("FINISH GAME");
+        OnFinish?.Invoke();
     }
 
     #region Output
 
     public event Action<int, CardBoxType> OnChangeMoves;
+    public event Action OnFinish;
 
     #endregion
 }
