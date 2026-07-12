@@ -17,13 +17,22 @@ public class StateMachine_Game : IStateMachineProvider
         ICardsOrchectrationProvider cardsOrchectrationProvider,
         IVideoProvider videoProvider,
         ISoundProvider soundProvider,
-        IGameScoreListener gameScoreListener
+        IGameScoreListener gameScoreListener,
+        IGameScoreInfo gameScoreInfo,
+        ICardBoxBuyProvider cardBoxBuyProvider,
+        ICardBoxProvider cardBoxProvider,
+        ICardBoxListener cardBoxListener,
+        ICardsBoxPseudoListener cardsBoxPseudoListener,
+        ICardsBoxPseudoProvider cardsBoxPseudoProvider,
+        ICardPresentationProvider cardPresentationProvider
         )
     {
         states[typeof(StartHoldOnState_Game)] = new StartHoldOnState_Game(this);
         states[typeof(StartState_Game)] = new StartState_Game(this, storeLevelInfo, storeGameCardsProvider, cardsGameSpawnerProvider, storeCardDesignInfoProvider, cardsGameSpawnerListener, sceneRoot);
         states[typeof(MemoryState_Game)] = new MemoryState_Game(this, sceneRoot, storeLevelInfo, cardsOrchectrationProvider);
-        states[typeof(PlayState_Game)] = new PlayState_Game(this, sceneRoot, cardsOrchectrationProvider, gameScoreListener);
+        states[typeof(PlayState_Game)] = new PlayState_Game(this, sceneRoot, cardsOrchectrationProvider, gameScoreListener, gameScoreInfo, cardBoxBuyProvider);
+
+        states[typeof(ShopOpenPackState_Game)] = new ShopOpenPackState_Game(this, sceneRoot, cardBoxProvider, cardBoxListener, cardsBoxPseudoProvider, cardsBoxPseudoListener, cardPresentationProvider);
 
         states[typeof(StartWinState_Game)] = new StartWinState_Game(this, videoProvider, sceneRoot, soundProvider);
         states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);

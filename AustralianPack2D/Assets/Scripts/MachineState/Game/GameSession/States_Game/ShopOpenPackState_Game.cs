@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopOpenPackState_Menu : IState
+public class ShopOpenPackState_Game : IState
 {
     private readonly IStateMachineProvider _machineProvider;
-    private readonly UIMainMenuRoot _sceneRoot;
+    private readonly UIGameRoot _sceneRoot;
 
     private readonly ICardBoxProvider _cardBoxProvider;
     private readonly ICardBoxListener _cardBoxListener;
@@ -21,7 +21,7 @@ public class ShopOpenPackState_Menu : IState
 
     private IEnumerator timer;
 
-    public ShopOpenPackState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot, ICardBoxProvider cardBoxProvider, ICardBoxListener cardBoxListener, ICardsBoxPseudoProvider cardsBoxPseudoProvider, ICardsBoxPseudoListener cardsBoxPseudoListener, ICardPresentationProvider cardPresentationProvider)
+    public ShopOpenPackState_Game(IStateMachineProvider machineProvider, UIGameRoot sceneRoot, ICardBoxProvider cardBoxProvider, ICardBoxListener cardBoxListener, ICardsBoxPseudoProvider cardsBoxPseudoProvider, ICardsBoxPseudoListener cardsBoxPseudoListener, ICardPresentationProvider cardPresentationProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
@@ -42,9 +42,7 @@ public class ShopOpenPackState_Menu : IState
         _cardsBoxPseudoListener.OnEndMove += ReturnEndMovePseudo;
         _cardsBoxPseudoListener.OnEndRotate += ReturnEndRotatePseudo;
 
-        _sceneRoot.CloseShopHeaderPanel();
-        _sceneRoot.OpenShopOpenPackPanel();
-        _sceneRoot.OpenBackgroundPanel_Green();
+        _sceneRoot.OpenOpenPackPanel();
 
         _isOpenPack = false;
         _isEndMovePseudo = false;
@@ -118,6 +116,6 @@ public class ShopOpenPackState_Menu : IState
 
     private void ChangeStateToShopChoosePack()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<ShopCardsPresentationState_Menu>());
+        //_machineProvider.EnterState(_machineProvider.GetState<ShopCardsPresentationState_Game>());
     }
 }

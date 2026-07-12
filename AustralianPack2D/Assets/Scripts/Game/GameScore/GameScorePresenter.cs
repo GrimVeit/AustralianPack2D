@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScorePresenter : IGameScoreListener
+public class GameScorePresenter : IGameScoreListener, IGameScoreInfo
 {
     private readonly GameScoreModel _model;
     private readonly GameScoreView _view;
@@ -49,6 +49,17 @@ public class GameScorePresenter : IGameScoreListener
     }
 
     #endregion
+
+    #region Input
+
+    public CardBoxType CardBoxType => _model.CardBoxType;
+
+    #endregion
+}
+
+public interface IGameScoreInfo
+{
+    public CardBoxType CardBoxType { get; }
 }
 
 public interface IGameScoreListener

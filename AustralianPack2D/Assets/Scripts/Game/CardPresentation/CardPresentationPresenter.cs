@@ -61,6 +61,7 @@ public class CardPresentationPresenter : ICardPresentationProvider, ICardPresent
 
     #region Input
 
+    public bool IsHasDuplicates => _view.IsHasDuplicates();
     public void Show(float time) => _view.Show(time);
     public void Hide() => _view.Hide();
     public void ShowDuplicates() => _view.ShowDuplicates();
@@ -70,6 +71,7 @@ public class CardPresentationPresenter : ICardPresentationProvider, ICardPresent
 
 public interface ICardPresentationProvider
 {
+    public bool IsHasDuplicates { get; }
     public void Show(float time);
     public void Hide();
     public void ShowDuplicates();

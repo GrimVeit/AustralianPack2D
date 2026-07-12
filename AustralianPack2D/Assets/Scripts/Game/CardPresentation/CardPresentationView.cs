@@ -76,6 +76,19 @@ public class CardPresentationView : View
         }
     }
 
+    public bool IsHasDuplicates()
+    {
+        for (int i = 0; i < cardPresentationUnits.Count; i++)
+        {
+            if (cardPresentationUnits[i].IsDuplicate == true)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     #endregion
 
     #region Output
@@ -138,6 +151,8 @@ public class CardPresentationView : View
             _currentCardOpen = cardOpen;
 
         }
+
+        public bool IsDuplicate => _currentCardOpen.IsDuplicate;
 
         public void ShowDuplicate(Color color)
         {

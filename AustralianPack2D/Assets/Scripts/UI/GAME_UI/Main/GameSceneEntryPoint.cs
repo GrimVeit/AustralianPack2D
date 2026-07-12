@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private CardPacksSO cardPacksSO;
     [SerializeField] private List<Sprite> spritesGameCards;
     [SerializeField] private UIGameRoot gameRootPrefab;
 
@@ -25,6 +26,12 @@ public class GameSceneEntryPoint : MonoBehaviour
     private CardsGameSpawnerPresenter cardsGameSpawnerPresenter;
     private CardsOrchestrationPresenter cardsOrchestrationPresenter;
     private GameScorePresenter gameScorePresenter;
+
+    private StoreCardPresenter storeCardPresenter;
+    private CardBoxBuyPresenter cardBoxBuyPresenter;
+    private CardsBoxPseudoPresenter cardsBoxPseudoPresenter;
+    private CardBoxPresenter cardBoxPresenter;
+    private CardPresentationPresenter cardPresentationPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -56,6 +63,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsOrchestrationPresenter = new CardsOrchestrationPresenter(new CardsOrchestrationModel(cardsGameSpawnerPresenter));
         gameScorePresenter = new GameScorePresenter(new GameScoreModel(cardsOrchestrationPresenter, storeLevelPresenter), viewContainer.GetView<GameScoreView>());
 
+        storeCardPresenter = new StoreCardPresenter(new StoreCardModel(cardPacksSO));
+        cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel(bankPresenter));
+        cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
+        cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
+        cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
+
         stateMachine = new StateMachine_Game(
             storeLevelPresenter, 
             storeGameCardsPresenter, 
@@ -66,7 +79,14 @@ public class GameSceneEntryPoint : MonoBehaviour
             cardsOrchestrationPresenter,
             videoPresenter,
             soundPresenter,
-            gameScorePresenter);
+            gameScorePresenter,
+            gameScorePresenter,
+            cardBoxBuyPresenter,
+            cardBoxPresenter,
+            cardBoxPresenter,
+            cardsBoxPseudoPresenter,
+            cardsBoxPseudoPresenter,
+            cardPresentationPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -86,7 +106,13 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeLevelPresenter.Initialize();
         storeCardDesignPresenter.Initialize();
         cardsOrchestrationPresenter.Initialize();
-        
+
+        storeCardPresenter.Initialize();
+        cardPresentationPresenter.Initialize();
+        cardBoxPresenter.Initialize();
+        cardsBoxPseudoPresenter.Initialize();
+        cardBoxBuyPresenter.Initialize();
+
         stateMachine.Initialize();
     }
 
@@ -139,6 +165,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeLevelPresenter?.Dispose();
         storeCardDesignPresenter?.Dispose();
         cardsOrchestrationPresenter?.Dispose();
+
+        storeCardPresenter?.Dispose();
+        cardPresentationPresenter.Dispose();
+        cardBoxPresenter.Dispose();
+        cardsBoxPseudoPresenter.Dispose();
+        cardBoxBuyPresenter.Dispose();
 
         stateMachine?.Dispose();
     }

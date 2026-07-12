@@ -11,6 +11,10 @@ public class UIGameRoot : UIRoot
     [SerializeField] private WinStartPanel_Game winStartPanel;
     [SerializeField] private WinPanel_Game winPanel;
 
+    [Header("GIFT")]
+    [SerializeField] private OpenPackPanel_Game openPackPanel;
+    [SerializeField] private CardPresentationPanel_Game cardPresentationPanel;
+
     private ISoundProvider _soundProvider;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
@@ -26,18 +30,25 @@ public class UIGameRoot : UIRoot
 
         winStartPanel.Initialize();
         winPanel.Initialize();
+
+        openPackPanel.Initialize();
+        cardPresentationPanel.Initialize();
     }
 
     public void Activate()
     {
         winPanel.OnClickToMenu += ClickToMenu_Win;
         winPanel.OnClickToGame += ClickToGame_Win;
+
+        cardPresentationPanel.OnClickToBack += ClickToBack_CardPresentation;
     }
 
     public void Deactivate()
     {
         winPanel.OnClickToMenu -= ClickToMenu_Win;
         winPanel.OnClickToGame -= ClickToGame_Win;
+
+        cardPresentationPanel.OnClickToBack -= ClickToBack_CardPresentation;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
@@ -51,6 +62,9 @@ public class UIGameRoot : UIRoot
 
         winStartPanel.Dispose();
         winPanel.Dispose();
+
+        openPackPanel.Dispose();
+        cardPresentationPanel.Dispose();
     }
 
     #region Input
@@ -132,6 +146,37 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(winPanel);
     }
 
+
+
+    public void OpenOpenPackPanel()
+    {
+        if(openPackPanel.IsActive) return;
+
+        OpenOtherPanel(openPackPanel);
+    }
+
+    public void CloseOpenPackPanel()
+    {
+        if(!openPackPanel.IsActive) return;
+
+        CloseOtherPanel(openPackPanel);
+    }
+
+
+    public void OpenCardPresentationPanel()
+    {
+        if (cardPresentationPanel.IsActive) return;
+
+        OpenOtherPanel(cardPresentationPanel);
+    }
+
+    public void CloseCardPresentationPanel()
+    {
+        if (!cardPresentationPanel.IsActive) return;
+
+        CloseOtherPanel(cardPresentationPanel);
+    }
+
     #endregion
 
 
@@ -152,6 +197,17 @@ public class UIGameRoot : UIRoot
     private void ClickToGame_Win()
     {
         OnClickToGame_Win?.Invoke();
+    }
+
+    #endregion
+
+    #region CARD PRESENTATION
+
+    public event Action OnClickToBack_CardPresentation;
+
+    private void ClickToBack_CardPresentation()
+    {
+        OnClickToBack_CardPresentation?.Invoke();
     }
 
     #endregion
