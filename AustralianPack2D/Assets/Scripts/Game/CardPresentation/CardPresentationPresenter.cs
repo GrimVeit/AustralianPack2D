@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class CardPresentationPresenter : ICardPresentationProvider, ICardPresentationListener
 {
@@ -55,6 +52,12 @@ public class CardPresentationPresenter : ICardPresentationProvider, ICardPresent
 
     #region Output
 
+    public event Action<int> OnGetCountUniqueCards
+    {
+        add => _model.OnGetCountUniqueCards += value;
+        remove => _model.OnGetCountUniqueCards -= value;
+    }
+
     public event Action OnClickCard;
 
     #endregion
@@ -79,5 +82,6 @@ public interface ICardPresentationProvider
 
 public interface ICardPresentationListener
 {
+    public event Action<int> OnGetCountUniqueCards;
     public event Action OnClickCard;
 }

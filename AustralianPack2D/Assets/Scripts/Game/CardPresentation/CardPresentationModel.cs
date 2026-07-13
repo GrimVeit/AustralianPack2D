@@ -36,6 +36,8 @@ public class CardPresentationModel
 
         var result = new List<CardOpenResult>();
 
+        var isUniqueCount = 0;
+
         foreach (var type in cardTypes)
         {
             var card = _storeCardProvider.GetRandomCard(type);
@@ -47,6 +49,7 @@ public class CardPresentationModel
 
             if (!duplicate)
             {
+                isUniqueCount += 1;
                 _storeCardProvider.OpenCard(
                     card.Type,
                     card.Page,
@@ -56,10 +59,14 @@ public class CardPresentationModel
             result.Add(new CardOpenResult(card, duplicate));
         }
 
+        OnGetCountUniqueCards?.Invoke(isUniqueCount);
+
         OnBuyCards?.Invoke(result);
     }
 
     #region Output
+
+    public event Action<int> OnGetCountUniqueCards;
 
     public event Action<List<CardOpenResult>> OnBuyCards;
 

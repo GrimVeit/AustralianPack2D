@@ -96,7 +96,9 @@ public class ShopOpenPackState_Game : IState
             yield return new WaitForSeconds(2f);
         }
 
-        ChangeStateToShopChoosePack();
+        _sceneRoot.CloseOpenPackPanel();
+
+        ChangeStateToStartWin();
     }
 
     private void ReturnOpen()
@@ -114,8 +116,8 @@ public class ShopOpenPackState_Game : IState
         _isEndRotatePseudo = true;
     }
 
-    private void ChangeStateToShopChoosePack()
+    private void ChangeStateToStartWin()
     {
-        //_machineProvider.EnterState(_machineProvider.GetState<ShopCardsPresentationState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<StartWinState_Game>());
     }
 }

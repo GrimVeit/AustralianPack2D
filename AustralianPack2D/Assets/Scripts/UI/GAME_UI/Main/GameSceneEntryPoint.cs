@@ -32,6 +32,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private CardsBoxPseudoPresenter cardsBoxPseudoPresenter;
     private CardBoxPresenter cardBoxPresenter;
     private CardPresentationPresenter cardPresentationPresenter;
+    private CardUniqueCounterPresenter cardUniqueCounterPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -68,6 +69,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
         cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
+        cardUniqueCounterPresenter = new CardUniqueCounterPresenter(new CardUniqueCounterModel(cardPresentationPresenter), viewContainer.GetView<CardUniqueCounterView>());
 
         stateMachine = new StateMachine_Game(
             storeLevelPresenter, 
@@ -108,6 +110,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsOrchestrationPresenter.Initialize();
 
         storeCardPresenter.Initialize();
+        cardUniqueCounterPresenter.Initialize();
         cardPresentationPresenter.Initialize();
         cardBoxPresenter.Initialize();
         cardsBoxPseudoPresenter.Initialize();
@@ -167,6 +170,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsOrchestrationPresenter?.Dispose();
 
         storeCardPresenter?.Dispose();
+        cardUniqueCounterPresenter?.Dispose();
         cardPresentationPresenter.Dispose();
         cardBoxPresenter.Dispose();
         cardsBoxPseudoPresenter.Dispose();

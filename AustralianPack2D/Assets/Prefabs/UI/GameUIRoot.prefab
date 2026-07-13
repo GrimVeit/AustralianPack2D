@@ -2959,7 +2959,7 @@ MonoBehaviour:
   panel: {fileID: 2954803933674841985}
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
-  time: 0.1
+  time: 0.2
   canvasGroup: {fileID: 2028869874765017815}
   effectCombination: {fileID: 5550254432538177282}
 --- !u!114 &5550254432538177282
@@ -4495,7 +4495,7 @@ MonoBehaviour:
   panel: {fileID: 5235909008674298053}
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
-  time: 0.2
+  time: 0.3
   canvasGroup: {fileID: 8886093778444743282}
 --- !u!1 &5333658210473301167
 GameObject:
