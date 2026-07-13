@@ -52,6 +52,14 @@ public class UIGameRoot : UIRoot
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
+
+        CloseOpenPackPanel();
+        CloseCardPresentationPanel();
+        CloseMainFooterPanel();
+        CloseMainPanel();
+        CloseMemorizeFooterPanel();
+        CloseWinPanel();
+        CloseWinStartPanel();
     }
 
     public void Dispose()

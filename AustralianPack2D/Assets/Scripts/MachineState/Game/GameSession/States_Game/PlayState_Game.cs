@@ -10,10 +10,12 @@ public class PlayState_Game : IState
     private readonly IGameScoreListener _gameScoreListener;
     private readonly IGameScoreInfo _gameScoreInfo;
     private readonly ICardBoxBuyProvider _cardBoxBuyProvider;
+    private readonly IGameMoneyGiftProvider _gameMoneyGiftProvider;
+    private readonly IStoreLevelInfo _storeLevelInfo;
 
     private IEnumerator timer;
 
-    public PlayState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, ICardsOrchectrationProvider cardsOrchectrationProvider, IGameScoreListener gameScoreListener, IGameScoreInfo gameScoreInfo, ICardBoxBuyProvider cardBoxBuyProvider)
+    public PlayState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, ICardsOrchectrationProvider cardsOrchectrationProvider, IGameScoreListener gameScoreListener, IGameScoreInfo gameScoreInfo, ICardBoxBuyProvider cardBoxBuyProvider, IGameMoneyGiftProvider gameMoneyGiftProvider, IStoreLevelInfo storeLevelInfo)
     {
         _stateMachineProvider = stateMachineProvider;
         _sceneRoot = sceneRoot;
@@ -21,6 +23,8 @@ public class PlayState_Game : IState
         _gameScoreListener = gameScoreListener;
         _gameScoreInfo = gameScoreInfo;
         _cardBoxBuyProvider = cardBoxBuyProvider;
+        _gameMoneyGiftProvider = gameMoneyGiftProvider;
+        _storeLevelInfo = storeLevelInfo;
     }
 
     public void EnterState()
@@ -60,6 +64,8 @@ public class PlayState_Game : IState
 
     private void CheckWin()
     {
+        _gameMoneyGiftProvider.AddGift(_storeLevelInfo.GameLevel);
+
         if(_gameScoreInfo.CardBoxType == CardBoxType.None)
         {
             ChangeStateToWinStart();

@@ -33,6 +33,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private CardBoxPresenter cardBoxPresenter;
     private CardPresentationPresenter cardPresentationPresenter;
     private CardUniqueCounterPresenter cardUniqueCounterPresenter;
+    private GameMoneyGiftPresenter gameMoneyGiftPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -70,6 +71,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
         cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
         cardUniqueCounterPresenter = new CardUniqueCounterPresenter(new CardUniqueCounterModel(cardPresentationPresenter), viewContainer.GetView<CardUniqueCounterView>());
+        gameMoneyGiftPresenter = new GameMoneyGiftPresenter(new GameMoneyGiftModel(bankPresenter), viewContainer.GetView<GameMoneyGiftView>());
 
         stateMachine = new StateMachine_Game(
             storeLevelPresenter, 
@@ -88,7 +90,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             cardBoxPresenter,
             cardsBoxPseudoPresenter,
             cardsBoxPseudoPresenter,
-            cardPresentationPresenter);
+            cardPresentationPresenter,
+            gameMoneyGiftPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -110,6 +113,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsOrchestrationPresenter.Initialize();
 
         storeCardPresenter.Initialize();
+        gameMoneyGiftPresenter.Initialize();
         cardUniqueCounterPresenter.Initialize();
         cardPresentationPresenter.Initialize();
         cardBoxPresenter.Initialize();
@@ -170,6 +174,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardsOrchestrationPresenter?.Dispose();
 
         storeCardPresenter?.Dispose();
+        gameMoneyGiftPresenter?.Dispose();
         cardUniqueCounterPresenter?.Dispose();
         cardPresentationPresenter.Dispose();
         cardBoxPresenter.Dispose();

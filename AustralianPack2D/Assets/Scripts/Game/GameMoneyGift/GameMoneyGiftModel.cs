@@ -8,10 +8,9 @@ public class GameMoneyGiftModel
     private readonly IMoneyProvider _moneyProvider;
     private int _countMoney = 0;
 
-    public GameMoneyGiftModel(IMoneyProvider moneyProvider, int countMoney)
+    public GameMoneyGiftModel(IMoneyProvider moneyProvider)
     {
         _moneyProvider = moneyProvider;
-        _countMoney = countMoney;
     }
 
     public void AddGift(int count)
