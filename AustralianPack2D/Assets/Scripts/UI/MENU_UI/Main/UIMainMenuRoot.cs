@@ -629,27 +629,37 @@ public class UIMainMenuRoot : UIRoot
 
     private void ClickToPlay_PlayFooter()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToPlay_PlayFooter?.Invoke();
     }
 
 
     private void ClickToLevel_MainMiddle()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToLevel_MainMiddle?.Invoke();
     }
 
     private void ClickToSettings_MainMiddle()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToSettings_MainMiddle?.Invoke();
     }
 
     private void ClickToStore_MainMiddle()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToShop_MainMiddle?.Invoke();
     }
 
     private void ClickToAlbum_MainMiddle()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToAlbum_MainMiddle?.Invoke();
     }
 
@@ -667,31 +677,43 @@ public class UIMainMenuRoot : UIRoot
 
     private void ClickToExit_LevelHeader()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToExit_LevelHeader?.Invoke();
     }
 
     private void ClickToLevel1_LevelHeader()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToLevel1_LevelMiddle?.Invoke();
     }
 
     private void ClickToLevel2_LevelHeader()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToLevel2_LevelMiddle?.Invoke();
     }
 
     private void ClickToLevel3_LevelHeader()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToLevel3_LevelMiddle?.Invoke();
     }
 
     private void ClickToLevel4_LevelHeader()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToLevel4_LevelMiddle?.Invoke();
     }
 
     private void ClickToLevel5_LevelHeader()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToLevel5_LevelMiddle?.Invoke();
     }
 
@@ -703,6 +725,8 @@ public class UIMainMenuRoot : UIRoot
 
     private void ClickToExit_SettingsHeader()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToExit_SettingsHeader?.Invoke();
     }
 
@@ -723,37 +747,51 @@ public class UIMainMenuRoot : UIRoot
 
     private void ClickToExit_ShopHeader()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToExit_ShopHeader?.Invoke();
     }
 
     private void ClickToCover_ShopMiddle()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToCover_ShopMiddle?.Invoke();
     }
 
     private void ClickToCardPack_ShopMiddle()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToCardPack_ShopMiddle?.Invoke();
     }
 
 
     private void ClickToStandard_ShopChoosePack()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToStandard_ShopChoosePack?.Invoke();
     }
 
     private void ClickToPriority_ShopChoosePack()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToPriority_ShopChoosePack?.Invoke();
     }
 
     private void ClickToAlbum_ShopOpenPackFooter()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToAlbum_ShopOpenPackFooter?.Invoke();
     }
 
     private void ClickToBack_ShopCardPresentation()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToBack_ShopCardPresentation?.Invoke();
     }
 
@@ -771,31 +809,43 @@ public class UIMainMenuRoot : UIRoot
 
     private void ClickToExit_AlbumHeader()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToExit_AlbumHeader?.Invoke();
     }
 
     private void ClickToCommon_AlbumChoose()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToCommon_AlbumChoose?.Invoke();
     }
 
     private void ClickToUncommon_AlbumChoose()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToUncommon_AlbumChoose?.Invoke();
     }
 
     private void ClickToRare_AlbumChoose()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToRare_AlbumChoose?.Invoke();
     }
 
     private void ClickToEpic_AlbumChoose()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToEpic_AlbumChoose?.Invoke();
     }
 
     private void ClickToMythical_AlbumChoose()
     {
+        _soundProvider.PlayOneShot("PanelOpen");
+
         OnClickToMythical_AlbumChoose?.Invoke();
     }
 

@@ -2157,86 +2157,6 @@ MonoBehaviour:
     isLoop: 0
     isPlayAwake: 0
     audioType: 1
-  - id: ------------------------------CHICKEN_EVENTS
-    audioSource: {fileID: 1041171254}
-    audioClip: {fileID: 8300000, guid: bf73ef90b0e7f734994bd25bbd2374eb, type: 3}
-    volume: 0
-    pitch: 0
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 1
-  - id: Chicken_Nitro
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: 0d183f0ec30346245a312380fc227cae, type: 3}
-    volume: 1
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_Car
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: 6a9b2421e92877e43b7fbcf81067a110, type: 3}
-    volume: 1
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_Ghost
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: 1ae7be4e93fcd4a47b7e50cc3d802988, type: 3}
-    volume: 0.9
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_Hunter
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: ed7380a57f63ba3479d65ae8809f5dd8, type: 3}
-    volume: 0.9
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_Pigeon
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: 1285ae9e2c5e5f746a5c06856e81348d, type: 3}
-    volume: 0.9
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_Fall
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: 6da01c6badde4ad4689ee7c5348abad1, type: 3}
-    volume: 0.8
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_UFO
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: d7abfbafca1645b4ebe9b9d45932942f, type: 3}
-    volume: 1
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: Chicken_Tornado
-    audioSource: {fileID: 774087515}
-    audioClip: {fileID: 8300000, guid: fb1780b83538db8438a24619547b06b4, type: 3}
-    volume: 1
-    pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: -------------------------------PIECE
-    audioSource: {fileID: 1041171254}
-    audioClip: {fileID: 8300000, guid: bf73ef90b0e7f734994bd25bbd2374eb, type: 3}
-    volume: 0
-    pitch: 0
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 1
   - id: Pseudo_Return
     audioSource: {fileID: 195081977}
     audioClip: {fileID: 8300000, guid: 5953ae51870b0764b8f961453cb73d52, type: 3}
@@ -2250,14 +2170,6 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 8ce660894a0b5e546bd8bb7c17b5e310, type: 3}
     volume: 1
     pitch: 1
-    isLoop: 0
-    isPlayAwake: 0
-    audioType: 0
-  - id: -------------------------------OTHER
-    audioSource: {fileID: 195081977}
-    audioClip: {fileID: 8300000, guid: 8ce660894a0b5e546bd8bb7c17b5e310, type: 3}
-    volume: 0
-    pitch: 0
     isLoop: 0
     isPlayAwake: 0
     audioType: 0

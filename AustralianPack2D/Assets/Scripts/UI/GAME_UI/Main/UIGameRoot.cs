@@ -199,11 +199,15 @@ public class UIGameRoot : UIRoot
 
     private void ClickToMenu_Win()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToMenu_Win?.Invoke();
     }
 
     private void ClickToGame_Win()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToGame_Win?.Invoke();
     }
 
@@ -215,6 +219,8 @@ public class UIGameRoot : UIRoot
 
     private void ClickToBack_CardPresentation()
     {
+        _soundProvider.PlayOneShot("PanelClose");
+
         OnClickToBack_CardPresentation?.Invoke();
     }
 

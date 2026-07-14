@@ -125,15 +125,6 @@ public class MenuEntryPoint : MonoBehaviour
         stateMachine.Initialize();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            var card = storeCardPresenter.GetRandomCard();
-            storeCardPresenter.OpenCard(card.Type, card.Page, card.Index);
-        }
-    }
-
     private void ActivateEvents()
     {
         ActivateTransitions();
