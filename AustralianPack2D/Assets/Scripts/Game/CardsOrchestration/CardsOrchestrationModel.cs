@@ -22,12 +22,15 @@ public class CardsOrchestrationModel
 
     private IEnumerator processCoroutine;
 
-    public CardsOrchestrationModel(ICardsGameSpawnerListener spawnListener)
+    private readonly ISoundProvider _soundProvider;
+
+    public CardsOrchestrationModel(ICardsGameSpawnerListener spawnListener, ISoundProvider soundProvider)
     {
         _spawnListener = spawnListener;
 
         _spawnListener.OnSpawnedCards += OnCardsSpawned;
         _spawnListener.OnDestroyCard += DestroyCard;
+        _soundProvider = soundProvider;
     }
 
     public void Dispose()
@@ -128,6 +131,8 @@ public class CardsOrchestrationModel
     {
         _firstCard = card;
 
+        _soundProvider.PlayOneShot("ChooseCardGame");
+
         _firstCard.Show();
         _firstCard.DeactivateInteraction();
     }
@@ -146,14 +151,20 @@ public class CardsOrchestrationModel
 
     private IEnumerator CompareRoutine()
     {
-        yield return new WaitForSeconds(_compareDelay);
-
         if (_firstCard.IdPair == _secondCard.IdPair)
         {
+            _soundProvider.PlayOneShot("ChooseCardGame_GOOD");
+
+            yield return new WaitForSeconds(_compareDelay);
+
             HandleMatch();
         }
         else
         {
+            _soundProvider.PlayOneShot("ChooseCardGame_BAD");
+
+            yield return new WaitForSeconds(_compareDelay);
+
             HandleMismatch();
         }
     }
