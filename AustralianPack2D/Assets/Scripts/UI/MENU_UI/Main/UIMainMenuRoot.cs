@@ -26,6 +26,10 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private SettingsHeaderPanel_Menu settingsHeaderPanel;
     [SerializeField] private SettingsMiddlePanel_Menu settingsMiddlePanel;
 
+    [Header("SETTINGS")]
+    [SerializeField] private LeadersHeaderPanel_Menu leadersHeaderPanel;
+    [SerializeField] private LeadersMiddlePanel_Menu leadersMiddlePanel;
+
     [Header("SHOP")]
     [SerializeField] private ShopHeaderPanel_Menu shopHeaderPanel;
     [SerializeField] private ShopMiddlePanel_Menu shopMiddlePanel;
@@ -68,6 +72,9 @@ public class UIMainMenuRoot : UIRoot
         settingsHeaderPanel.Initialize();
         settingsMiddlePanel.Initialize();
 
+        leadersHeaderPanel.Initialize();
+        leadersMiddlePanel.Initialize();
+
         shopHeaderPanel.Initialize();
         shopMiddlePanel.Initialize();
         shopCoverTablePanel.Initialize();
@@ -91,6 +98,7 @@ public class UIMainMenuRoot : UIRoot
         mainMiddlePanel.OnClickSettings += ClickToSettings_MainMiddle;
         mainMiddlePanel.OnClickStore += ClickToStore_MainMiddle;
         mainMiddlePanel.OnClickAlbum += ClickToAlbum_MainMiddle;
+        mainMiddlePanel.OnClickLeaders += ClickToLeaders_MainMiddle;
 
 
         levelHeaderPanel.OnClickBack += ClickToExit_LevelHeader;
@@ -102,6 +110,8 @@ public class UIMainMenuRoot : UIRoot
 
 
         settingsHeaderPanel.OnClickBack += ClickToExit_SettingsHeader;
+
+        leadersHeaderPanel.OnClickBack += ClickToExit_LeadersHeader;
 
 
         shopHeaderPanel.OnClickBack += ClickToExit_ShopHeader;
@@ -133,6 +143,7 @@ public class UIMainMenuRoot : UIRoot
         mainMiddlePanel.OnClickSettings -= ClickToSettings_MainMiddle;
         mainMiddlePanel.OnClickStore -= ClickToStore_MainMiddle;
         mainMiddlePanel.OnClickAlbum -= ClickToAlbum_MainMiddle;
+        mainMiddlePanel.OnClickLeaders -= ClickToLeaders_MainMiddle;
 
 
         levelHeaderPanel.OnClickBack -= ClickToExit_LevelHeader;
@@ -144,6 +155,8 @@ public class UIMainMenuRoot : UIRoot
 
 
         settingsHeaderPanel.OnClickBack -= ClickToExit_SettingsHeader;
+
+        leadersHeaderPanel.OnClickBack -= ClickToExit_LeadersHeader;
 
 
         shopHeaderPanel.OnClickBack -= ClickToExit_ShopHeader;
@@ -181,6 +194,9 @@ public class UIMainMenuRoot : UIRoot
 
         settingsHeaderPanel.Dispose();
         settingsMiddlePanel.Dispose();
+
+        leadersHeaderPanel.Dispose();
+        leadersMiddlePanel.Dispose();
 
         shopHeaderPanel.Dispose();
         shopMiddlePanel.Dispose();
@@ -613,6 +629,38 @@ public class UIMainMenuRoot : UIRoot
 
     #endregion
 
+    #region LEADERS
+
+    public void OpenLeadersHeaderPanel()
+    {
+        if(leadersHeaderPanel.IsActive) return;
+
+        OpenOtherPanel(leadersHeaderPanel);
+    }
+
+    public void CloseLeadersHeaderPanel()
+    {
+        if (!leadersHeaderPanel.IsActive) return;
+
+        CloseOtherPanel(leadersHeaderPanel);
+    }
+
+    public void OpenLeadersMiddlePanel()
+    {
+        if (leadersMiddlePanel.IsActive) return;
+
+        OpenOtherPanel(leadersMiddlePanel);
+    }
+
+    public void CloseLeadersMiddlePanel()
+    {
+        if (!leadersMiddlePanel.IsActive) return;
+
+        CloseOtherPanel(leadersMiddlePanel);
+    }
+
+    #endregion
+
     #endregion
 
 
@@ -626,6 +674,7 @@ public class UIMainMenuRoot : UIRoot
     public event Action OnClickToSettings_MainMiddle;
     public event Action OnClickToShop_MainMiddle;
     public event Action OnClickToAlbum_MainMiddle;
+    public event Action OnClickToLeaders_MainMiddle;
 
     private void ClickToPlay_PlayFooter()
     {
@@ -661,6 +710,13 @@ public class UIMainMenuRoot : UIRoot
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToAlbum_MainMiddle?.Invoke();
+    }
+
+    private void ClickToLeaders_MainMiddle()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToLeaders_MainMiddle?.Invoke();
     }
 
     #endregion
@@ -847,6 +903,19 @@ public class UIMainMenuRoot : UIRoot
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToMythical_AlbumChoose?.Invoke();
+    }
+
+    #endregion
+
+    #region SETTINGS
+
+    public event Action OnClickToExit_LeadersHeader;
+
+    private void ClickToExit_LeadersHeader()
+    {
+        _soundProvider.PlayOneShot("PanelClose");
+
+        OnClickToExit_LeadersHeader?.Invoke();
     }
 
     #endregion

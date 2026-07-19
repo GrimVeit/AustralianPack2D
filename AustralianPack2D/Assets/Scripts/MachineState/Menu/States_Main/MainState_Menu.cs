@@ -21,6 +21,7 @@ public class MainState_Menu : IState
         _sceneRoot.OnClickToSettings_MainMiddle += ChangeStateToSettings;
         _sceneRoot.OnClickToShop_MainMiddle += ChangeStateToShop;
         _sceneRoot.OnClickToAlbum_MainMiddle += ChangeStateToAlbum;
+        _sceneRoot.OnClickToLeaders_MainMiddle += ChangeStateToLeaders;
 
         _sceneRoot.OpenMainHeaderPanel();
         _sceneRoot.OpenMainMiddlePanel();
@@ -34,6 +35,7 @@ public class MainState_Menu : IState
         _sceneRoot.OnClickToSettings_MainMiddle -= ChangeStateToSettings;
         _sceneRoot.OnClickToShop_MainMiddle -= ChangeStateToShop;
         _sceneRoot.OnClickToAlbum_MainMiddle -= ChangeStateToAlbum;
+        _sceneRoot.OnClickToLeaders_MainMiddle -= ChangeStateToLeaders;
 
         _sceneRoot.CloseMainHeaderPanel();
         _sceneRoot.CloseMainMiddlePanel();
@@ -50,6 +52,13 @@ public class MainState_Menu : IState
         _sceneRoot.ClosePlayFooterPanel();
 
         _machineProvider.EnterState(_machineProvider.GetState<SettingsState_Menu>());
+    }
+
+    private void ChangeStateToLeaders()
+    {
+        _sceneRoot.ClosePlayFooterPanel();
+
+        _machineProvider.EnterState(_machineProvider.GetState<LeadersState_Menu>());
     }
 
     private void ChangeStateToShop()

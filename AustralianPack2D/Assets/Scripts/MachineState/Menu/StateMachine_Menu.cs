@@ -26,6 +26,7 @@ public class StateMachine_Menu : IStateMachineProvider
         states[typeof(MainState_Menu)] = new MainState_Menu(this, sceneRoot);
         states[typeof(LevelState_Menu)] = new LevelState_Menu(this, sceneRoot);
         states[typeof(SettingsState_Menu)] = new SettingsState_Menu(this, sceneRoot);
+        states[typeof(LeadersState_Menu)] = new LeadersState_Menu(this, sceneRoot);
 
         states[typeof(ShopState_Menu)] = new ShopState_Menu(this, sceneRoot);
         states[typeof(ShopCoverState_Menu)] = new ShopCoverState_Menu(this, sceneRoot);

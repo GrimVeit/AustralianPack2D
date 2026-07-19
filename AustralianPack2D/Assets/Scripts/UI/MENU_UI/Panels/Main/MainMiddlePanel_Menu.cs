@@ -9,6 +9,7 @@ public class MainMiddlePanel_Menu : MovePanel
     [SerializeField] private Button buttonSettings;
     [SerializeField] private Button buttonStore;
     [SerializeField] private Button buttonAlbum;
+    [SerializeField] private Button buttonLeaders;
 
     public override void Initialize()
     {
@@ -18,6 +19,7 @@ public class MainMiddlePanel_Menu : MovePanel
         buttonSettings.onClick.AddListener(ClickSettings);
         buttonStore.onClick.AddListener(ClickStore);
         buttonAlbum.onClick.AddListener(ClickAlbum);
+        buttonLeaders.onClick.AddListener(ClickLeaders);
 
         effectCombination.Initialize();
     }
@@ -30,6 +32,7 @@ public class MainMiddlePanel_Menu : MovePanel
         buttonSettings.onClick.RemoveListener(ClickSettings);
         buttonStore.onClick.RemoveListener(ClickStore);
         buttonAlbum.onClick.RemoveListener(ClickAlbum);
+        buttonLeaders.onClick.RemoveListener(ClickLeaders);
 
         effectCombination.Dispose();
     }
@@ -54,6 +57,7 @@ public class MainMiddlePanel_Menu : MovePanel
     public event Action OnClickSettings;
     public event Action OnClickAlbum;
     public event Action OnClickStore;
+    public event Action OnClickLeaders;
     
 
     private void ClickLevel()
@@ -74,6 +78,11 @@ public class MainMiddlePanel_Menu : MovePanel
     private void ClickStore()
     {
         OnClickStore?.Invoke();
+    }
+
+    private void ClickLeaders()
+    {
+        OnClickLeaders?.Invoke();
     }
 
     #endregion
