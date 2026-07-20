@@ -1,0 +1,37 @@
+{
+  "project_info": {
+    "project_number": "538594464998",
+    "firebase_url": "https://australianpack2d-default-rtdb.firebaseio.com",
+    "project_id": "australianpack2d",
+    "storage_bucket": "australianpack2d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538594464998:ios:37e170f521b98344ef5727",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.AustralianPack2D"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl8Thby7b5Rnm7kyhh55S1gBD-CDk3Wmk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538594464998-srbsgemjirfphocae23hkvvuhj3a0dua.apps.googleusercontent.com"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}

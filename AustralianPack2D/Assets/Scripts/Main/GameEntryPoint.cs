@@ -37,16 +37,19 @@ public class GameEntryPoint
 
     private void Run()
     {
-        coroutines.StartCoroutine(LoadAndStartMenu());
+        coroutines.StartCoroutine(LoadAndStartCheck());
     }
 
 
-    private IEnumerator LoadSceneAndRun<TSceneEntry>(string scene, bool showLoading = true, Action<TSceneEntry> setup = null)
+    private IEnumerator LoadSceneAndRun<TSceneEntry>(string scene, bool showLoading, int screenLoadId, Action<TSceneEntry> setup = null)
         where TSceneEntry : MonoBehaviour
     {
         if (showLoading)
         {
-            yield return rootView.ShowLoadingScreen(0);
+            if (rootView.Index != screenLoadId)
+                rootView.ClearSceneUI();
+
+            yield return rootView.ShowLoadingScreen(screenLoadId);
             yield return new WaitForSeconds(0.4f);
         }
 
@@ -60,11 +63,11 @@ public class GameEntryPoint
         var sceneEntryPoint = Object.FindObjectOfType<TSceneEntry>();
         setup?.Invoke(sceneEntryPoint);
 
-        yield return new WaitForSeconds(0.5f);
-
         if (showLoading)
         {
-            yield return rootView.HideLoadingScreen(0);
+            yield return new WaitForSeconds(0.5f);
+
+            yield return rootView.HideLoadingScreen(screenLoadId);
         }
     }
 
@@ -72,10 +75,10 @@ public class GameEntryPoint
 
     private IEnumerator LoadAndStartCheck()
     {
-        yield return LoadSceneAndRun<CountryCheckerSceneEntryPoint>(Scenes.CHECKER, true, sceneEntry =>
+        yield return LoadSceneAndRun<CountryCheckerSceneEntryPoint>(Scenes.CHECKER, false, 0, sceneEntry =>
         {
-            sceneEntry.GoToGame -= HandleClickToGame;
-            sceneEntry.GoToGame += HandleClickToGame;
+            sceneEntry.GoToMenu -= HandleClickToMenu;
+            sceneEntry.GoToMenu += HandleClickToMenu;
 
             sceneEntry.GoToOther -= HandleGoToOther;
             sceneEntry.GoToOther += HandleGoToOther;
@@ -86,10 +89,10 @@ public class GameEntryPoint
 
     private IEnumerator LoadAndStartOther()
     {
-        yield return LoadSceneAndRun<OtherSceneEntryPoint>(Scenes.OTHER, true, sceneEntry =>
+        yield return LoadSceneAndRun<OtherSceneEntryPoint>(Scenes.OTHER, false, 0, sceneEntry =>
         {
-            sceneEntry.OnGoToGame -= HandleClickToGame;
-            sceneEntry.OnGoToGame += HandleClickToGame;
+            sceneEntry.OnGoToMenu -= HandleClickToMenu;
+            sceneEntry.OnGoToMenu += HandleClickToMenu;
 
             sceneEntry.Run(rootView);
         });
@@ -97,7 +100,7 @@ public class GameEntryPoint
 
     private IEnumerator LoadAndStartGame()
     {
-        yield return LoadSceneAndRun<GameSceneEntryPoint>(Scenes.GAME, true, sceneEntry =>
+        yield return LoadSceneAndRun<GameSceneEntryPoint>(Scenes.GAME, true, 1, sceneEntry =>
         {
             sceneEntry.OnClickToGame -= HandleClickToGame;
             sceneEntry.OnClickToGame += HandleClickToGame;
@@ -111,7 +114,7 @@ public class GameEntryPoint
 
     private IEnumerator LoadAndStartMenu()
     {
-        yield return LoadSceneAndRun<MenuEntryPoint>(Scenes.MAIN_MENU, true, sceneEntry =>
+        yield return LoadSceneAndRun<MenuEntryPoint>(Scenes.MAIN_MENU, true, 1, sceneEntry =>
         {
             sceneEntry.OnClickToGame -= HandleClickToGame;
             sceneEntry.OnClickToGame += HandleClickToGame;

@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class UIRootView : MonoBehaviour
 {
+    public int Index => _index;
+
     [SerializeField] private Canvas canvasMain;
     [SerializeField] private List<MovePanel> loadScreens = new List<MovePanel>();
     [SerializeField] private Transform uiSceneContainer;
 
+    private int _index;
+
     public IEnumerator ShowLoadingScreen(int index)
     {
+        _index = index;
+
         loadScreens[index].ActivatePanel();
         yield return new WaitForSeconds(0.3f);
     }
@@ -39,7 +45,7 @@ public class UIRootView : MonoBehaviour
         rectTransform.offsetMax = Vector2.zero;
     }
 
-    private void ClearSceneUI()
+    public void ClearSceneUI()
     {
         for (int i = 0; i < uiSceneContainer.childCount; i++)
         {
