@@ -5,21 +5,25 @@ using UnityEngine;
 public class StartMainState_Menu : IState
 {
     private readonly IStateMachineProvider _machineProvider;
+    private readonly FirebaseAuthenticationPresenter _firebaseAuthenticationPresenter;
+    private readonly FirebaseDatabasePresenter _firebaseDatabasePresenter;
 
-    public StartMainState_Menu(IStateMachineProvider machineProvider)
+    public StartMainState_Menu(IStateMachineProvider machineProvider, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter, FirebaseDatabasePresenter firebaseDatabasePresenter)
     {
         _machineProvider = machineProvider;
+        _firebaseAuthenticationPresenter = firebaseAuthenticationPresenter;
+        _firebaseDatabasePresenter = firebaseDatabasePresenter;
     }
 
     public void EnterState()
     {
         Debug.Log("<color=red>ACTIVATE STATE - START MAIN STATE / MENU</color>");
 
-        //if (_firebaseAuthenticationPresenter.IsAuthorization())
-        //{
-        //    _firebaseDatabasePresenter.SaveChangeToServer();
-        //    _firebaseDatabasePresenter.DisplayUsersRecords();
-        //}
+        if (_firebaseAuthenticationPresenter.IsAuthorization())
+        {
+            _firebaseDatabasePresenter.SaveChangeToServer();
+            _firebaseDatabasePresenter.DisplayUsersRecords();
+        }
 
         ChangeStateToMain();
     }

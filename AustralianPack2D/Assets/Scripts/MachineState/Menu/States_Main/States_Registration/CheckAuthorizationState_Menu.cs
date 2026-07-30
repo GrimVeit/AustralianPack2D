@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckAuthorizationState_Game : IState
+public class CheckAuthorizationState_Menu : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly FirebaseAuthenticationPresenter _firebaseAuthenticationPresenter;
-    private readonly UIGameRoot _sceneRoot;
 
-    public CheckAuthorizationState_Game(IStateMachineProvider machineProvider, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter, UIGameRoot sceneRoot)
+    public CheckAuthorizationState_Menu(IStateMachineProvider machineProvider, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter)
     {
         _machineProvider = machineProvider;
         _firebaseAuthenticationPresenter = firebaseAuthenticationPresenter;
-        _sceneRoot = sceneRoot;
     }
 
     public void EnterState()
     {
         Debug.Log("<color=red>ACTIVATE STATE - AUTHORIZATION STATE / GAME</color>");
-
-        //_sceneRoot.OpenPurpleBackgroundPanel();
 
         if (_firebaseAuthenticationPresenter.IsAuthorization())
         {
@@ -38,11 +34,11 @@ public class CheckAuthorizationState_Game : IState
 
     private void ChangeStateToStartRegistration()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<NameAndAvatarInputState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<HoldOnRegistrateState_Menu>());
     }
 
     private void ChangeStateToStartMain()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<StartState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<StartMainState_Menu>());
     }
 }

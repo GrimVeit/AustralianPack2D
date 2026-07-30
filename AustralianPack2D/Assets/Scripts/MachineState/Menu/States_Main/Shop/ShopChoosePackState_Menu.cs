@@ -23,6 +23,7 @@ public class ShopChoosePackState_Menu : IState
         _cardBoxBuyVisualListener.OnCardBoxBuy += ChangeStateToShopOpenPack;
 
         _sceneRoot.OpenShopChoosePackPanel();
+        _sceneRoot.OpenShopBalancePanel();
     }
 
     public void ExitState()
@@ -31,6 +32,7 @@ public class ShopChoosePackState_Menu : IState
         _cardBoxBuyVisualListener.OnCardBoxBuy -= ChangeStateToShopOpenPack;
 
         _sceneRoot.CloseShopChoosePackPanel();
+        _sceneRoot.CloseShopBalancePanel();
     }
 
     private void ChangeStateToShop()

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Firebase.Auth;
+using Firebase.Database;
 using UnityEngine;
 
 public class MenuEntryPoint : MonoBehaviour
@@ -11,11 +13,18 @@ public class MenuEntryPoint : MonoBehaviour
     private UIMainMenuRoot sceneRoot;
     private ViewContainer viewContainer;
 
+    private VideoPresenter videoPresenter;
+
     private BankPresenter bankPresenter;
     private ParticleEffectPresenter particleEffectPresenter;
     private ParticleEffectMaterialPresenter particleEffectMaterialPresenter;
     private SoundPresenter soundPresenter;
     private VolumeSettingsPresenter volumeSettingsPresenter;
+
+    private NicknamePresenter nicknamePresenter;
+    private FirebaseAuthenticationPresenter firebaseAuthenticationPresenter;
+    private FirebaseDatabasePresenter firebaseDatabasePresenter;
+    private LeaderboardPresenter leaderboardPresenter;
 
     private StoreLevelPresenter storeLevelPresenter;
     private ChooseLevelVisualPresenter chooseLevelVisualPresenter;
@@ -50,6 +59,10 @@ public class MenuEntryPoint : MonoBehaviour
         viewContainer = sceneRoot.GetComponent<ViewContainer>();
         viewContainer.Initialize();
 
+        FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false);
+        FirebaseAuth firebaseAuth = FirebaseAuth.DefaultInstance;
+        DatabaseReference databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+
         soundPresenter = new SoundPresenter
             (new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS, PlayerPrefsKeys.KEY_VOLUME_SOUND, PlayerPrefsKeys.KEY_VOLUME_MUSIC),
             viewContainer.GetView<SoundView>());
@@ -60,9 +73,16 @@ public class MenuEntryPoint : MonoBehaviour
             (new ParticleEffectModel(),
             viewContainer.GetView<ParticleEffectView>());
 
+        videoPresenter = new VideoPresenter(new VideoModel(), viewContainer.GetView<VideoView>());
+
         particleEffectMaterialPresenter = new ParticleEffectMaterialPresenter(new ParticleEffectMaterialModel(), viewContainer.GetView<ParticleEffectMaterialView>());
 
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
+
+        nicknamePresenter = new NicknamePresenter(new NicknameModel(PlayerPrefsKeys.NICKNAME, soundPresenter), viewContainer.GetView<NicknameView>());
+        firebaseAuthenticationPresenter = new FirebaseAuthenticationPresenter(new FirebaseAuthenticationModel(firebaseAuth, soundPresenter), viewContainer.GetView<FirebaseAuthenticationView>());
+        firebaseDatabasePresenter = new FirebaseDatabasePresenter(new FirebaseDatabaseModel(firebaseAuth, databaseReference, bankPresenter));
+        leaderboardPresenter = new LeaderboardPresenter(new LeaderboardModel(firebaseDatabasePresenter), viewContainer.GetView<LeaderboardView>());
 
         storeLevelPresenter = new StoreLevelPresenter(new StoreLevelModel(PlayerPrefsKeys.LEVEL_NUMBER));
         chooseLevelVisualPresenter = new ChooseLevelVisualPresenter(new ChooseLevelVisualModel(storeLevelPresenter, storeLevelPresenter), viewContainer.GetView<ChooseLevelVisualView>());
@@ -85,7 +105,7 @@ public class MenuEntryPoint : MonoBehaviour
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
         cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
 
-        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, cardPresentationPresenter, cardPresentationPresenter);
+        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, cardPresentationPresenter, cardPresentationPresenter, firebaseAuthenticationPresenter, firebaseDatabasePresenter, nicknamePresenter, videoPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -95,9 +115,15 @@ public class MenuEntryPoint : MonoBehaviour
         soundPresenter.Initialize();
         volumeSettingsPresenter.Initialize();
         particleEffectPresenter.Initialize();
+        videoPresenter.Initialize();
         particleEffectMaterialPresenter.Initialize();
         particleEffectMaterialPresenter.Activate();
         sceneRoot.Initialize();
+
+        leaderboardPresenter.Initialize();
+        nicknamePresenter.Initialize();
+        firebaseAuthenticationPresenter.Initialize();
+        firebaseDatabasePresenter.Initialize();
 
         bankPresenter.Initialize();
 
@@ -170,6 +196,7 @@ public class MenuEntryPoint : MonoBehaviour
         volumeSettingsPresenter?.Dispose();
         sceneRoot?.Dispose();
         particleEffectPresenter?.Dispose();
+        videoPresenter?.Dispose();
         particleEffectMaterialPresenter?.Dispose();
         bankPresenter?.Dispose();
 
@@ -193,6 +220,11 @@ public class MenuEntryPoint : MonoBehaviour
         cardBoxBuyVisualPresenter.Dispose();
         cardsBoxPseudoPresenter.Dispose();
         cardBoxBuyPresenter.Dispose();
+
+        leaderboardPresenter?.Dispose();
+        nicknamePresenter.Dispose();
+        firebaseAuthenticationPresenter.Dispose();
+        firebaseDatabasePresenter.Dispose();
 
         stateMachine?.Dispose();
     }

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NameAndAvatarInputState_Game : IState
+public class NameAndAvatarInputState_Menu : IState
 {
     private readonly IStateMachineProvider _globalStateMachineProvider;
-    private readonly UIGameRoot _sceneRoot;
+    private readonly UIMainMenuRoot _sceneRoot;
     private readonly NicknamePresenter _nicknamePresenter;
     private readonly FirebaseAuthenticationPresenter _firebaseAuthenticationPresenter;
     private readonly FirebaseDatabasePresenter _firebaseDatabasePresenter;
 
-    public NameAndAvatarInputState_Game(IStateMachineProvider globalStateMachineProvider, UIGameRoot sceneRoot, NicknamePresenter nicknamePresenter, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter, FirebaseDatabasePresenter firebaseDatabasePresenter)
+    public NameAndAvatarInputState_Menu(IStateMachineProvider globalStateMachineProvider, UIMainMenuRoot sceneRoot, NicknamePresenter nicknamePresenter, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter, FirebaseDatabasePresenter firebaseDatabasePresenter)
     {
         _globalStateMachineProvider = globalStateMachineProvider;
         _sceneRoot = sceneRoot;
@@ -26,9 +26,9 @@ public class NameAndAvatarInputState_Game : IState
         _nicknamePresenter.OnChooseNickname += _firebaseAuthenticationPresenter.SetNickname;
         _nicknamePresenter.OnChooseNickname += _firebaseDatabasePresenter.SetNickname;
 
-        //_sceneRoot.OnClickToRegistrate_Registration += ChangeStateToRegistration;
+        _sceneRoot.OnClickToRegistrate_Registration += ChangeStateToRegistration;
 
-        //_sceneRoot.OpenRegistrationPanel();
+        _sceneRoot.OpenRegistrationPanel();
     }
 
     public void ExitState()
@@ -36,13 +36,13 @@ public class NameAndAvatarInputState_Game : IState
         _nicknamePresenter.OnChooseNickname -= _firebaseAuthenticationPresenter.SetNickname;
         _nicknamePresenter.OnChooseNickname -= _firebaseDatabasePresenter.SetNickname;
 
-        //_sceneRoot.OnClickToRegistrate_Registration -= ChangeStateToRegistration;
+        _sceneRoot.OnClickToRegistrate_Registration -= ChangeStateToRegistration;
 
-        //_sceneRoot.CloseRegistrationPanel();
+        _sceneRoot.CloseRegistrationPanel();
     }
 
     private void ChangeStateToRegistration()
     {
-        _globalStateMachineProvider.EnterState(_globalStateMachineProvider.GetState<RegistrationState_Game>());
+        _globalStateMachineProvider.EnterState(_globalStateMachineProvider.GetState<RegistrationState_Menu>());
     }
 }

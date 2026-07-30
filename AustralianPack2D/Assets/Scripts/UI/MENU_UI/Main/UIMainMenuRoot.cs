@@ -5,6 +5,11 @@ public class UIMainMenuRoot : UIRoot
 {
     private ISoundProvider _soundProvider;
 
+    [Header("REGISTRATION")]
+    [SerializeField] private MovePanel backgroundRegistrationPanel;
+    [SerializeField] private RegistrationPanel_Menu registrationPanel;
+    [SerializeField] private LoadingPanel_Menu loadingPanel;
+
     [Header("BACKGROUNDS")]
     [SerializeField] private MovePanel backgroundPanel_Main;
     [SerializeField] private MovePanel backgroundPanel_Level;
@@ -33,6 +38,7 @@ public class UIMainMenuRoot : UIRoot
     [Header("SHOP")]
     [SerializeField] private ShopHeaderPanel_Menu shopHeaderPanel;
     [SerializeField] private ShopMiddlePanel_Menu shopMiddlePanel;
+    [SerializeField] private ShopBalancePanel shopBalancePanel;
 
     [SerializeField] private ShopCoverTablePanel_Menu shopCoverTablePanel;
     [SerializeField] private ShopCoverTableFooterPanel_Menu shopCoverTableFooterPanel;
@@ -55,6 +61,10 @@ public class UIMainMenuRoot : UIRoot
 
     public void Initialize()
     {
+        backgroundRegistrationPanel.Initialize();
+        registrationPanel.Initialize();
+        loadingPanel.Initialize();
+
         backgroundPanel_Main.Initialize();
         backgroundPanel_Level.Initialize();
         backgroundPanel_Settings.Initialize();
@@ -77,6 +87,7 @@ public class UIMainMenuRoot : UIRoot
 
         shopHeaderPanel.Initialize();
         shopMiddlePanel.Initialize();
+        shopBalancePanel.Initialize();
         shopCoverTablePanel.Initialize();
         shopCoverTableFooterPanel.Initialize();
 
@@ -93,6 +104,8 @@ public class UIMainMenuRoot : UIRoot
 
     public void Activate()
     {
+        registrationPanel.OnClickToSave += ClickToRegistrate_Registration;
+
         playFooterPanel.OnClickToPlay += ClickToPlay_PlayFooter;
         mainMiddlePanel.OnClickLevel += ClickToLevel_MainMiddle;
         mainMiddlePanel.OnClickSettings += ClickToSettings_MainMiddle;
@@ -138,6 +151,8 @@ public class UIMainMenuRoot : UIRoot
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
 
+        registrationPanel.OnClickToSave -= ClickToRegistrate_Registration;
+
         playFooterPanel.OnClickToPlay -= ClickToPlay_PlayFooter;
         mainMiddlePanel.OnClickLevel -= ClickToLevel_MainMiddle;
         mainMiddlePanel.OnClickSettings -= ClickToSettings_MainMiddle;
@@ -178,6 +193,10 @@ public class UIMainMenuRoot : UIRoot
 
     public void Dispose()
     {
+        backgroundRegistrationPanel.Dispose();
+        registrationPanel.Dispose();
+        loadingPanel.Dispose();
+
         backgroundPanel_Main.Dispose();
         backgroundPanel_Level.Dispose();
         backgroundPanel_Settings.Dispose();
@@ -200,6 +219,7 @@ public class UIMainMenuRoot : UIRoot
 
         shopHeaderPanel.Dispose();
         shopMiddlePanel.Dispose();
+        shopBalancePanel.Dispose();
         shopCoverTablePanel.Dispose();
         shopCoverTableFooterPanel.Dispose();
 
@@ -215,6 +235,54 @@ public class UIMainMenuRoot : UIRoot
     }
 
     #region INPUT
+
+    #region REGISTRATION
+
+    public void OpenBackgroundRegistrationPanel()
+    {
+        if (backgroundRegistrationPanel.IsActive) return;
+
+        OpenOtherPanel(backgroundRegistrationPanel);
+    }
+
+    public void CloseBackgroundRegistrationPanel()
+    {
+        if (!backgroundRegistrationPanel.IsActive) return;
+
+        CloseOtherPanel(backgroundRegistrationPanel);
+    }
+
+
+    public void OpenRegistrationPanel()
+    {
+        if(registrationPanel.IsActive) return;
+
+        OpenOtherPanel(registrationPanel);
+    }
+
+    public void CloseRegistrationPanel()
+    {
+        if (!registrationPanel.IsActive) return;
+
+        CloseOtherPanel(registrationPanel);
+    }
+
+
+    public void OpenLoadingPanel()
+    {
+        if (loadingPanel.IsActive) return;
+
+        OpenOtherPanel(loadingPanel);
+    }
+
+    public void CloseLoadingPanel()
+    {
+        if (!loadingPanel.IsActive) return;
+
+        CloseOtherPanel(loadingPanel);
+    }
+
+    #endregion
 
     #region BACKGROUND
 
@@ -468,6 +536,22 @@ public class UIMainMenuRoot : UIRoot
 
 
 
+    public void OpenShopBalancePanel()
+    {
+        if (shopBalancePanel.IsActive) return;
+
+        OpenOtherPanel(shopBalancePanel);
+    }
+
+    public void CloseShopBalancePanel()
+    {
+        if (!shopBalancePanel.IsActive) return;
+
+        CloseOtherPanel(shopBalancePanel);
+    }
+
+
+
     public void OpenShopCoverTablePanel()
     {
         if (shopCoverTablePanel.IsActive) return;
@@ -665,6 +749,19 @@ public class UIMainMenuRoot : UIRoot
 
 
     #region OUTPUT
+
+    #region REGIST
+
+    public event Action OnClickToRegistrate_Registration;
+
+    private void ClickToRegistrate_Registration()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToRegistrate_Registration?.Invoke();
+    }
+
+    #endregion
 
     #region MAIN
 

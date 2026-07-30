@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RegistrationState_Game : IState
+public class RegistrationState_Menu : IState
 {
     private readonly IStateMachineProvider _globalStateMachineProvider;
-    private readonly UIGameRoot _sceneRoot;
+    private readonly UIMainMenuRoot _sceneRoot;
     private readonly FirebaseAuthenticationPresenter _firebaseAuthenticationPresenter;
     private readonly FirebaseDatabasePresenter _firebaseDatabasePresenter;
 
-    public RegistrationState_Game(IStateMachineProvider globalStateMachineProvider, UIGameRoot sceneRoot, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter, FirebaseDatabasePresenter firebaseDatabasePresenter)
+    public RegistrationState_Menu(IStateMachineProvider globalStateMachineProvider, UIMainMenuRoot sceneRoot, FirebaseAuthenticationPresenter firebaseAuthenticationPresenter, FirebaseDatabasePresenter firebaseDatabasePresenter)
     {
         _globalStateMachineProvider = globalStateMachineProvider;
         _sceneRoot = sceneRoot;
@@ -28,7 +28,7 @@ public class RegistrationState_Game : IState
 
         _firebaseAuthenticationPresenter.SignUp();
 
-        //_sceneRoot.OpenLoadingRegistrationPanel();
+        _sceneRoot.OpenLoadingPanel();
     }
 
     public void ExitState()
@@ -38,16 +38,18 @@ public class RegistrationState_Game : IState
 
         _firebaseAuthenticationPresenter.OnSignUpError -= ChangeStateToNameAndAvatarInput;
 
-        //_sceneRoot.CloseLoadingRegistrationPanel();
+        _sceneRoot.CloseLoadingPanel();
     }
 
     private void ChangeStateToNameAndAvatarInput()
     {
-        _globalStateMachineProvider.EnterState(_globalStateMachineProvider.GetState<NameAndAvatarInputState_Game>());
+        _globalStateMachineProvider.EnterState(_globalStateMachineProvider.GetState<NameAndAvatarInputState_Menu>());
     }
 
     private void ChangeStateToStartMainMenu()
     {
-        _globalStateMachineProvider.EnterState(_globalStateMachineProvider.GetState<StartState_Game>());
+        _sceneRoot.CloseBackgroundRegistrationPanel();
+
+        _globalStateMachineProvider.EnterState(_globalStateMachineProvider.GetState<StartMainState_Menu>());
     }
 }

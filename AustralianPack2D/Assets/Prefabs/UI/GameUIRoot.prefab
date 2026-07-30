@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9d0c0a3c29e604690b0b7afe24293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeDelay: 0
+  startTimeDelay: 0.1
   uiEffects:
   - {fileID: 5118309113601099671}
   - {fileID: 2380154786212450716}
@@ -3025,7 +3025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9d0c0a3c29e604690b0b7afe24293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeDelay: 0
+  startTimeDelay: 0.1
   uiEffects:
   - {fileID: 4234491942522308706}
   timeDelay: 0
@@ -3745,7 +3745,7 @@ MonoBehaviour:
   panel: {fileID: 4318792556480724093}
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
-  time: 0.1
+  time: 0.2
   canvasGroup: {fileID: 2255125922216066433}
   effectCombination: {fileID: 6501442019480299361}
 --- !u!114 &6501442019480299361
@@ -3760,7 +3760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9d0c0a3c29e604690b0b7afe24293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeDelay: 0
+  startTimeDelay: 0.1
   uiEffects:
   - {fileID: 5526950239781148946}
   - {fileID: 3880180625482088875}
@@ -5042,7 +5042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81e16cc91490c34eba2b1fd07a8728b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.1
+  duration: 0.2
   scaleElement: {fileID: 475112855809489765}
 --- !u!1 &5508651247854176470
 GameObject:
@@ -5706,7 +5706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9d0c0a3c29e604690b0b7afe24293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeDelay: 0
+  startTimeDelay: 0.1
   uiEffects:
   - {fileID: 5751852058627048305}
   - {fileID: 7833573574235810059}
@@ -6530,7 +6530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81e16cc91490c34eba2b1fd07a8728b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.1
+  duration: 0.2
   scaleElement: {fileID: 8470305532773908867}
 --- !u!1 &7835909390690874109
 GameObject:
@@ -7006,7 +7006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9d0c0a3c29e604690b0b7afe24293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeDelay: 0
+  startTimeDelay: 0.1
   uiEffects:
   - {fileID: 7337627704768493678}
   timeDelay: 0

@@ -10,9 +10,14 @@ public class VideoView : View
 {
     [SerializeField] private VideoPlayers videoPlayers;
 
-    public void Initialize()
+    private void Awake()
     {
         videoPlayers.Initialize();
+    }
+
+    public void Initialize()
+    {
+
     }
 
     public void Prepare(string id)

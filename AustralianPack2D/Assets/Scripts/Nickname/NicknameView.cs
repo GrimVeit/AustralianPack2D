@@ -44,14 +44,16 @@ public class NicknameView : View
     {
         buttonSave.enabled = true;
 
-        buttonEffect.ActivateEffect();
+        if(!buttonEffect.IsActive)
+            buttonEffect.ActivateEffect();
     }
 
     public void DeactivateButton()
     {
         buttonSave.enabled = false;
 
-        buttonEffect.DeactivateEffect();
+        if(buttonEffect.IsActive)
+           buttonEffect.DeactivateEffect();
     }
 
     public void ChangeNickname(string nickname)

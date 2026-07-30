@@ -34,6 +34,6 @@ public class StartHoldOnState_Menu : IState
 
     private void ChangeStateToStart()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<MainState_Menu>());
+        _machineProvider.EnterState(_machineProvider.GetState<CheckAuthorizationState_Menu>());
     }
 }

@@ -20,9 +20,23 @@ public class StateMachine_Menu : IStateMachineProvider
         ICardsBoxPseudoProvider cardsBoxPseudoProvider,
         
         ICardPresentationProvider cardPresentationProvider,
-        ICardPresentationListener cardPresentationListener)
+        ICardPresentationListener cardPresentationListener,
+        
+        FirebaseAuthenticationPresenter firebaseAuthenticationPresenter,
+        FirebaseDatabasePresenter firebaseDatabasePresenter,
+        NicknamePresenter nicknamePresenter,
+        
+        IVideoProvider videoProvider)
     {
         states[typeof(StartHoldOnState_Menu)] = new StartHoldOnState_Menu(this);
+
+        states[typeof(CheckAuthorizationState_Menu)] = new CheckAuthorizationState_Menu(this, firebaseAuthenticationPresenter);
+
+        states[typeof(HoldOnRegistrateState_Menu)] = new HoldOnRegistrateState_Menu(this, sceneRoot, videoProvider);
+        states[typeof(NameAndAvatarInputState_Menu)] = new NameAndAvatarInputState_Menu(this, sceneRoot, nicknamePresenter, firebaseAuthenticationPresenter, firebaseDatabasePresenter);
+        states[typeof(RegistrationState_Menu)] = new RegistrationState_Menu(this, sceneRoot, firebaseAuthenticationPresenter, firebaseDatabasePresenter);
+
+        states[typeof(StartMainState_Menu)] = new StartMainState_Menu(this, firebaseAuthenticationPresenter, firebaseDatabasePresenter);
         states[typeof(MainState_Menu)] = new MainState_Menu(this, sceneRoot);
         states[typeof(LevelState_Menu)] = new LevelState_Menu(this, sceneRoot);
         states[typeof(SettingsState_Menu)] = new SettingsState_Menu(this, sceneRoot);
