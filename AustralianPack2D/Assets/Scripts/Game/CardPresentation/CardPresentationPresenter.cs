@@ -1,6 +1,8 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class CardPresentationPresenter : ICardPresentationProvider, ICardPresentationListener
+public class CardPresentationPresenter
 {
     private readonly CardPresentationModel _model;
     private readonly CardPresentationView _view;
@@ -15,7 +17,6 @@ public class CardPresentationPresenter : ICardPresentationProvider, ICardPresent
     {
         ActivateEvents();
 
-        _view.Initialize();
         _model.Initialize();
     }
 
@@ -23,65 +24,16 @@ public class CardPresentationPresenter : ICardPresentationProvider, ICardPresent
     {
         DeactivateEvents();
 
-        _view.Dispose();
         _model.Dispose();
     }
 
     private void ActivateEvents()
     {
-        _view.OnClickCard += _model.ClickCard;
-
-        _model.OnClickCard += ClickCard;
-        _model.OnBuyCards += _view.SetCards;
+        _model.OnSetCard += _view.CardPresentation;
     }
 
     private void DeactivateEvents()
     {
-        _view.OnClickCard -= _model.ClickCard;
-
-        _model.OnClickCard -= ClickCard;
-        _model.OnBuyCards -= _view.SetCards;
+        _model.OnSetCard -= _view.CardPresentation;
     }
-
-    private void ClickCard(CardOpenResult card)
-    {
-        _view.CardPresentation(card.Card.Sprite);
-
-        OnClickCard?.Invoke();
-    }
-
-    #region Output
-
-    public event Action<int> OnGetCountUniqueCards
-    {
-        add => _model.OnGetCountUniqueCards += value;
-        remove => _model.OnGetCountUniqueCards -= value;
-    }
-
-    public event Action OnClickCard;
-
-    #endregion
-
-    #region Input
-
-    public bool IsHasDuplicates => _view.IsHasDuplicates();
-    public void Show(float time) => _view.Show(time);
-    public void Hide() => _view.Hide();
-    public void ShowDuplicates() => _view.ShowDuplicates();
-
-    #endregion
-}
-
-public interface ICardPresentationProvider
-{
-    public bool IsHasDuplicates { get; }
-    public void Show(float time);
-    public void Hide();
-    public void ShowDuplicates();
-}
-
-public interface ICardPresentationListener
-{
-    public event Action<int> OnGetCountUniqueCards;
-    public event Action OnClickCard;
 }

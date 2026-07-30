@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class CardUniqueCounterModel
 {
-    private readonly ICardPresentationListener _cardPresentationListener;
+    private readonly IShopCardPresentationListener _cardPresentationListener;
 
-    public CardUniqueCounterModel(ICardPresentationListener cardPresentationListener)
+    public CardUniqueCounterModel(IShopCardPresentationListener cardPresentationListener)
     {
         _cardPresentationListener = cardPresentationListener;
 

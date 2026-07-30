@@ -31,7 +31,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private CardBoxBuyPresenter cardBoxBuyPresenter;
     private CardsBoxPseudoPresenter cardsBoxPseudoPresenter;
     private CardBoxPresenter cardBoxPresenter;
-    private CardPresentationPresenter cardPresentationPresenter;
+    private ShopCardPresentationPresenter cardPresentationPresenter;
     private CardUniqueCounterPresenter cardUniqueCounterPresenter;
     private GameMoneyGiftPresenter gameMoneyGiftPresenter;
 
@@ -69,7 +69,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel(bankPresenter));
         cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
-        cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
+        cardPresentationPresenter = new ShopCardPresentationPresenter(new ShopCardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<ShopCardPresentationView>());
         cardUniqueCounterPresenter = new CardUniqueCounterPresenter(new CardUniqueCounterModel(cardPresentationPresenter), viewContainer.GetView<CardUniqueCounterView>());
         gameMoneyGiftPresenter = new GameMoneyGiftPresenter(new GameMoneyGiftModel(bankPresenter), viewContainer.GetView<GameMoneyGiftView>());
 

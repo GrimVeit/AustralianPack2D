@@ -29,15 +29,24 @@ public class CardVisualModel
         OnOpenCard?.Invoke(card, isNew);
     }
 
-    public void CloseCard(Card card)
+    private void CloseCard(Card card)
     {
         OnCloseCard?.Invoke(card);
+    }
+
+    public void ClickCard(Card card)
+    {
+        OnClickCard_Value?.Invoke(card);
+        OnClickCard?.Invoke();
     }
 
     #region Output
 
     public event Action<Card, bool> OnOpenCard;
     public event Action<Card> OnCloseCard;
+
+    public event Action<Card> OnClickCard_Value;
+    public event Action OnClickCard;
 
     #endregion
 }

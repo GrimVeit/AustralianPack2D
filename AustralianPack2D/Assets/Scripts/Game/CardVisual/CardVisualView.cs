@@ -101,6 +101,7 @@ public class CardVisualView : View
         [SerializeField] private GameObject objectNew;
 
         private Card _card;
+        private bool isOpen = false;
 
         public void Initialize()
         {
@@ -119,6 +120,8 @@ public class CardVisualView : View
             imageElement.gameObject.SetActive(true);
             imageElement.sprite = _card.Sprite;
 
+            isOpen = true;
+
             if (isNew)
             {
                 objectNew.SetActive(true);
@@ -133,6 +136,8 @@ public class CardVisualView : View
         {
             _card = card;
 
+            isOpen = false;
+
             imageElement.gameObject.SetActive(false);
         }
 
@@ -142,6 +147,8 @@ public class CardVisualView : View
 
         private void CardClick()
         {
+            if (!isOpen) return;
+
             OnCardClick?.Invoke(_card);
         }
 

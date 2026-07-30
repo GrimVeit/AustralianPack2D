@@ -24,7 +24,7 @@ public class StateMachine_Game : IStateMachineProvider
         ICardBoxListener cardBoxListener,
         ICardsBoxPseudoListener cardsBoxPseudoListener,
         ICardsBoxPseudoProvider cardsBoxPseudoProvider,
-        ICardPresentationProvider cardPresentationProvider,
+        IShopCardPresentationProvider cardPresentationProvider,
         IGameMoneyGiftProvider gameMoneyGiftProvider
         )
     {

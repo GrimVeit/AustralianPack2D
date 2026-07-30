@@ -6,10 +6,10 @@ public class ShopCardsPresentationState_Menu : IState
 {
     private readonly IStateMachineProvider _stateMachineProvider;
     private readonly UIMainMenuRoot _sceneRoot;
-    private readonly ICardPresentationProvider _cardPresentationProvider;
-    private readonly ICardPresentationListener _cardPresentationListener;
+    private readonly IShopCardPresentationProvider _cardPresentationProvider;
+    private readonly IShopCardPresentationListener _cardPresentationListener;
 
-    public ShopCardsPresentationState_Menu(IStateMachineProvider stateMachineProvider, UIMainMenuRoot sceneRoot, ICardPresentationProvider cardPresentationProvider, ICardPresentationListener cardPresentationListener)
+    public ShopCardsPresentationState_Menu(IStateMachineProvider stateMachineProvider, UIMainMenuRoot sceneRoot, IShopCardPresentationProvider cardPresentationProvider, IShopCardPresentationListener cardPresentationListener)
     {
         _stateMachineProvider = stateMachineProvider;
         _sceneRoot = sceneRoot;

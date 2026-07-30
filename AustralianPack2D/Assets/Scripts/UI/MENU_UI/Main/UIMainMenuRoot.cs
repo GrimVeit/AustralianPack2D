@@ -46,7 +46,7 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private ShopChoosePackPanel_Menu shopChoosePackPanel;
     [SerializeField] private ShopOpenPackPanel_Menu shopOpenPackPanel;
     [SerializeField] private ShopOpenPackFooterPanel_Menu shopOpenPackFooterPanel;
-    [SerializeField] private CardPresentationPanel_Menu shopCardPresentationPanel;
+    [SerializeField] private CardPresentationPanel_Menu cardPresentationPanel;
 
     [Header("ALBUM")]
     [SerializeField] private AlbumHeaderPanel_Menu albumHeaderPanel;
@@ -94,7 +94,7 @@ public class UIMainMenuRoot : UIRoot
         shopChoosePackPanel.Initialize();
         shopOpenPackPanel.Initialize();
         shopOpenPackFooterPanel.Initialize();
-        shopCardPresentationPanel.Initialize();
+        cardPresentationPanel.Initialize();
 
         albumHeaderPanel.Initialize();
         albumChooseMiddlePanel.Initialize();
@@ -133,7 +133,7 @@ public class UIMainMenuRoot : UIRoot
         shopChoosePackPanel.OnClickStandard += ClickToStandard_ShopChoosePack;
         shopChoosePackPanel.OnClickPriority += ClickToPriority_ShopChoosePack;
         shopOpenPackFooterPanel.OnClickToAlbum += ClickToAlbum_ShopOpenPackFooter;
-        shopCardPresentationPanel.OnClickToBack += ClickToBack_ShopCardPresentation;
+        cardPresentationPanel.OnClickToBack += ClickToBack_CardPresentation;
 
 
 
@@ -180,7 +180,7 @@ public class UIMainMenuRoot : UIRoot
         shopChoosePackPanel.OnClickStandard -= ClickToStandard_ShopChoosePack;
         shopChoosePackPanel.OnClickPriority -= ClickToPriority_ShopChoosePack;
         shopOpenPackFooterPanel.OnClickToAlbum -= ClickToAlbum_ShopOpenPackFooter;
-        shopCardPresentationPanel.OnClickToBack -= ClickToBack_ShopCardPresentation;
+        cardPresentationPanel.OnClickToBack -= ClickToBack_CardPresentation;
 
 
         albumHeaderPanel.OnClickBack -= ClickToExit_AlbumHeader;
@@ -226,7 +226,7 @@ public class UIMainMenuRoot : UIRoot
         shopChoosePackPanel.Dispose();
         shopOpenPackPanel.Dispose();
         shopOpenPackFooterPanel.Dispose();
-        shopCardPresentationPanel.Dispose();
+        cardPresentationPanel.Dispose();
 
         albumHeaderPanel.Dispose();
         albumChooseMiddlePanel.Dispose();
@@ -631,18 +631,18 @@ public class UIMainMenuRoot : UIRoot
     }
 
 
-    public void OpenShopCardPresentationPanel()
+    public void OpenCardPresentationPanel()
     {
-        if (shopCardPresentationPanel.IsActive) return;
+        if (cardPresentationPanel.IsActive) return;
 
-        OpenOtherPanel(shopCardPresentationPanel);
+        OpenOtherPanel(cardPresentationPanel);
     }
 
-    public void CloseShopCardPresentationPanel()
+    public void CloseCardPresentationPanel()
     {
-        if (!shopCardPresentationPanel.IsActive) return;
+        if (!cardPresentationPanel.IsActive) return;
 
-        CloseOtherPanel(shopCardPresentationPanel);
+        CloseOtherPanel(cardPresentationPanel);
     }
 
     #endregion
@@ -896,7 +896,7 @@ public class UIMainMenuRoot : UIRoot
     public event Action OnClickToPriority_ShopChoosePack;
 
     public event Action OnClickToAlbum_ShopOpenPackFooter;
-    public event Action OnClickToBack_ShopCardPresentation;
+    public event Action OnClickToBack_CardPresentation;
 
     private void ClickToExit_ShopHeader()
     {
@@ -941,11 +941,11 @@ public class UIMainMenuRoot : UIRoot
         OnClickToAlbum_ShopOpenPackFooter?.Invoke();
     }
 
-    private void ClickToBack_ShopCardPresentation()
+    private void ClickToBack_CardPresentation()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
-        OnClickToBack_ShopCardPresentation?.Invoke();
+        OnClickToBack_CardPresentation?.Invoke();
     }
 
     #endregion

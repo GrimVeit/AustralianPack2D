@@ -45,6 +45,7 @@ public class MenuEntryPoint : MonoBehaviour
     private CardBoxBuyVisualPresenter cardBoxBuyVisualPresenter;
     private CardsBoxPseudoPresenter cardsBoxPseudoPresenter;
     private CardBoxPresenter cardBoxPresenter;
+    private ShopCardPresentationPresenter shopCardPresentationPresenter;
     private CardPresentationPresenter cardPresentationPresenter;
 
 
@@ -103,9 +104,10 @@ public class MenuEntryPoint : MonoBehaviour
         cardBoxBuyVisualPresenter = new CardBoxBuyVisualPresenter(new CardBoxBuyVisualModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxBuyVisualView>());
         cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
-        cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<CardPresentationView>());
+        shopCardPresentationPresenter = new ShopCardPresentationPresenter(new ShopCardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<ShopCardPresentationView>());
+        cardPresentationPresenter = new CardPresentationPresenter(new CardPresentationModel(cardVisualPresenter), viewContainer.GetView<CardPresentationView>());
 
-        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, cardPresentationPresenter, cardPresentationPresenter, firebaseAuthenticationPresenter, firebaseDatabasePresenter, nicknamePresenter, videoPresenter);
+        stateMachine = new StateMachine_Menu(sceneRoot, bookPagesPresenter, cardBoxPresenter, cardBoxPresenter, cardBoxBuyVisualPresenter, cardsBoxPseudoPresenter, cardsBoxPseudoPresenter, shopCardPresentationPresenter, shopCardPresentationPresenter, firebaseAuthenticationPresenter, firebaseDatabasePresenter, nicknamePresenter, videoPresenter, cardVisualPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -143,6 +145,7 @@ public class MenuEntryPoint : MonoBehaviour
         storeCardPresenter.Initialize();
 
         cardPresentationPresenter.Initialize();
+        shopCardPresentationPresenter.Initialize();
         cardBoxPresenter.Initialize();
         cardBoxBuyVisualPresenter.Initialize();
         cardsBoxPseudoPresenter.Initialize();
@@ -215,7 +218,8 @@ public class MenuEntryPoint : MonoBehaviour
         cardVisualPresenter.Dispose();
         storeCardPresenter.Dispose();
 
-        cardPresentationPresenter.Dispose();
+        cardPresentationPresenter?.Dispose();
+        shopCardPresentationPresenter.Dispose();
         cardBoxPresenter.Dispose();
         cardBoxBuyVisualPresenter.Dispose();
         cardsBoxPseudoPresenter.Dispose();

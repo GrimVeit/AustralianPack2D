@@ -9903,6 +9903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2101887642134691947}
+  - component: {fileID: 3750049858037393116}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -9929,6 +9930,41 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3750049858037393116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834660358924036972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84df5ce3d4f38e4688d67341a040c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPresentationUnits:
+  - buttonUnit: {fileID: 1026187670429698997}
+    imageCard: {fileID: 6955561892890900886}
+    transformCardShake: {fileID: 1468821589260569309}
+    duplicateIcon: {fileID: 8544546659118199431}
+  - buttonUnit: {fileID: 4438698584615569749}
+    imageCard: {fileID: 7601191245981680983}
+    transformCardShake: {fileID: 9051520116929433993}
+    duplicateIcon: {fileID: 5093136907765806309}
+  - buttonUnit: {fileID: 8735942590074404065}
+    imageCard: {fileID: 9018188288014790853}
+    transformCardShake: {fileID: 969645198784992181}
+    duplicateIcon: {fileID: 6478900977611661710}
+  - buttonUnit: {fileID: 6709918037320777968}
+    imageCard: {fileID: 531242926458854765}
+    transformCardShake: {fileID: 4098634518519896430}
+    duplicateIcon: {fileID: 1577600840231926501}
+  - buttonUnit: {fileID: 7329277382418008721}
+    imageCard: {fileID: 8018494189401114197}
+    transformCardShake: {fileID: 7921252972296266430}
+    duplicateIcon: {fileID: 1542210462754373710}
+  colorDuplicate: {r: 0.44313726, g: 0.44313726, b: 0.44313726, a: 1}
+  imageCardPresentation: {fileID: 7902827455974330368}
 --- !u!1 &838671828307243537
 GameObject:
   m_ObjectHideFlags: 0
@@ -17737,7 +17773,7 @@ GameObject:
   - component: {fileID: 2297510827139903400}
   - component: {fileID: 418002418910188080}
   m_Layer: 5
-  m_Name: ShopCardPresentationPanel
+  m_Name: CardPresentationPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34362,7 +34398,7 @@ MonoBehaviour:
   shopChoosePackPanel: {fileID: 9114078156301494463}
   shopOpenPackPanel: {fileID: 8447105454711417588}
   shopOpenPackFooterPanel: {fileID: 1379947099130831654}
-  shopCardPresentationPanel: {fileID: 2297510827139903400}
+  cardPresentationPanel: {fileID: 2297510827139903400}
   albumHeaderPanel: {fileID: 1697407346957831909}
   albumChooseMiddlePanel: {fileID: 1583772889139798598}
   albumTablePanel: {fileID: 3715403547180241751}
@@ -58759,29 +58795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316947195146e5c4f8028f1bb3759e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPresentationUnits:
-  - buttonUnit: {fileID: 1026187670429698997}
-    imageCard: {fileID: 6955561892890900886}
-    transformCardShake: {fileID: 1468821589260569309}
-    duplicateIcon: {fileID: 8544546659118199431}
-  - buttonUnit: {fileID: 4438698584615569749}
-    imageCard: {fileID: 7601191245981680983}
-    transformCardShake: {fileID: 9051520116929433993}
-    duplicateIcon: {fileID: 5093136907765806309}
-  - buttonUnit: {fileID: 8735942590074404065}
-    imageCard: {fileID: 9018188288014790853}
-    transformCardShake: {fileID: 969645198784992181}
-    duplicateIcon: {fileID: 6478900977611661710}
-  - buttonUnit: {fileID: 6709918037320777968}
-    imageCard: {fileID: 531242926458854765}
-    transformCardShake: {fileID: 4098634518519896430}
-    duplicateIcon: {fileID: 1577600840231926501}
-  - buttonUnit: {fileID: 7329277382418008721}
-    imageCard: {fileID: 8018494189401114197}
-    transformCardShake: {fileID: 7921252972296266430}
-    duplicateIcon: {fileID: 1542210462754373710}
-  colorDuplicate: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 1}
-  imageCardPresentation: {fileID: 7902827455974330368}
+  imageCard: {fileID: 7902827455974330368}
 --- !u!1 &5636368792988198841
 GameObject:
   m_ObjectHideFlags: 0

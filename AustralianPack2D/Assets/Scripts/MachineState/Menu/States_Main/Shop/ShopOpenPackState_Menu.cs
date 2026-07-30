@@ -13,7 +13,7 @@ public class ShopOpenPackState_Menu : IState
     private readonly ICardsBoxPseudoProvider _cardsBoxPseudoProvider;
     private readonly ICardsBoxPseudoListener _cardsBoxPseudoListener;
 
-    private readonly ICardPresentationProvider _cardPresentationProvider;
+    private readonly IShopCardPresentationProvider _cardPresentationProvider;
 
     private bool _isOpenPack = false;
     private bool _isEndMovePseudo = false;
@@ -21,7 +21,7 @@ public class ShopOpenPackState_Menu : IState
 
     private IEnumerator timer;
 
-    public ShopOpenPackState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot, ICardBoxProvider cardBoxProvider, ICardBoxListener cardBoxListener, ICardsBoxPseudoProvider cardsBoxPseudoProvider, ICardsBoxPseudoListener cardsBoxPseudoListener, ICardPresentationProvider cardPresentationProvider)
+    public ShopOpenPackState_Menu(IStateMachineProvider machineProvider, UIMainMenuRoot sceneRoot, ICardBoxProvider cardBoxProvider, ICardBoxListener cardBoxListener, ICardsBoxPseudoProvider cardsBoxPseudoProvider, ICardsBoxPseudoListener cardsBoxPseudoListener, IShopCardPresentationProvider cardPresentationProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
