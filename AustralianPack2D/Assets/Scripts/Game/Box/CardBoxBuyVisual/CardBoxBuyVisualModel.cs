@@ -7,16 +7,24 @@ public class CardBoxBuyVisualModel
 {
     private readonly ICardBoxBuyProvider _cardBoxBuyProvider;
 
-    public CardBoxBuyVisualModel(ICardBoxBuyProvider cardBoxBuyProvider)
+    private readonly IMoneyProvider _moneyProvider;
+
+    public CardBoxBuyVisualModel(ICardBoxBuyProvider cardBoxBuyProvider, IMoneyProvider moneyProvider)
     {
         _cardBoxBuyProvider = cardBoxBuyProvider;
+        _moneyProvider = moneyProvider;
     }
 
     public void BuyBox(CardBoxType type, int cost)
     {
-        _cardBoxBuyProvider.Buy(type, cost);
+        if (_moneyProvider.CanAfford(cost))
+        {
+            _moneyProvider.SendMoney(-cost);
 
-        OnCardBoxBuy?.Invoke();
+            _cardBoxBuyProvider.Buy(type);
+
+            OnCardBoxBuy?.Invoke();
+        }
     }
 
     #region Output

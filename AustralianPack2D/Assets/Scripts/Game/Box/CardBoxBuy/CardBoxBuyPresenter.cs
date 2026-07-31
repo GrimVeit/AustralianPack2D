@@ -35,14 +35,12 @@ public class CardBoxBuyPresenter : ICardBoxBuyProvider, ICardBoxBuyListener
     #region Input
 
     public void Buy(CardBoxType type) => _model.Buy(type);
-    public void Buy(CardBoxType type, int cost) => _model.Buy(type, cost);
 
     #endregion
 }
 
 public interface ICardBoxBuyProvider
 {
-    public void Buy(CardBoxType type, int cost);
     public void Buy(CardBoxType type);
 }
 

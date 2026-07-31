@@ -21386,7 +21386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 500 coins
+  m_text: 1900 coins
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55471c1726221d1479ee84cd0fb051a0, type: 2}
   m_sharedMaterial: {fileID: -9031739193220213530, guid: 55471c1726221d1479ee84cd0fb051a0, type: 2}
@@ -23185,7 +23185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 500 coins
+  m_text: 800 coins
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55471c1726221d1479ee84cd0fb051a0, type: 2}
   m_sharedMaterial: {fileID: -9031739193220213530, guid: 55471c1726221d1479ee84cd0fb051a0, type: 2}
@@ -52107,10 +52107,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - buttonBuy: {fileID: 4729341694734012602}
-    cost: 0
+    cost: 800
     cardBoxType: 1
   - buttonBuy: {fileID: 841795927905691407}
-    cost: 0
+    cost: 1900
     cardBoxType: 2
 --- !u!1 &4939718051935761226
 GameObject:
@@ -87263,10 +87263,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3852171458246670587}
-  - {fileID: 322837807262340521}
   - {fileID: 1165769602445506666}
   - {fileID: 956043628020361160}
+  - {fileID: 3852171458246670587}
+  - {fileID: 322837807262340521}
   m_Father: {fileID: 3199806216092548801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

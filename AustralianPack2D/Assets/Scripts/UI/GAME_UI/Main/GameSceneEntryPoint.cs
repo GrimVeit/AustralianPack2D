@@ -66,7 +66,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         gameScorePresenter = new GameScorePresenter(new GameScoreModel(cardsOrchestrationPresenter, storeLevelPresenter), viewContainer.GetView<GameScoreView>());
 
         storeCardPresenter = new StoreCardPresenter(new StoreCardModel(cardPacksSO));
-        cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel(bankPresenter));
+        cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel());
         cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
         cardPresentationPresenter = new ShopCardPresentationPresenter(new ShopCardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<ShopCardPresentationView>());

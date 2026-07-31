@@ -1988,7 +1988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7717828325708263490}
-  - component: {fileID: 6552778242529000229}
+  - component: {fileID: 5535081689445670277}
   m_Layer: 5
   m_Name: Presentation
   m_TagString: Untagged
@@ -2015,7 +2015,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6552778242529000229
+--- !u!114 &5535081689445670277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2024,7 +2024,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2102350004168684455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 316947195146e5c4f8028f1bb3759e60, type: 3}
+  m_Script: {fileID: 11500000, guid: a84df5ce3d4f38e4688d67341a040c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardPresentationUnits:
@@ -2048,7 +2048,7 @@ MonoBehaviour:
     imageCard: {fileID: 4016514124661264922}
     transformCardShake: {fileID: 1303273023557774612}
     duplicateIcon: {fileID: 1562277289044722823}
-  colorDuplicate: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 1}
+  colorDuplicate: {r: 0.44313726, g: 0.44313726, b: 0.44313726, a: 1}
   imageCardPresentation: {fileID: 6899380414160973639}
 --- !u!1 &2121832583188982338
 GameObject:

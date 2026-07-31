@@ -100,8 +100,8 @@ public class MenuEntryPoint : MonoBehaviour
         storeCardPresenter = new StoreCardPresenter(new StoreCardModel(cards));
         cardVisualPresenter = new CardVisualPresenter(new CardVisualModel(storeCardPresenter), viewContainer.GetView<CardVisualView>());
 
-        cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel(bankPresenter));
-        cardBoxBuyVisualPresenter = new CardBoxBuyVisualPresenter(new CardBoxBuyVisualModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxBuyVisualView>());
+        cardBoxBuyPresenter = new CardBoxBuyPresenter(new CardBoxBuyModel());
+        cardBoxBuyVisualPresenter = new CardBoxBuyVisualPresenter(new CardBoxBuyVisualModel(cardBoxBuyPresenter, bankPresenter), viewContainer.GetView<CardBoxBuyVisualView>());
         cardsBoxPseudoPresenter = new CardsBoxPseudoPresenter(new CardsBoxPseudoModel(cardBoxBuyPresenter), viewContainer.GetView<CardsBoxPseudoView>());
         cardBoxPresenter = new CardBoxPresenter(new CardBoxModel(cardBoxBuyPresenter), viewContainer.GetView<CardBoxView>());
         shopCardPresentationPresenter = new ShopCardPresentationPresenter(new ShopCardPresentationModel(cardBoxBuyPresenter, storeCardPresenter, storeCardPresenter), viewContainer.GetView<ShopCardPresentationView>());
