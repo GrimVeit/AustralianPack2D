@@ -13,13 +13,13 @@ public class InternetModel
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            Debug.Log("Подключения к интернету нет");
+            //Debug.Log("Подключения к интернету нет");
             OnGetStatusDescription?.Invoke("Please check internet connection...");
             OnInternetUnvailable?.Invoke();
         }
         else
         {
-            Debug.Log("Подключения к интернету есть");
+            //Debug.Log("Подключения к интернету есть");
             OnGetStatusDescription?.Invoke("Loading...");
             OnInternetAvailable?.Invoke();
         }
